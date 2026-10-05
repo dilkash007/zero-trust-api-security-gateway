@@ -6,8 +6,8 @@ export default function Sidebar() {
     { label: "Overview", path: "/dashboard", active: true, tag: "ACTIVE" },
     { label: "API Traffic", path: "/traffic", active: true, tag: "ACTIVE" },
     { label: "Threats", path: "/threats", active: true, tag: "ACTIVE" },
-    { label: "Attack Simulator", path: "#simulator", active: false, tag: "STEP 5" },
-    { label: "Policies", path: "#policies", active: false, tag: "STEP 6" },
+    { label: "Behavior Baselines", path: "/behavior", active: true, tag: "STEP 5" },
+    { label: "Anomaly Policies", path: "#policies", active: false, tag: "STEP 6" },
   ];
 
   return (
@@ -53,7 +53,7 @@ export default function Sidebar() {
 
       <div className="sidebar-footer">
         <div>CORE STACK: FastAPI + Postgres</div>
-        <div>TELEMETRY: Step 4 (Active)</div>
+        <div>BEHAVIOR ENGINE: Step 5 (Active)</div>
       </div>
     </aside>
   );

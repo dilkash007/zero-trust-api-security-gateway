@@ -113,4 +113,27 @@ export const getSecurityEvents = async (params = {}) => {
   return response.data;
 };
 
+/**
+ * Behavioral Baseline & Feature Engine APIs (Step 5)
+ */
+export const getBehaviorProfiles = async () => {
+  const response = await api.get("/api/behavior/profiles");
+  return response.data;
+};
+
+export const getMyBehaviorProfile = async () => {
+  const response = await api.get("/api/behavior/me");
+  return response.data;
+};
+
+export const getBehaviorFeatures = async () => {
+  const response = await api.get("/api/behavior/features");
+  return response.data;
+};
+
+export const rebuildBaselines = async () => {
+  const response = await api.post("/api/behavior/rebuild");
+  return response.data;
+};
+
 export default api;

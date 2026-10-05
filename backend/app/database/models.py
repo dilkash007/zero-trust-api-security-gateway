@@ -1,12 +1,11 @@
 """Database models for Zero-Trust API Security & Behavioral Anomaly Engine.
 
-Step 4 introduces persistent request telemetry (api_request_logs)
-and security events (security_events).
+Step 5 introduces persistent behavior baseline profiles (behavior_profiles).
 """
 
 from datetime import datetime, timezone
 import enum
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, JSON, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.connection import Base
@@ -31,6 +30,13 @@ class EventSeverity(str, enum.Enum):
     INFO = "INFO"
     MEDIUM = "MEDIUM"
     HIGH = "HIGH"
+
+
+class BaselineStatus(str, enum.Enum):
+    """Maturity classifications for user behavior baselines (Step 5)."""
+    INSUFFICIENT_DATA = "INSUFFICIENT_DATA"  # 0-9 requests
+    LEARNING = "LEARNING"                    # 10-49 requests
+    ESTABLISHED = "ESTABLISHED"              # 50+ requests
 
 
 class User(Base):
@@ -61,6 +67,9 @@ class User(Base):
     )
     security_events: Mapped[list["SecurityEvent"]] = relationship(
         "SecurityEvent", back_populates="user", cascade="all, delete-orphan"
+    )
+    behavior_profile: Mapped[Optional["BehaviorProfile"]] = relationship(
+        "BehaviorProfile", back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
 
 
@@ -110,11 +119,43 @@ class SecurityEvent(Base):
     timestamp: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), nullable=False, index=True
     )
-    # Map attribute event_metadata to column 'metadata' to avoid SQLAlchemy Base.metadata collision
     event_metadata: Mapped[Optional[Dict[str, Any]]] = mapped_column("metadata", JSON, nullable=True)
 
     # Relationship to user
     user: Mapped[Optional["User"]] = relationship("User", back_populates="security_events")
+
+
+class BehaviorProfile(Base):
+    """Behavioral baseline profile established for each identity based on historical telemetry."""
+    __tablename__ = "behavior_profiles"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id", ondelete="CASCADE"), unique=True, index=True, nullable=False
+    )
+    avg_requests_per_minute: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
+    avg_unique_endpoints: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
+    avg_failed_requests: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
+    avg_sensitive_access: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
+    normal_hours: Mapped[List[int]] = mapped_column(JSON, default=list, nullable=False)
+    known_devices: Mapped[List[str]] = mapped_column(JSON, default=list, nullable=False)
+    known_ips: Mapped[List[str]] = mapped_column(JSON, default=list, nullable=False)
+    avg_response_time: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
+    avg_request_size: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
+    avg_response_size: Mapped[float] = mapped_column(Float, default=0.0, nullable=False)
+    sample_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    baseline_status: Mapped[str] = mapped_column(
+        String(30), default=BaselineStatus.INSUFFICIENT_DATA.value, nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+        nullable=False,
+    )
+
+    # Relationship to user
+    user: Mapped["User"] = relationship("User", back_populates="behavior_profile")
 
 
 __all__ = [
@@ -125,4 +166,6 @@ __all__ = [
     "SecurityEvent",
     "SecurityEventType",
     "EventSeverity",
+    "BehaviorProfile",
+    "BaselineStatus",
 ]

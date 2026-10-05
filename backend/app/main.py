@@ -11,6 +11,7 @@ from app.gateway.demo_routes import demo_router
 from app.gateway.dependencies import SecurityGatewayException
 from app.gateway.middleware import RequestContextMiddleware
 from app.gateway.telemetry_routes import telemetry_router
+from app.behavior.routes import behavior_router
 # Ensure models are imported so Base.metadata knows about all schemas
 import app.database.models  # noqa: F401
 
@@ -97,6 +98,9 @@ app.include_router(demo_router)
 
 # Include Security Telemetry & Audit Event APIs (Step 4)
 app.include_router(telemetry_router)
+
+# Include Behavioral Baseline & Feature Engine APIs (Step 5)
+app.include_router(behavior_router)
 
 
 @app.get(

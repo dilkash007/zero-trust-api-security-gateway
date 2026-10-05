@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { checkHealth, checkDatabaseHealth, testProtectedApi } from "../services/api";
+import {
+  checkHealth,
+  checkDatabaseHealth,
+  testProtectedApi,
+  getBehaviorProfiles,
+  getMyBehaviorProfile,
+} from "../services/api";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
@@ -13,6 +20,12 @@ export default function Dashboard() {
   const [databaseError, setDatabaseError] = useState(null);
   const [lastChecked, setLastChecked] = useState(null);
   const [protectedTestMsg, setProtectedTestMsg] = useState(null);
+  const [behaviorStats, setBehaviorStats] = useState({
+    learning: 0,
+    established: 0,
+    insufficient: 0,
+    total: 0,
+  });
 
   const fetchHealthData = async (isManualRefresh = false) => {
     if (isManualRefresh) {
@@ -36,6 +49,31 @@ export default function Dashboard() {
       dData = await checkDatabaseHealth();
     } catch {
       dErr = "Database unavailable";
+    }
+
+    // Step 5: Fetch behavior baseline profiles from backend
+    try {
+      let profilesList = [];
+      if (user?.role === "ADMIN") {
+        const res = await getBehaviorProfiles();
+        profilesList = res.data || [];
+      } else {
+        const res = await getMyBehaviorProfile();
+        profilesList = res.data ? [res.data] : [];
+      }
+
+      const learningCount = profilesList.filter((p) => p.baseline_status === "LEARNING").length;
+      const establishedCount = profilesList.filter((p) => p.baseline_status === "ESTABLISHED").length;
+      const insufficientCount = profilesList.filter((p) => p.baseline_status === "INSUFFICIENT_DATA").length;
+
+      setBehaviorStats({
+        learning: learningCount,
+        established: establishedCount,
+        insufficient: insufficientCount,
+        total: profilesList.length,
+      });
+    } catch {
+      // Degraded or offline handling
     }
 
     setBackendHealth(bData);
@@ -277,6 +315,51 @@ export default function Dashboard() {
             <div className="info-item">
               <div className="info-label">Account Status</div>
               <div className="info-value" style={{ color: "var(--success)" }}>Active</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Step 5: Behavior Baseline Profiles Summary */}
+        <section className="info-panel" id="panel-behavior-summary" style={{ marginBottom: "20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+            <h2 className="info-title" style={{ margin: 0 }}>
+              <span>User Behavior Profiles (Step 5)</span>
+            </h2>
+            <Link
+              to="/behavior"
+              className="btn-refresh"
+              style={{ fontSize: "11px", textDecoration: "none" }}
+            >
+              View Behavior Matrix →
+            </Link>
+          </div>
+          <p style={{ fontSize: "12px", color: "var(--muted)", margin: "0 0 12px 0" }}>
+            Real baseline statistics aggregated from PostgreSQL request logs (7-day window).
+          </p>
+          <div className="info-grid">
+            <div className="info-item">
+              <div className="info-label">Users Learning (10–49 reqs)</div>
+              <div className="info-value" style={{ color: "var(--warning)", fontWeight: 700 }}>
+                {behaviorStats.learning}
+              </div>
+            </div>
+            <div className="info-item">
+              <div className="info-label">Established (50+ reqs)</div>
+              <div className="info-value" style={{ color: "var(--success)", fontWeight: 700 }}>
+                {behaviorStats.established}
+              </div>
+            </div>
+            <div className="info-item">
+              <div className="info-label">Insufficient Data (&lt;10 reqs)</div>
+              <div className="info-value" style={{ color: "var(--muted)", fontWeight: 700 }}>
+                {behaviorStats.insufficient}
+              </div>
+            </div>
+            <div className="info-item">
+              <div className="info-label">Total Modeled Profiles</div>
+              <div className="info-value" style={{ color: "var(--accent)", fontWeight: 700 }}>
+                {behaviorStats.total}
+              </div>
             </div>
           </div>
         </section>
