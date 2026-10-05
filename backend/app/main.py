@@ -1,11 +1,15 @@
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, status
+from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+
 from app.auth.routes import auth_router, test_router
 from app.config import settings
 from app.database.connection import Base, engine, verify_database_connection
+from app.gateway.demo_routes import demo_router
+from app.gateway.dependencies import SecurityGatewayException
+from app.gateway.middleware import RequestContextMiddleware
 # Ensure models are imported so Base.metadata knows about them
 import app.database.models  # noqa: F401
 
@@ -27,7 +31,7 @@ async def lifespan(app: FastAPI):
     if is_connected:
         logger.info("[STARTUP CHECK] PostgreSQL database connection successful.")
         try:
-            # Step 2: Automatically create tables if they do not exist (non-destructive)
+            # Automatically create tables if they do not exist (non-destructive)
             Base.metadata.create_all(bind=engine)
             logger.info("[STARTUP] Database schema verification complete (users table initialized).")
         except Exception as exc:
@@ -51,18 +55,44 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Configure CORS Middleware
+# Step 3: Gateway Middleware (Request ID, IP & User-Agent capture)
+app.add_middleware(RequestContextMiddleware)
+
+# Configure CORS Middleware with X-Request-ID exposed to browser clients
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["X-Request-ID"],
 )
 
-# Include Authentication and Protected Test routers
+
+@app.exception_handler(SecurityGatewayException)
+async def security_gateway_exception_handler(request: Request, exc: SecurityGatewayException):
+    """Formats gateway authorization failures into standardized Zero-Trust security error responses."""
+    request_id = getattr(request.state, "request_id", "")
+    headers = {"X-Request-ID": request_id} if request_id else {}
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "success": False,
+            "error": {
+                "code": exc.code,
+                "message": exc.message,
+            },
+        },
+        headers=headers,
+    )
+
+
+# Include Authentication and Protected Test routers (Step 2)
 app.include_router(auth_router)
 app.include_router(test_router)
+
+# Include Protected Demo APIs (Step 3)
+app.include_router(demo_router)
 
 
 @app.get(

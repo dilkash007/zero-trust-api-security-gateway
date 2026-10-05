@@ -31,7 +31,6 @@ api.interceptors.response.use(
     if (status === 401 && !isLoginEndpoint) {
       localStorage.removeItem("zero_trust_token");
       localStorage.removeItem("zero_trust_user");
-      // Notify application of auth expiration without full page reload if possible
       window.dispatchEvent(new Event("zero_trust_logout"));
     }
     return Promise.reject(error);
@@ -39,7 +38,7 @@ api.interceptors.response.use(
 );
 
 /**
- * Health check APIs
+ * Health check APIs (Step 1)
  */
 export const checkHealth = async () => {
   const response = await api.get("/health");
@@ -52,7 +51,7 @@ export const checkDatabaseHealth = async () => {
 };
 
 /**
- * Authentication APIs
+ * Authentication APIs (Step 2)
  */
 export const loginApi = async (email, password) => {
   const response = await api.post("/api/auth/login", { email, password });
@@ -72,6 +71,34 @@ export const getMeApi = async () => {
 export const testProtectedApi = async () => {
   const response = await api.get("/api/test/protected");
   return response.data;
+};
+
+/**
+ * Protected Demo APIs (Step 3 Gateway)
+ * Returns the Axios response to allow extracting X-Request-ID and status codes.
+ */
+export const getProfile = async () => {
+  return await api.get("/api/profile");
+};
+
+export const getOrders = async () => {
+  return await api.get("/api/orders");
+};
+
+export const getPayment = async () => {
+  return await api.get("/api/payment");
+};
+
+export const getUsers = async () => {
+  return await api.get("/api/users");
+};
+
+export const getAdminUsers = async () => {
+  return await api.get("/api/admin/users");
+};
+
+export const getAdminTransactions = async () => {
+  return await api.get("/api/admin/transactions");
 };
 
 export default api;

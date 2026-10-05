@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 export default function Sidebar() {
   const navItems = [
     { label: "Overview", path: "/dashboard", active: true, tag: "ACTIVE" },
-    { label: "API Traffic", path: "#traffic", active: false, tag: "STEP 2" },
-    { label: "Threats", path: "#threats", active: false, tag: "STEP 3" },
-    { label: "Attack Simulator", path: "#simulator", active: false, tag: "STEP 4" },
-    { label: "Policies", path: "#policies", active: false, tag: "STEP 5" },
+    { label: "API Traffic", path: "/traffic", active: true, tag: "ACTIVE" },
+    { label: "Threats", path: "#threats", active: false, tag: "STEP 4" },
+    { label: "Attack Simulator", path: "#simulator", active: false, tag: "STEP 5" },
+    { label: "Policies", path: "#policies", active: false, tag: "STEP 6" },
   ];
 
   return (
@@ -53,7 +53,7 @@ export default function Sidebar() {
 
       <div className="sidebar-footer">
         <div>CORE STACK: FastAPI + Postgres</div>
-        <div>ENGINE: Step 1 (Foundation)</div>
+        <div>GATEWAY: Step 3 (Active)</div>
       </div>
     </aside>
   );
