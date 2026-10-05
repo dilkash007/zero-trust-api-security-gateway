@@ -9,9 +9,11 @@ const API_BASE = window.location.protocol.startsWith("http")
   ? `http://${window.location.hostname || "127.0.0.1"}:8000`
   : "http://127.0.0.1:8000";
 
-const WS_BASE = window.location.protocol.startsWith("http")
-  ? (window.location.port === "5173" ? `ws://${window.location.host}` : `ws://${window.location.hostname || "127.0.0.1"}:8000`)
-  : "ws://127.0.0.1:8000";
+const isHttps = window.location.protocol === "https:";
+const wsProtocol = isHttps ? "wss:" : "ws:";
+const WS_BASE = window.location.port === "5173" || isHttps
+  ? `${wsProtocol}//${window.location.host}`
+  : `ws://${window.location.hostname || "127.0.0.1"}:8000`;
 
 const Auth = {
   getToken() {

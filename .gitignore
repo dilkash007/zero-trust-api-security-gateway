@@ -50,6 +50,7 @@ Thumbs.db
 # Logs & Temporary files
 *.log
 0 trust/
+bin/
 *TESTING_REPORT.txt
 PRESENTATION_SLIDES_DATA.txt
 PROJECT_PRESENTATION_AND_VIVA_GUIDE.txt
