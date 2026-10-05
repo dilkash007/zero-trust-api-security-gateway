@@ -5,9 +5,9 @@ export default function Sidebar() {
   const navItems = [
     { label: "Overview", path: "/dashboard", active: true, tag: "ACTIVE" },
     { label: "API Traffic", path: "/traffic", active: true, tag: "ACTIVE" },
-    { label: "Threats", path: "/threats", active: true, tag: "ACTIVE" },
-    { label: "Behavior Baselines", path: "/behavior", active: true, tag: "STEP 5" },
-    { label: "Anomaly Policies", path: "#policies", active: false, tag: "STEP 6" },
+    { label: "Threats & Anomalies", path: "/threats", active: true, tag: "STEP 6" },
+    { label: "Behavior Baselines", path: "/behavior", active: true, tag: "ACTIVE" },
+    { label: "Security Policies", path: "#policies", active: false, tag: "STEP 7" },
   ];
 
   return (
@@ -53,7 +53,7 @@ export default function Sidebar() {
 
       <div className="sidebar-footer">
         <div>CORE STACK: FastAPI + Postgres</div>
-        <div>BEHAVIOR ENGINE: Step 5 (Active)</div>
+        <div>DETECTION ENGINE: Step 6 (Active)</div>
       </div>
     </aside>
   );

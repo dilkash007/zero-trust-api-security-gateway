@@ -7,6 +7,7 @@ import {
   testProtectedApi,
   getBehaviorProfiles,
   getMyBehaviorProfile,
+  getAnomalies,
 } from "../services/api";
 
 export default function Dashboard() {
@@ -25,6 +26,12 @@ export default function Dashboard() {
     established: 0,
     insufficient: 0,
     total: 0,
+  });
+  const [anomalyStats, setAnomalyStats] = useState({
+    total: 0,
+    high: 0,
+    medium: 0,
+    low: 0,
   });
 
   const fetchHealthData = async (isManualRefresh = false) => {
@@ -74,6 +81,22 @@ export default function Dashboard() {
       });
     } catch {
       // Degraded or offline handling
+    }
+
+    // Step 6: Fetch detected anomalies count (ADMIN)
+    if (user?.role === "ADMIN") {
+      try {
+        const anomRes = await getAnomalies({ limit: 100 });
+        const anomList = anomRes.data || [];
+        setAnomalyStats({
+          total: anomList.length,
+          high: anomList.filter((a) => a.severity === "HIGH").length,
+          medium: anomList.filter((a) => a.severity === "MEDIUM").length,
+          low: anomList.filter((a) => a.severity === "LOW" || a.severity === "INFO").length,
+        });
+      } catch {
+        // Degraded handling
+      }
     }
 
     setBackendHealth(bData);
@@ -363,6 +386,53 @@ export default function Dashboard() {
             </div>
           </div>
         </section>
+
+        {/* Step 6: Detected Behavioral Anomalies Summary (Admin View) */}
+        {user?.role === "ADMIN" && (
+          <section className="info-panel" id="panel-anomalies-summary" style={{ marginBottom: "20px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+              <h2 className="info-title" style={{ margin: 0 }}>
+                <span>Detected Behavioral Anomalies (Step 6)</span>
+              </h2>
+              <Link
+                to="/threats"
+                className="btn-refresh"
+                style={{ fontSize: "11px", textDecoration: "none" }}
+              >
+                Inspect Threat Console →
+              </Link>
+            </div>
+            <p style={{ fontSize: "12px", color: "var(--muted)", margin: "0 0 12px 0" }}>
+              Real-time rule-based heuristics evaluated against Step 5 user baselines and stored in <code>security_events</code>.
+            </p>
+            <div className="info-grid">
+              <div className="info-item">
+                <div className="info-label">Total Detected Anomalies</div>
+                <div id="dash-anomalies-total" className="info-value" style={{ color: "var(--text)", fontWeight: 700 }}>
+                  {anomalyStats.total}
+                </div>
+              </div>
+              <div className="info-item">
+                <div className="info-label">High Severity</div>
+                <div id="dash-anomalies-high" className="info-value" style={{ color: "var(--danger)", fontWeight: 700 }}>
+                  {anomalyStats.high}
+                </div>
+              </div>
+              <div className="info-item">
+                <div className="info-label">Medium Severity</div>
+                <div id="dash-anomalies-med" className="info-value" style={{ color: "var(--warning)", fontWeight: 700 }}>
+                  {anomalyStats.medium}
+                </div>
+              </div>
+              <div className="info-item">
+                <div className="info-label">Low Severity</div>
+                <div id="dash-anomalies-low" className="info-value" style={{ color: "var(--accent)", fontWeight: 700 }}>
+                  {anomalyStats.low}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Project Information Panel */}
         <section className="info-panel" id="panel-project-info">

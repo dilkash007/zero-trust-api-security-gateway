@@ -7,6 +7,7 @@ from starlette.requests import Request
 from starlette.responses import Response
 
 from app.database.models import EventSeverity, SecurityEventType
+from app.detection.engine import evaluate_request
 from app.gateway.telemetry_logger import persist_telemetry
 from app.security.privilege import is_sensitive_endpoint
 
@@ -20,6 +21,8 @@ PROTECTED_PATH_PREFIXES = (
     "/api/requests",
     "/api/security/events",
     "/api/test/protected",
+    "/api/behavior",
+    "/api/anomalies",
 )
 
 
@@ -117,5 +120,22 @@ class RequestContextMiddleware(BaseHTTPMiddleware):
                 security_event_message=sec_event_message,
                 security_event_metadata=sec_event_metadata,
             )
+
+            # Step 6: Trigger Rule-Based Behavioral Anomaly Engine
+            try:
+                req_ctx = {
+                    "request_id": request_id,
+                    "user_id": user_id,
+                    "role": role,
+                    "client_ip": client_ip,
+                    "user_agent": user_agent,
+                    "endpoint": path,
+                    "method": request.method,
+                    "status_code": status_code,
+                    "is_sensitive": is_sensitive,
+                }
+                evaluate_request(req_ctx, status_code=status_code)
+            except Exception:
+                pass
 
         return response

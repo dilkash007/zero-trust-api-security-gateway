@@ -12,6 +12,7 @@ from app.gateway.dependencies import SecurityGatewayException
 from app.gateway.middleware import RequestContextMiddleware
 from app.gateway.telemetry_routes import telemetry_router
 from app.behavior.routes import behavior_router
+from app.detection.routes import detection_router
 # Ensure models are imported so Base.metadata knows about all schemas
 import app.database.models  # noqa: F401
 
@@ -101,6 +102,9 @@ app.include_router(telemetry_router)
 
 # Include Behavioral Baseline & Feature Engine APIs (Step 5)
 app.include_router(behavior_router)
+
+# Include Rule-Based Anomaly Detection APIs (Step 6)
+app.include_router(detection_router)
 
 
 @app.get(

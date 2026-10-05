@@ -18,16 +18,25 @@ class UserRole(str, enum.Enum):
 
 
 class SecurityEventType(str, enum.Enum):
-    """Recognized security event classifications for Step 4."""
+    """Recognized security event classifications for Step 4 & Step 6."""
     AUTHENTICATION_FAILURE = "AUTHENTICATION_FAILURE"
     AUTHORIZATION_FAILURE = "AUTHORIZATION_FAILURE"
     SENSITIVE_ENDPOINT_ACCESS = "SENSITIVE_ENDPOINT_ACCESS"
     REQUEST_COMPLETED = "REQUEST_COMPLETED"
 
+    # Step 6 Rule-Based Anomaly Types
+    API_ABUSE = "API_ABUSE"
+    CREDENTIAL_ATTACK = "CREDENTIAL_ATTACK"
+    UNKNOWN_DEVICE = "UNKNOWN_DEVICE"
+    LOCATION_ANOMALY = "LOCATION_ANOMALY"
+    PRIVILEGE_MISUSE = "PRIVILEGE_MISUSE"
+    UNUSUAL_TIME = "UNUSUAL_TIME"
+
 
 class EventSeverity(str, enum.Enum):
-    """Static severity levels for security events."""
+    """Static severity levels for security and anomaly events."""
     INFO = "INFO"
+    LOW = "LOW"
     MEDIUM = "MEDIUM"
     HIGH = "HIGH"
 

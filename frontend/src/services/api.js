@@ -136,4 +136,12 @@ export const rebuildBaselines = async () => {
   return response.data;
 };
 
+/**
+ * Rule-Based Anomaly Detection APIs (Step 6)
+ */
+export const getAnomalies = async (params = {}) => {
+  const response = await api.get("/api/anomalies", { params });
+  return response.data;
+};
+
 export default api;
