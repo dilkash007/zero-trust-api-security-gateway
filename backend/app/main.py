@@ -3,8 +3,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from app.auth.routes import auth_router, test_router
 from app.config import settings
-from app.database.connection import verify_database_connection
+from app.database.connection import Base, engine, verify_database_connection
+# Ensure models are imported so Base.metadata knows about them
+import app.database.models  # noqa: F401
 
 # Configure structured logging
 logging.basicConfig(
@@ -16,21 +19,27 @@ logger = logging.getLogger("zero_trust.engine")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan manager handling startup and shutdown diagnostics."""
+    """Application lifespan manager handling startup table creation and diagnostics."""
     logger.info("Starting up %s (version: %s)...", settings.APP_NAME, settings.APP_VERSION)
-    
+
     # Startup database connection verification
     is_connected = verify_database_connection()
     if is_connected:
         logger.info("[STARTUP CHECK] PostgreSQL database connection successful.")
+        try:
+            # Step 2: Automatically create tables if they do not exist (non-destructive)
+            Base.metadata.create_all(bind=engine)
+            logger.info("[STARTUP] Database schema verification complete (users table initialized).")
+        except Exception as exc:
+            logger.error("[STARTUP ERROR] Failed to initialize database schema: %s", type(exc).__name__)
     else:
         logger.warning(
             "[STARTUP CHECK WARNING] PostgreSQL database is unavailable or credentials incorrect. "
             "Server running in degraded state."
         )
-    
+
     yield
-    
+
     logger.info("Shutting down %s...", settings.APP_NAME)
 
 
@@ -50,6 +59,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include Authentication and Protected Test routers
+app.include_router(auth_router)
+app.include_router(test_router)
 
 
 @app.get(

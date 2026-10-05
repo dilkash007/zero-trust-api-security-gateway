@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { checkHealth, checkDatabaseHealth } from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import { checkHealth, checkDatabaseHealth, testProtectedApi } from "../services/api";
 
 export default function Dashboard() {
+  const { user, logout } = useAuth();
+
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [backendHealth, setBackendHealth] = useState(null);
@@ -9,6 +12,7 @@ export default function Dashboard() {
   const [backendError, setBackendError] = useState(null);
   const [databaseError, setDatabaseError] = useState(null);
   const [lastChecked, setLastChecked] = useState(null);
+  const [protectedTestMsg, setProtectedTestMsg] = useState(null);
 
   const fetchHealthData = async (isManualRefresh = false) => {
     if (isManualRefresh) {
@@ -17,7 +21,6 @@ export default function Dashboard() {
       setLoading(true);
     }
 
-    // Reset error & data states for fresh evaluation
     let bData = null;
     let bErr = null;
     let dData = null;
@@ -25,13 +28,13 @@ export default function Dashboard() {
 
     try {
       bData = await checkHealth();
-    } catch (err) {
+    } catch {
       bErr = "Backend unavailable";
     }
 
     try {
       dData = await checkDatabaseHealth();
-    } catch (err) {
+    } catch {
       dErr = "Database unavailable";
     }
 
@@ -42,6 +45,19 @@ export default function Dashboard() {
     setLastChecked(new Date().toLocaleTimeString());
     setLoading(false);
     setRefreshing(false);
+  };
+
+  const handleTestProtected = async () => {
+    try {
+      const res = await testProtectedApi();
+      setProtectedTestMsg(`Success: ${res.message} (Role: ${res.role})`);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setProtectedTestMsg("Error 401: Unauthorized (Invalid or expired token)");
+      } else {
+        setProtectedTestMsg("Protected call failed");
+      }
+    }
   };
 
   useEffect(() => {
@@ -61,8 +77,14 @@ export default function Dashboard() {
           <span className="topbar-badge">SOC MONITOR</span>
         </div>
         <div className="topbar-right">
+          {user && (
+            <div className="user-greeting" id="user-greeting">
+              <span className="user-welcome">Welcome, {user.name}</span>
+              <span className="user-role-badge">Role: {user.role}</span>
+            </div>
+          )}
           <span className="info-value" style={{ fontSize: "11px", color: "var(--muted)" }}>
-            {lastChecked ? `Last Check: ${lastChecked}` : "Checking..."}
+            {lastChecked ? `Check: ${lastChecked}` : "Checking..."}
           </span>
           <button
             id="refresh-health-btn"
@@ -72,6 +94,14 @@ export default function Dashboard() {
           >
             {refreshing ? "Checking..." : "Refresh Status"}
           </button>
+          <button
+            id="logout-btn"
+            className="btn-logout"
+            onClick={logout}
+            title="Sign out of current session"
+          >
+            Logout
+          </button>
         </div>
       </header>
 
@@ -80,7 +110,7 @@ export default function Dashboard() {
         <div className="header-banner">
           <h1 className="page-title">SOC Operations & Telemetry Status</h1>
           <p className="page-subtitle">
-            Zero-Trust API Security Engine — Step 1: Foundation & PostgreSQL Verification
+            Zero-Trust API Security Engine — Step 2: Authentication & Identity Active
           </p>
         </div>
 
@@ -112,7 +142,7 @@ export default function Dashboard() {
             </div>
             <div className="card-footer">
               <span>SECURITY SCOPE</span>
-              <span>{isSystemOperational ? "READY FOR TELEMETRY" : "ATTENTION REQUIRED"}</span>
+              <span>{isSystemOperational ? "IDENTITY & TELEMETRY READY" : "ATTENTION REQUIRED"}</span>
             </div>
           </div>
 
@@ -179,7 +209,77 @@ export default function Dashboard() {
               <span>{isDatabaseConnected ? "zero_trust_db" : "UNREACHABLE"}</span>
             </div>
           </div>
+
+          {/* Card 4: Identity & Session Status */}
+          <div className="soc-card" id="card-identity-session">
+            <div className="card-header">
+              <span className="card-title">Identity & Session</span>
+              <span className="topbar-badge">JWT</span>
+            </div>
+            <div>
+              <div className="status-indicator">
+                <span className="dot dot-connected"></span>
+                <span className="text-success">Authenticated</span>
+              </div>
+            </div>
+            <div className="card-footer">
+              <span>ROLE</span>
+              <span style={{ color: "var(--accent)", fontWeight: 600 }}>{user?.role || "USER"}</span>
+            </div>
+          </div>
         </div>
+
+        {/* Authenticated Identity & Protected Endpoint Verification */}
+        <section className="info-panel" id="panel-identity-info" style={{ marginBottom: "20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+            <h2 className="info-title" style={{ margin: 0 }}>
+              <span>Authenticated Principal Profile</span>
+            </h2>
+            <button
+              id="test-protected-btn"
+              className="btn-refresh"
+              onClick={handleTestProtected}
+              style={{ fontSize: "11px" }}
+            >
+              Verify /api/test/protected
+            </button>
+          </div>
+          {protectedTestMsg && (
+            <div
+              id="protected-test-result"
+              style={{
+                fontSize: "12px",
+                padding: "8px 12px",
+                borderRadius: "4px",
+                backgroundColor: "var(--surface-secondary)",
+                border: "1px solid var(--border)",
+                color: protectedTestMsg.startsWith("Success") ? "var(--success)" : "var(--danger)",
+                marginBottom: "12px",
+                fontFamily: "var(--font-mono)"
+              }}
+            >
+              {protectedTestMsg}
+            </div>
+          )}
+          <div className="info-grid">
+            <div className="info-item">
+              <div className="info-label">Identity Name</div>
+              <div className="info-value">{user?.name}</div>
+            </div>
+            <div className="info-item">
+              <div className="info-label">Email Address</div>
+              <div className="info-value">{user?.email}</div>
+            </div>
+            <div className="info-item">
+              <div className="info-label">Assigned Role</div>
+              <div className="info-value">{user?.role}</div>
+            </div>
+            <div className="info-item">
+              <div className="info-label">Account Status</div>
+              <div className="info-value" style={{ color: "var(--success)" }}>Active</div>
+            </div>
+          </div>
+        </section>
 
         {/* Project Information Panel */}
         <section className="info-panel" id="panel-project-info">
@@ -187,8 +287,9 @@ export default function Dashboard() {
             <span>Security Engine Blueprint</span>
           </h2>
           <p style={{ fontSize: "13px", color: "var(--muted)", lineHeight: 1.6 }}>
-            Foundation deployment verification for the Zero-Trust API Security & Behavioral Anomaly Engine.
-            All telemetry, behavioral profiling, and policy enforcement modules will build atop this verified base.
+            Step 2 identity layer established. All subsequent requests in upcoming steps
+            (telemetry logging, behavioral baselining, and policy enforcement) are linked to
+            authenticated user principals.
           </p>
 
           <div className="info-grid">
@@ -198,23 +299,15 @@ export default function Dashboard() {
             </div>
             <div className="info-item">
               <div className="info-label">Current Release</div>
-              <div className="info-value">v0.1.0 (Step 1 Foundation)</div>
+              <div className="info-value">v0.1.0 (Step 2 - Identity Layer)</div>
             </div>
             <div className="info-item">
-              <div className="info-label">Backend Architecture</div>
-              <div className="info-value">FastAPI + SQLAlchemy 2.x</div>
+              <div className="info-label">Identity Store</div>
+              <div className="info-value">PostgreSQL users (Bcrypt Hashes)</div>
             </div>
             <div className="info-item">
-              <div className="info-label">Storage Engine</div>
-              <div className="info-value">PostgreSQL (psycopg2-binary)</div>
-            </div>
-            <div className="info-item">
-              <div className="info-label">Frontend Platform</div>
-              <div className="info-value">React + Vite + Axios</div>
-            </div>
-            <div className="info-item">
-              <div className="info-label">Security Model</div>
-              <div className="info-value">Zero-Trust Continuous Verification</div>
+              <div className="info-label">Auth Protocol</div>
+              <div className="info-value">JWT Bearer (HS256)</div>
             </div>
           </div>
         </section>
