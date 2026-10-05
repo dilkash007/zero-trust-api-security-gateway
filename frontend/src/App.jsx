@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ApiTraffic from "./pages/ApiTraffic";
+import Threats from "./pages/Threats";
 
 function HomeRedirect() {
   const { isAuthenticated, loading } = useAuth();
@@ -37,6 +38,17 @@ export default function App() {
               <div className="app-container">
                 <Sidebar />
                 <ApiTraffic />
+              </div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/threats"
+          element={
+            <ProtectedRoute>
+              <div className="app-container">
+                <Sidebar />
+                <Threats />
               </div>
             </ProtectedRoute>
           }

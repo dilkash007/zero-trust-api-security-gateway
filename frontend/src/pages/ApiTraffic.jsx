@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import {
+  getApiRequests,
   getProfile,
   getOrders,
   getPayment,
@@ -11,8 +12,35 @@ import {
 
 export default function ApiTraffic() {
   const { user, logout } = useAuth();
-  const [trafficLogs, setTrafficLogs] = useState([]);
+  const [dbLogs, setDbLogs] = useState([]);
+  const [sessionLogs, setSessionLogs] = useState([]);
   const [loadingEndpoint, setLoadingEndpoint] = useState(null);
+  const [fetchingDb, setFetchingDb] = useState(false);
+  const [dbAccessForbidden, setDbAccessForbidden] = useState(false);
+  const [filterSensitive, setFilterSensitive] = useState("");
+
+  const fetchDatabaseLogs = async () => {
+    setFetchingDb(true);
+    setDbAccessForbidden(false);
+    try {
+      const params = { limit: 50 };
+      if (filterSensitive === "true") params.is_sensitive = true;
+      if (filterSensitive === "false") params.is_sensitive = false;
+
+      const res = await getApiRequests(params);
+      setDbLogs(res.data || []);
+    } catch (err) {
+      if (err.response?.status === 403) {
+        setDbAccessForbidden(true);
+      }
+    } finally {
+      setFetchingDb(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDatabaseLogs();
+  }, [filterSensitive]);
 
   const executeApiCall = async (endpointName, apiFn, method = "GET", isSensitive = false) => {
     setLoadingEndpoint(endpointName);
@@ -29,7 +57,7 @@ export default function ApiTraffic() {
       requestId =
         response.headers["x-request-id"] ||
         response.data?.security_context?.request_id ||
-        "generated-id";
+        "N/A";
       message = response.data?.data?.message || "Data retrieved successfully";
       if (response.data?.security_context?.role) {
         userRole = response.data.security_context.role;
@@ -40,7 +68,7 @@ export default function ApiTraffic() {
         requestId =
           err.response.headers["x-request-id"] ||
           err.response.data?.error?.request_id ||
-          "denied-id";
+          "N/A";
 
         if (status === 401) {
           message = "Authentication required";
@@ -59,23 +87,25 @@ export default function ApiTraffic() {
 
     const logEntry = {
       id: Date.now() + Math.random(),
-      requestId,
+      request_id: requestId,
       endpoint: endpointName,
       method,
-      status,
-      user: userName,
+      status_code: status,
+      username: userName,
       role: userRole,
-      sensitive: isSensitive ? "YES" : "NO",
+      is_sensitive: isSensitive,
       message,
       timestamp: new Date().toLocaleTimeString(),
+      response_time_ms: 0,
     };
 
-    setTrafficLogs((prev) => [logEntry, ...prev]);
+    setSessionLogs((prev) => [logEntry, ...prev]);
     setLoadingEndpoint(null);
-  };
 
-  const clearLogs = () => {
-    setTrafficLogs([]);
+    // Refresh database records if user is admin
+    if (user?.role === "ADMIN") {
+      fetchDatabaseLogs();
+    }
   };
 
   const runAllTests = async () => {
@@ -87,13 +117,16 @@ export default function ApiTraffic() {
     await executeApiCall("/api/admin/transactions", getAdminTransactions, "GET", true);
   };
 
+  // Determine display rows: use database logs if available (for Admin), or session logs (for User)
+  const displayLogs = dbLogs.length > 0 ? dbLogs : sessionLogs;
+
   return (
     <div className="main-wrapper">
       {/* Top Navbar */}
       <header className="topbar">
         <div className="topbar-left">
           <span className="topbar-title">API Traffic Inspection</span>
-          <span className="topbar-badge">GATEWAY TELEMETRY</span>
+          <span className="topbar-badge">POSTGRES TELEMETRY</span>
         </div>
         <div className="topbar-right">
           {user && (
@@ -111,9 +144,9 @@ export default function ApiTraffic() {
       {/* Main Content Area */}
       <main className="content-area">
         <div className="header-banner">
-          <h1 className="page-title">Live API Traffic & Gateway Interception</h1>
+          <h1 className="page-title">Live API Traffic & Persistent Telemetry</h1>
           <p className="page-subtitle">
-            Zero-Trust API Security Engine — Step 3: Centralized Inspection, Request IDs & Role Authorization
+            Zero-Trust API Security Engine — Step 4: PostgreSQL Request Telemetry (`api_request_logs`)
           </p>
         </div>
 
@@ -121,7 +154,7 @@ export default function ApiTraffic() {
         <section className="info-panel" style={{ marginBottom: "24px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
             <h2 className="info-title" style={{ margin: 0 }}>
-              <span>Protected API Test Triggers</span>
+              <span>Protected API Triggers</span>
             </h2>
             <div style={{ display: "flex", gap: "10px" }}>
               <button
@@ -133,14 +166,16 @@ export default function ApiTraffic() {
               >
                 Run All Endpoints
               </button>
-              <button
-                id="btn-clear-logs"
-                className="btn-refresh"
-                onClick={clearLogs}
-                disabled={trafficLogs.length === 0}
-              >
-                Clear Results
-              </button>
+              {user?.role === "ADMIN" && (
+                <button
+                  id="btn-refresh-db"
+                  className="btn-refresh"
+                  onClick={fetchDatabaseLogs}
+                  disabled={fetchingDb}
+                >
+                  {fetchingDb ? "Syncing..." : "Sync Database Logs"}
+                </button>
+              )}
             </div>
           </div>
 
@@ -207,20 +242,54 @@ export default function ApiTraffic() {
           </div>
         </section>
 
+        {dbAccessForbidden && (
+          <div
+            style={{
+              padding: "12px 16px",
+              backgroundColor: "rgba(59, 130, 246, 0.1)",
+              border: "1px solid rgba(59, 130, 246, 0.3)",
+              borderRadius: "6px",
+              marginBottom: "16px",
+              fontSize: "12px",
+              color: "var(--text)",
+            }}
+          >
+            <strong>Note:</strong> Logged in as standard USER. Showing current session traffic. Historical database logs (`/api/requests`) require ADMIN role.
+          </div>
+        )}
+
         {/* Live Traffic Table */}
         <section className="info-panel">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px", flexWrap: "wrap", gap: "10px" }}>
             <h2 className="info-title" style={{ margin: 0 }}>
-              <span>Gateway Interception Stream ({trafficLogs.length} events)</span>
+              <span>
+                {dbLogs.length > 0 ? "PostgreSQL Audit Logs (`api_request_logs`)" : "Gateway Traffic Stream"} ({displayLogs.length} records)
+              </span>
             </h2>
-            <span style={{ fontSize: "11px", color: "var(--muted)", fontFamily: "var(--font-mono)" }}>
-              REQUEST IDs EXTRACTED FROM X-Request-ID
-            </span>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ fontSize: "11px", color: "var(--muted)" }}>Filter Sensitive:</span>
+              <select
+                value={filterSensitive}
+                onChange={(e) => setFilterSensitive(e.target.value)}
+                style={{
+                  backgroundColor: "var(--surface-secondary)",
+                  color: "var(--text)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "4px",
+                  padding: "4px 8px",
+                  fontSize: "11px",
+                }}
+              >
+                <option value="">All Endpoints</option>
+                <option value="true">Sensitive Only</option>
+                <option value="false">Normal Only</option>
+              </select>
+            </div>
           </div>
 
-          {trafficLogs.length === 0 ? (
+          {displayLogs.length === 0 ? (
             <div style={{ padding: "36px", textAlign: "center", color: "var(--muted)", fontSize: "13px" }}>
-              No API traffic recorded in this session. Click any endpoint button above to trigger live Zero-Trust gateway inspection.
+              No request logs recorded yet. Trigger one of the API endpoints above.
             </div>
           ) : (
             <div style={{ overflowX: "auto" }}>
@@ -228,47 +297,46 @@ export default function ApiTraffic() {
                 <thead>
                   <tr style={{ borderBottom: "1px solid var(--border)", color: "var(--muted)", textTransform: "uppercase", fontSize: "11px" }}>
                     <th style={{ padding: "10px" }}>Request ID</th>
-                    <th style={{ padding: "10px" }}>Endpoint</th>
-                    <th style={{ padding: "10px" }}>Method</th>
-                    <th style={{ padding: "10px" }}>Status</th>
                     <th style={{ padding: "10px" }}>User</th>
                     <th style={{ padding: "10px" }}>Role</th>
+                    <th style={{ padding: "10px" }}>Method</th>
+                    <th style={{ padding: "10px" }}>Endpoint</th>
+                    <th style={{ padding: "10px" }}>Status</th>
+                    <th style={{ padding: "10px" }}>Latency</th>
                     <th style={{ padding: "10px" }}>Sensitive</th>
-                    <th style={{ padding: "10px" }}>Gateway Message</th>
+                    <th style={{ padding: "10px" }}>Timestamp</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {trafficLogs.map((log) => {
-                    const isSuccess = log.status >= 200 && log.status < 300;
-                    const isForbidden = log.status === 403;
-                    const isUnauthorized = log.status === 401;
+                  {displayLogs.map((log, index) => {
+                    const status = log.status_code;
+                    const isSuccess = status >= 200 && status < 300;
+                    const isForbidden = status === 403;
+                    const isUnauthorized = status === 401;
 
                     let statusClass = "text-success";
                     if (isForbidden) statusClass = "text-danger";
                     else if (isUnauthorized) statusClass = "text-warning";
                     else if (!isSuccess) statusClass = "text-danger";
 
+                    const timeStr = log.timestamp
+                      ? log.timestamp.includes("T")
+                        ? new Date(log.timestamp).toLocaleTimeString()
+                        : log.timestamp
+                      : "Now";
+
                     return (
                       <tr
-                        key={log.id}
+                        key={log.request_id || index}
                         style={{
                           borderBottom: "1px solid rgba(255,255,255,0.05)",
                           backgroundColor: isForbidden ? "rgba(239, 68, 68, 0.03)" : "transparent",
                         }}
                       >
                         <td style={{ padding: "10px", fontFamily: "var(--font-mono)", color: "var(--accent)" }}>
-                          {log.requestId.length > 13 ? `${log.requestId.substring(0, 13)}...` : log.requestId}
+                          {log.request_id ? `${log.request_id.substring(0, 13)}...` : "N/A"}
                         </td>
-                        <td style={{ padding: "10px", fontFamily: "var(--font-mono)", fontWeight: 600 }}>
-                          {log.endpoint}
-                        </td>
-                        <td style={{ padding: "10px", fontFamily: "var(--font-mono)" }}>
-                          {log.method}
-                        </td>
-                        <td style={{ padding: "10px", fontFamily: "var(--font-mono)", fontWeight: 700 }} className={statusClass}>
-                          {log.status === 0 ? "ERR" : `${log.status} ${isSuccess ? "OK" : isForbidden ? "FORBIDDEN" : isUnauthorized ? "UNAUTHORIZED" : ""}`}
-                        </td>
-                        <td style={{ padding: "10px" }}>{log.user}</td>
+                        <td style={{ padding: "10px" }}>{log.username || "Anonymous"}</td>
                         <td style={{ padding: "10px" }}>
                           <span
                             style={{
@@ -280,8 +348,20 @@ export default function ApiTraffic() {
                               color: log.role === "ADMIN" ? "var(--danger)" : "var(--accent)",
                             }}
                           >
-                            {log.role}
+                            {log.role || "NONE"}
                           </span>
+                        </td>
+                        <td style={{ padding: "10px", fontFamily: "var(--font-mono)" }}>
+                          {log.method}
+                        </td>
+                        <td style={{ padding: "10px", fontFamily: "var(--font-mono)", fontWeight: 600 }}>
+                          {log.endpoint}
+                        </td>
+                        <td style={{ padding: "10px", fontFamily: "var(--font-mono)", fontWeight: 700 }} className={statusClass}>
+                          {status} {isSuccess ? "OK" : isForbidden ? "FORBIDDEN" : isUnauthorized ? "UNAUTHORIZED" : ""}
+                        </td>
+                        <td style={{ padding: "10px", fontFamily: "var(--font-mono)" }}>
+                          {log.response_time_ms ? `${log.response_time_ms} ms` : "< 1 ms"}
                         </td>
                         <td style={{ padding: "10px" }}>
                           <span
@@ -291,15 +371,15 @@ export default function ApiTraffic() {
                               fontSize: "10px",
                               fontWeight: 600,
                               fontFamily: "var(--font-mono)",
-                              backgroundColor: log.sensitive === "YES" ? "rgba(245, 158, 11, 0.15)" : "rgba(148, 163, 184, 0.1)",
-                              color: log.sensitive === "YES" ? "var(--warning)" : "var(--muted)",
+                              backgroundColor: log.is_sensitive ? "rgba(245, 158, 11, 0.15)" : "rgba(148, 163, 184, 0.1)",
+                              color: log.is_sensitive ? "var(--warning)" : "var(--muted)",
                             }}
                           >
-                            {log.sensitive}
+                            {log.is_sensitive ? "YES" : "NO"}
                           </span>
                         </td>
-                        <td style={{ padding: "10px", color: isForbidden ? "#fca5a5" : "var(--text)" }}>
-                          {log.message}
+                        <td style={{ padding: "10px", fontSize: "11px", color: "var(--muted)", fontFamily: "var(--font-mono)" }}>
+                          {timeStr}
                         </td>
                       </tr>
                     );

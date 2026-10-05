@@ -75,7 +75,6 @@ export const testProtectedApi = async () => {
 
 /**
  * Protected Demo APIs (Step 3 Gateway)
- * Returns the Axios response to allow extracting X-Request-ID and status codes.
  */
 export const getProfile = async () => {
   return await api.get("/api/profile");
@@ -99,6 +98,19 @@ export const getAdminUsers = async () => {
 
 export const getAdminTransactions = async () => {
   return await api.get("/api/admin/transactions");
+};
+
+/**
+ * Security Telemetry & Audit Event APIs (Step 4)
+ */
+export const getApiRequests = async (params = {}) => {
+  const response = await api.get("/api/requests", { params });
+  return response.data;
+};
+
+export const getSecurityEvents = async (params = {}) => {
+  const response = await api.get("/api/security/events", { params });
+  return response.data;
 };
 
 export default api;

@@ -10,7 +10,8 @@ from app.database.connection import Base, engine, verify_database_connection
 from app.gateway.demo_routes import demo_router
 from app.gateway.dependencies import SecurityGatewayException
 from app.gateway.middleware import RequestContextMiddleware
-# Ensure models are imported so Base.metadata knows about them
+from app.gateway.telemetry_routes import telemetry_router
+# Ensure models are imported so Base.metadata knows about all schemas
 import app.database.models  # noqa: F401
 
 # Configure structured logging
@@ -31,9 +32,9 @@ async def lifespan(app: FastAPI):
     if is_connected:
         logger.info("[STARTUP CHECK] PostgreSQL database connection successful.")
         try:
-            # Automatically create tables if they do not exist (non-destructive)
+            # Automatically create tables if they do not exist (users, api_request_logs, security_events)
             Base.metadata.create_all(bind=engine)
-            logger.info("[STARTUP] Database schema verification complete (users table initialized).")
+            logger.info("[STARTUP] Database schema verification complete (telemetry tables initialized).")
         except Exception as exc:
             logger.error("[STARTUP ERROR] Failed to initialize database schema: %s", type(exc).__name__)
     else:
@@ -55,7 +56,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Step 3: Gateway Middleware (Request ID, IP & User-Agent capture)
+# Step 3 & 4: Gateway & Telemetry Middleware
 app.add_middleware(RequestContextMiddleware)
 
 # Configure CORS Middleware with X-Request-ID exposed to browser clients
@@ -93,6 +94,9 @@ app.include_router(test_router)
 
 # Include Protected Demo APIs (Step 3)
 app.include_router(demo_router)
+
+# Include Security Telemetry & Audit Event APIs (Step 4)
+app.include_router(telemetry_router)
 
 
 @app.get(

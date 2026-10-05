@@ -5,7 +5,7 @@ export default function Sidebar() {
   const navItems = [
     { label: "Overview", path: "/dashboard", active: true, tag: "ACTIVE" },
     { label: "API Traffic", path: "/traffic", active: true, tag: "ACTIVE" },
-    { label: "Threats", path: "#threats", active: false, tag: "STEP 4" },
+    { label: "Threats", path: "/threats", active: true, tag: "ACTIVE" },
     { label: "Attack Simulator", path: "#simulator", active: false, tag: "STEP 5" },
     { label: "Policies", path: "#policies", active: false, tag: "STEP 6" },
   ];
@@ -53,7 +53,7 @@ export default function Sidebar() {
 
       <div className="sidebar-footer">
         <div>CORE STACK: FastAPI + Postgres</div>
-        <div>GATEWAY: Step 3 (Active)</div>
+        <div>TELEMETRY: Step 4 (Active)</div>
       </div>
     </aside>
   );
