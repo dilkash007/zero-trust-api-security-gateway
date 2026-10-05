@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Protector & Reverse Proxy - ZERO-TRUST API SECURITY GATEWAY</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="api-protector.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- ================= SIDEBAR NAVIGATION ================= -->
+    <aside class="sidebar">
+      
+      <div class="sidebar-top">
+        <!-- Brand Header -->
+        <div class="sidebar-brand">
+          <svg class="brand-shield-icon" viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sideShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00d2ff"/>
+                <stop offset="50%" stop-color="#0284c7"/>
+                <stop offset="100%" stop-color="#1e3a8a"/>
+              </linearGradient>
+            </defs>
+            <path d="M30 4L7 14V32C7 48.5 17 62 30 66C43 62 53 48.5 53 32V14L30 4Z" 
+                  fill="url(#sideShieldGrad)" 
+                  stroke="#38bdf8" 
+                  stroke-width="2.5"/>
+            <rect x="23" y="32" width="14" height="12" rx="2.5" fill="#ffffff"/>
+            <path d="M26 32V27C26 24.8 27.8 23 30 23C32.2 23 34 24.8 34 27V32" 
+                  stroke="#ffffff" 
+                  stroke-width="2.5" 
+                  stroke-linecap="round"/>
+          </svg>
+          <div class="brand-text">
+            <span class="brand-title">ZERO-TRUST</span>
+            <span class="brand-subtitle">API SECURITY GATEWAY</span>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="api-protector.html" class="nav-item active">
+            <!-- Target API Shield / Reverse Proxy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 12 9 15 12"/>
+              <line x1="12" y1="9" x2="12" y2="15"/>
+            </svg>
+            <span>API Protector</span>
+            <span class="nav-badge-pulse">ACTIVE</span>
+          </a>
+
+          <a href="api-traffic.html" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <span>API Traffic</span>
+          </a>
+
+          <a href="threat-center.html" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>Threat Center</span>
+          </a>
+
+          <a href="attack-simulator.html" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/>
+              <line x1="8.5" y1="2" x2="15.5" y2="2"/>
+              <line x1="7" y1="16" x2="17" y2="16"/>
+            </svg>
+            <span>Attack Simulator</span>
+          </a>
+
+          <a href="policies.html" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span>Policies</span>
+          </a>
+
+          <a href="settings.html" class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Sidebar Bottom System Status -->
+      <div class="sidebar-bottom">
+        <div class="system-status-card">
+          <div class="status-header">
+            <span class="status-indicator-dot"></span>
+            <span>Reverse Proxy Online</span>
+          </div>
+          <div class="status-meta">
+            <span>LLM Shield:</span>
+            <span class="status-val text-cyan">zero-trust-guard</span>
+          </div>
+          <div class="status-meta">
+            <span>Target:</span>
+            <span class="status-val text-green" id="sidebarTargetSummary">Gemini 3.8 Flash</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT AREA ================= -->
+    <main class="main-content">
+      
+      <!-- Top Navigation Bar -->
+      <header class="top-nav">
+        <div class="top-nav-left">
+          <div class="breadcrumb-trail">
+            <span class="breadcrumb-item">Gateway</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">API Protector & Live Hop Inspector</span>
+          </div>
+        </div>
+
+        <div class="top-nav-right">
+          <div class="telemetry-pill-group">
+            <div class="live-pill">
+              <span class="pulse-dot"></span>
+              <span>Ollama LLM: zero-trust-guard</span>
+            </div>
+            <div class="live-pill live-pill-green">
+              <span class="status-dot"></span>
+              <span>Proxy Engine: Active</span>
+            </div>
+          </div>
+
+          <div class="user-profile-badge">
+            <div class="user-avatar-circle">O</div>
+            <div class="user-info-text">
+              <span class="user-name">Security Operator</span>
+              <span class="user-role">SOC Admin</span>
+            </div>
+            <button class="btn-logout" title="Sign out">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Container -->
+      <div class="protector-container">
+
+        <!-- Hero Banner -->
+        <section class="protector-hero-card">
+          <div class="hero-left">
+            <div class="hero-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span>Reverse Proxy Telemetry Shield</span>
+            </div>
+            <h1 class="hero-title">Protect Your Real APIs with Zero-Trust Intelligence</h1>
+            <p class="hero-desc">
+              Connect your own target API (e.g. <strong>Google Gemini API</strong> or custom REST service). 
+              Every request is intercepted, inspected by <strong>Rule Signatures</strong>, <strong>Isolation Forest ML</strong>, and the local <strong>Ollama zero-trust-guard LLM</strong>. 
+              Threats are blocked at the perimeter before touching your upstream API.
+            </p>
+          </div>
+
+          <div class="hero-pipeline-preview">
+            <div class="pipe-node pipe-origin">
+              <span class="pipe-badge">ORIGIN</span>
+              <div class="pipe-icon">🌐</div>
+              <span class="pipe-title">Client / App</span>
+              <span class="pipe-sub">Kahan Se Aaya</span>
+            </div>
+            <div class="pipe-arrow">
+              <span class="arrow-line"></span>
+              <span class="arrow-label">Ingress</span>
+            </div>
+            <div class="pipe-node pipe-shield">
+              <span class="pipe-badge">ZERO-TRUST</span>
+              <div class="pipe-icon">🛡️</div>
+              <span class="pipe-title">Gateway Shield</span>
+              <span class="pipe-sub">Rules • ML • Ollama LLM</span>
+            </div>
+            <div class="pipe-arrow">
+              <span class="arrow-line"></span>
+              <span class="arrow-label">Clean Only</span>
+            </div>
+            <div class="pipe-node pipe-dest">
+              <span class="pipe-badge">DESTINATION</span>
+              <div class="pipe-icon">🚀</div>
+              <span class="pipe-title">Google Gemini</span>
+              <span class="pipe-sub">Kahan Gaya</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Configuration & Dispatcher 2-Column Grid -->
+        <div class="protector-grid">
+
+          <!-- CARD 1: TARGET API CONFIGURATION -->
+          <div class="panel-card config-card">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <div class="panel-icon-wrap icon-cyan">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="panel-title">1. Target API Configuration</h2>
+                  <p class="panel-subtitle">Define the upstream destination you want the Zero-Trust Gateway to protect</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Preset Buttons -->
+            <!-- Preset Buttons -->
+            <div class="preset-selector-label">Choose 1-Click Target Preset:</div>
+            <div class="preset-pill-container" id="presetPillContainer">
+              <button class="preset-pill active" data-preset="gemini-3.8-flash">
+                <span class="pill-spark">✨</span> Google Gemini 3.8 Flash
+              </button>
+              <button class="preset-pill" data-preset="gemini-3.5-flash-lite">
+                <span>⚡</span> Gemini 3.5 Flash Lite
+              </button>
+              <button class="preset-pill" data-preset="gemini-flash-latest">
+                <span>🧠</span> Gemini Flash Latest
+              </button>
+              <button class="preset-pill" data-preset="custom-rest">
+                <span>🌐</span> Custom REST API
+              </button>
+            </div>
+
+            <!-- Configuration Form -->
+            <form id="targetConfigForm" class="config-form">
+              <div class="form-row-2col">
+                <div class="form-group">
+                  <label for="geminiModelSelect">Gemini Model Target</label>
+                  <select id="geminiModelSelect" class="form-select font-mono">
+                    <option value="gemini-3.5-flash-lite" selected>gemini-3.5-flash-lite (Ultra-Fast 3.5 Lite - Online ✅)</option>
+                    <option value="gemini-flash-lite-latest">gemini-flash-lite-latest (Auto-Updated Flash Lite - Online ✅)</option>
+                    <option value="gemini-3.8-flash">gemini-3.8-flash (Flagship 3.8 Flash - Rate Limited 429)</option>
+                    <option value="gemini-flash-latest">gemini-flash-latest (Auto-Updated Latest Flash)</option>
+                    <option value="gemini-2.5-flash">gemini-2.5-flash (Gemini 2.5 - Sunset)</option>
+                    <option value="gemini-1.5-flash">gemini-1.5-flash (Legacy 1.5 - Sunset)</option>
+                    <option value="custom">custom (Type Custom Model Name)</option>
+                  </select>
+                </div>
+                <div class="form-group" id="customModelGroup" style="display:none;">
+                  <label for="customModelInput">Custom Model ID</label>
+                  <input type="text" id="customModelInput" class="form-input font-mono" placeholder="e.g. gemini-3.5-flash-lite">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="targetName">Target API Label</label>
+                <input type="text" id="targetName" class="form-input" value="Google Gemini 3.5 Flash Lite" placeholder="e.g. Google Gemini 3.5 Flash Lite">
+              </div>
+
+              <div class="form-group">
+                <label for="targetUrl">Target API Endpoint URL</label>
+                <div class="input-with-icon">
+                  <input type="url" id="targetUrl" class="form-input font-mono" value="https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent" placeholder="https://generativelanguage.googleapis.com/..." required>
+                </div>
+                <span class="field-hint">The upstream destination where clean requests will be forwarded.</span>
+              </div>
+
+              <div class="form-group">
+                <label for="targetApiKey">
+                  <span>Gemini API Key / Auth Token</span>
+                  <span class="label-tag">Active & Loaded</span>
+                </label>
+                <div class="input-with-button">
+                  <input type="password" id="targetApiKey" class="form-input font-mono" value="" placeholder="AIzaSy... or AQ.Ab8... (Paste your Google Gemini API key here)">
+                  <button type="button" id="toggleApiKeyBtn" class="btn-input-action" title="Show/Hide Key">👁️</button>
+                </div>
+                <span class="field-hint">Your API Key is injected by the Zero-Trust Gateway before proxying to Google.</span>
+              </div>
+
+              <!-- Validate All Models Action Button -->
+              <div class="model-check-action-bar">
+                <button type="button" id="checkAllModelsBtn" class="btn btn-validate-models">
+                  <span>🧪 Check & Validate All Gemini Models</span>
+                </button>
+                <span class="validate-hint">Tests key against Flash, Pro, and 2.0 simultaneously</span>
+              </div>
+
+              <!-- Model Health Status Container -->
+              <div id="modelHealthContainer" class="model-health-box hidden">
+                <div class="health-box-header">
+                  <span class="health-title">Gemini Models Live Availability Check:</span>
+                  <span id="healthOverallBadge" class="health-badge">CHECKING</span>
+                </div>
+                <div id="modelHealthGrid" class="health-grid">
+                  <!-- Populated dynamically -->
+                </div>
+              </div>
+
+              <!-- Gateway Public Reverse Proxy URL Box -->
+              <div class="gateway-proxy-url-box">
+                <div class="proxy-box-header">
+                  <span class="box-title">Your Gateway Protected Reverse-Proxy Endpoint:</span>
+                  <span class="badge-status">READY</span>
+                </div>
+                <div class="proxy-endpoint-row">
+                  <code id="gatewayProxyUrl">http://localhost:8000/api/proxy/gemini</code>
+                  <button type="button" id="copyProxyUrlBtn" class="btn-copy">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                    <span>Copy</span>
+                  </button>
+                </div>
+                <p class="proxy-box-sub">
+                  Point any client or cURL directly to this gateway URL. The gateway inspects every packet before proxying to Gemini.
+                </p>
+
+                <!-- External Caller Integration Guide Accordion -->
+                <div class="external-guide-toggle">
+                  <button type="button" class="external-guide-btn" id="toggleGuideBtn">
+                    <span>📡 How Others / External Apps Can Use This Gateway</span>
+                    <span id="guideArrow">▼</span>
+                  </button>
+                  <div class="external-guide-content hidden" id="externalGuideContent">
+                    <p style="margin-bottom: 6px;">Give other developers or external apps this endpoint. <strong>Your real Gemini API Key stays 100% secret</strong>. The Gateway identifies who calls, where they are, and what they do:</p>
+                    <p style="color: var(--text-white); font-weight: 600; margin-top: 6px;">1. cURL / Shell Example:</p>
+                    <pre><code>curl -X POST http://localhost:8000/api/proxy/gemini \
+  -H "Content-Type: application/json" \
+  -H "X-Client-Id: TeamMember-Rohan" \
+  -d '{"contents": [{"parts": [{"text": "Hello Gemini!"}]}]}'</code></pre>
+                    <p style="color: var(--text-white); font-weight: 600; margin-top: 8px;">2. Python Example:</p>
+                    <pre><code>import requests
+resp = requests.post("http://localhost:8000/api/proxy/gemini",
+    headers={"X-Client-Id": "DataPipeline-Script"},
+    json={"contents": [{"parts": [{"text": "Hello Gemini"}]}]})
+print(resp.json())</code></pre>
+                    <p style="margin-top: 8px; font-size: 0.73rem; color: var(--accent-green);">
+                      ✅ Gateway inspects each request with Ollama LLM + Isolation Forest. Malicious prompts are blocked instantly (403), clean prompts return AI answers with zero key exposure.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" id="saveConfigBtn" class="btn btn-secondary">
+                  <span>Save Target Settings</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- CARD 2: INTERACTIVE TEST DISPATCHER -->
+          <div class="panel-card dispatch-card">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <div class="panel-icon-wrap icon-purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="panel-title">2. Live Request Dispatcher</h2>
+                  <p class="panel-subtitle">Submit safe or adversarial prompts to test the real-time hop-by-hop shield</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payload Quick Presets -->
+            <div class="payload-presets-wrap">
+              <div class="preset-label">Test Scenarios:</div>
+              <div class="payload-preset-buttons">
+                <button type="button" class="btn-scenario btn-scenario-clean" data-scenario="clean-explain">
+                  <span class="scenario-dot green"></span> Safe: Explain Zero-Trust
+                </button>
+                <button type="button" class="btn-scenario btn-scenario-clean" data-scenario="clean-api">
+                  <span class="scenario-dot green"></span> Safe: What is API Gateway
+                </button>
+                <button type="button" class="btn-scenario btn-scenario-attack" data-scenario="attack-injection">
+                  <span class="scenario-dot red"></span> Attack: Prompt Injection / DAN
+                </button>
+                <button type="button" class="btn-scenario btn-scenario-attack" data-scenario="attack-sqli">
+                  <span class="scenario-dot red"></span> Attack: SQL Injection
+                </button>
+                <button type="button" class="btn-scenario btn-scenario-attack" data-scenario="attack-leak">
+                  <span class="scenario-dot orange"></span> Attack: Secret Exfiltration
+                </button>
+              </div>
+            </div>
+
+            <!-- Mode Selector -->
+            <div class="mode-selector-row">
+              <div class="mode-tabs">
+                <button type="button" id="tabPromptMode" class="tab-btn active">AI Prompt (Auto-Gemini)</button>
+                <button type="button" id="tabJsonMode" class="tab-btn">Raw JSON Payload</button>
+              </div>
+              <div class="origin-selector">
+                <label for="simulatedIpSelect">Simulated Origin:</label>
+                <select id="simulatedIpSelect" class="form-select">
+                  <option value="103.21.244.10" data-city="Bengaluru" data-country="India">🇮🇳 103.21.244.10 (Bengaluru, IN)</option>
+                  <option value="185.220.101.5" data-city="Frankfurt" data-country="Germany">🇩🇪 185.220.101.5 (Frankfurt, DE)</option>
+                  <option value="45.154.255.8" data-city="Moscow" data-country="Russia">🇷🇺 45.154.255.8 (Moscow, RU)</option>
+                  <option value="54.210.12.99" data-city="Virginia" data-country="United States">🇺🇸 54.210.12.99 (US East, US)</option>
+                  <option value="127.0.0.1" data-city="Local Dev" data-country="Localhost">💻 127.0.0.1 (Local Client)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Prompt Input (Default) -->
+            <div id="promptInputGroup" class="form-group">
+              <label for="promptInput">Prompt Text to Send Through Gateway</label>
+              <textarea id="promptInput" class="form-textarea" rows="4" placeholder="Enter prompt to test with Google Gemini... (e.g. 'Explain zero-trust security architecture')">Explain the core principles of Zero Trust Architecture in two concise sentences.</textarea>
+            </div>
+
+            <!-- JSON Input (Hidden by default) -->
+            <div id="jsonInputGroup" class="form-group hidden">
+              <label for="jsonInput">Raw JSON Body</label>
+              <textarea id="jsonInput" class="form-textarea font-mono" rows="6" placeholder='{"contents": [{"parts": [{"text": "Hello"}]}]}'></textarea>
+            </div>
+
+            <!-- Primary Dispatch Button -->
+            <button type="button" id="dispatchRequestBtn" class="btn-dispatch-pulse">
+              <div class="btn-content">
+                <span class="btn-icon">🚀</span>
+                <span class="btn-text">Send Through Zero-Trust Gateway</span>
+              </div>
+              <div class="btn-glow-ring"></div>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= SECTION 3: HOP-BY-HOP TELEMETRY INSPECTOR ================= -->
+        <section class="telemetry-inspector-section">
+          <div class="section-header-row">
+            <div>
+              <h2 class="section-title">Hop-by-Hop Telemetry Stream</h2>
+              <p class="section-subtitle">Real-time trace showing origin ingress, gateway AI shield inspection, and upstream egress</p>
+            </div>
+            <div class="telemetry-legend">
+              <span class="legend-item"><span class="legend-dot blue"></span> 1. Source (Origin)</span>
+              <span class="legend-item"><span class="legend-dot purple"></span> 2. Shield (Ollama & ML)</span>
+              <span class="legend-item"><span class="legend-dot green"></span> 3. Destination (Gemini API)</span>
+            </div>
+          </div>
+
+          <!-- Live Ingress Notification Alert -->
+          <div id="liveIngressAlert" class="live-ingress-banner hidden">
+            <span class="live-pulse-dot"></span>
+            <div class="live-ingress-text">
+              <span id="liveIngressTitle">⚡ LIVE INGRESS CAPTURED:</span>
+              <span id="liveIngressCaller" class="caller-identity-tag">External Caller</span>
+              <span id="liveIngressDesc" class="text-dim">Request analyzed in real-time</span>
+            </div>
+            <span id="liveIngressMeta" class="live-ingress-meta">Just Now</span>
+          </div>
+
+          <!-- 3-Hop Interactive Visual Pipeline -->
+          <div class="hop-pipeline-container" id="hopPipeline">
+            
+            <!-- HOP 1: SOURCE -->
+            <div class="hop-card hop-source" id="hopSourceCard">
+              <div class="hop-header">
+                <div class="hop-badge hop-badge-blue">
+                  <span class="hop-num">1</span>
+                  <span>SOURCE (Kahan Se Aaya)</span>
+                </div>
+                <span class="hop-status-tag" id="sourceMethodTag">POST</span>
+              </div>
+              <div class="hop-body">
+                <div class="hop-metric">
+                  <span class="metric-label">Caller Identity (Kon Hai)</span>
+                  <span class="metric-val text-cyan font-semibold" id="sourceCallerId">Local Operator / Testing</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Client IP (Effective)</span>
+                  <span class="metric-val font-mono" id="sourceIp">103.21.244.10</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Real Ingress IP</span>
+                  <span class="metric-val font-mono text-cyan" id="sourceRealIp">127.0.0.1 (Localhost)</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Geo Location (Kahan Se)</span>
+                  <span class="metric-val" id="sourceGeo">🇮🇳 Bengaluru, India</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Network Environment</span>
+                  <span class="metric-val text-xs" id="sourceNetwork">Localhost (Loopback Dev)</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Client Device / Tool</span>
+                  <span class="metric-val" id="sourceUserAgent">Chrome / Mac OS</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Gateway Ingress Route</span>
+                  <span class="metric-val font-mono text-xs text-dim" id="sourcePath">/api/proxy/dispatch</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Ingress Timestamp</span>
+                  <span class="metric-val font-mono" id="sourceTime">--:--:--</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Payload Size</span>
+                  <span class="metric-val font-mono" id="sourceSize">-- bytes</span>
+                </div>
+                <div class="hop-code-preview">
+                  <span class="preview-label">Ingress Payload Preview:</span>
+                  <pre class="code-box" id="sourcePayloadPreview">// Waiting for request dispatch...</pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- CONNECTOR 1 -->
+            <div class="hop-connector" id="connector1">
+              <div class="connector-line">
+                <span class="connector-packet"></span>
+              </div>
+              <span class="connector-label">Ingress Packet</span>
+            </div>
+
+            <!-- HOP 2: ZERO-TRUST SHIELD -->
+            <div class="hop-card hop-shield" id="hopShieldCard">
+              <div class="hop-header">
+                <div class="hop-badge hop-badge-purple">
+                  <span class="hop-num">2</span>
+                  <span>ZERO-TRUST SHIELD</span>
+                </div>
+                <span class="policy-badge policy-allow" id="shieldPolicyDecision">IDLE</span>
+              </div>
+              <div class="hop-body">
+                <!-- Risk Score Radial Gauge -->
+                <div class="risk-gauge-row">
+                  <div class="risk-gauge-circle" id="riskGaugeCircle">
+                    <span class="risk-number" id="shieldRiskScore">0</span>
+                    <span class="risk-max">/100</span>
+                  </div>
+                  <div class="risk-details">
+                    <span class="risk-tier-label" id="shieldRiskLevel">AWAITING REQUEST</span>
+                    <span class="risk-desc" id="shieldRiskDesc">Gateway inspection engine ready</span>
+                  </div>
+                </div>
+
+                <!-- Shield Engine Signals -->
+                <div class="shield-signals-grid">
+                  <div class="signal-item">
+                    <span class="signal-title">Rule Signature</span>
+                    <span class="signal-val text-green" id="signalRuleStatus">CLEAN</span>
+                  </div>
+                  <div class="signal-item">
+                    <span class="signal-title">Isolation Forest ML</span>
+                    <span class="signal-val font-mono" id="signalMlScore">-- %</span>
+                  </div>
+                  <div class="signal-item full-width">
+                    <span class="signal-title">Local Ollama LLM (zero-trust-guard)</span>
+                    <div class="llm-verdict-box" id="signalLlmBox">
+                      <span class="llm-status text-green" id="signalLlmThreat">Standby</span>
+                      <p class="llm-reasoning" id="signalLlmReasoning">Model ready on port 11434</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="hop-metric mt-8">
+                  <span class="metric-label">Gateway Inspection Latency</span>
+                  <span class="metric-val font-mono text-cyan" id="shieldLatency">-- ms</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CONNECTOR 2 -->
+            <div class="hop-connector" id="connector2">
+              <div class="connector-line">
+                <span class="connector-packet"></span>
+              </div>
+              <span class="connector-label" id="connector2Label">Clean Forward</span>
+            </div>
+
+            <!-- HOP 3: DESTINATION -->
+            <div class="hop-card hop-destination" id="hopDestCard">
+              <div class="hop-header">
+                <div class="hop-badge hop-badge-green">
+                  <span class="hop-num">3</span>
+                  <span>DESTINATION (Kahan Gaya)</span>
+                </div>
+                <span class="hop-status-tag" id="destStatusCode">--</span>
+              </div>
+              <div class="hop-body">
+                <div class="hop-metric">
+                  <span class="metric-label">Target Upstream</span>
+                  <span class="metric-val text-green" id="destTargetName">Google Gemini 3.5 Flash Lite</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Model Name</span>
+                  <span class="metric-val font-mono text-cyan" id="destModelBadge">gemini-3.5-flash-lite</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Target URL</span>
+                  <span class="metric-val font-mono text-xs truncate" id="destTargetUrl">https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Upstream Latency</span>
+                  <span class="metric-val font-mono" id="destLatency">-- ms</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Token Usage</span>
+                  <span class="metric-val font-mono text-xs" id="destTokenUsage">-- tokens</span>
+                </div>
+                <div class="hop-metric">
+                  <span class="metric-label">Delivery Outcome</span>
+                  <span class="metric-val text-cyan font-semibold" id="destOutcome">Awaiting Request</span>
+                </div>
+
+                <!-- Clean Formatted Gemini AI Answer Box -->
+                <div class="ai-answer-card" id="destAiAnswerWrap" style="display:none;">
+                  <div class="ai-answer-header">
+                    <span class="ai-answer-title">✨ Gemini AI Answer:</span>
+                    <button type="button" id="copyAiAnswerBtn" class="btn-mini-copy">Copy Answer</button>
+                  </div>
+                  <div class="ai-answer-body" id="destAiAnswerText"></div>
+                </div>
+
+                <!-- Upstream Raw Response Output Box -->
+                <div class="hop-code-preview">
+                  <div class="preview-header-bar">
+                    <span class="preview-label">Raw Response Payload:</span>
+                    <button type="button" id="copyResponseBtn" class="btn-mini-copy" title="Copy response">Copy JSON</button>
+                  </div>
+                  <pre class="code-box code-box-large" id="destResponsePreview">// Gemini output will display here upon successful proxy dispatch...</pre>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= SECTION 4: LIVE REVERSE-PROXY AUDIT TABLE ================= -->
+        <section class="panel-card history-section">
+          <div class="panel-header">
+            <div class="panel-title-group">
+              <div class="panel-icon-wrap icon-green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="panel-title">Live Reverse-Proxy Audit Log</h2>
+                <p class="panel-subtitle">Real-time record of all traffic forwarded or blocked across target APIs</p>
+              </div>
+            </div>
+            <button type="button" id="clearHistoryBtn" class="btn btn-mini">Clear History</button>
+          </div>
+
+          <div class="table-container">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Source (Origin)</th>
+                  <th>Target Destination</th>
+                  <th>Risk Score</th>
+                  <th>Ollama Threat Verdict</th>
+                  <th>Enforcement Action</th>
+                  <th>Latency</th>
+                  <th>Inspection</th>
+                </tr>
+              </thead>
+              <tbody id="proxyHistoryTableBody">
+                <tr class="empty-row">
+                  <td colspan="8">No proxy transactions recorded yet. Click <strong>Send Through Zero-Trust Gateway</strong> to test.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Detail Inspection Modal -->
+  <div class="modal-backdrop hidden" id="transactionModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTxId">Transaction Details</h3>
+        <button type="button" class="btn-close-modal" id="closeModalBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="modalTxContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="api-client.js"></script>
+  <script src="api-protector.js"></script>
+</body>
+</html>

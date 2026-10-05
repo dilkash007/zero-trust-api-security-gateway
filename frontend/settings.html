@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - ZERO-TRUST API SECURITY GATEWAY</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+
+  <div class="app-container">
+
+    <!-- ================= SIDEBAR NAVIGATION ================= -->
+    <aside class="sidebar">
+
+      <div class="sidebar-top">
+        <!-- Brand Header -->
+        <a href="dashboard.html" class="sidebar-brand-link" style="text-decoration:none;">
+          <div class="sidebar-brand">
+            <svg class="brand-shield-icon" viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sideShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00d2ff" />
+                  <stop offset="50%" stop-color="#0284c7" />
+                  <stop offset="100%" stop-color="#1e3a8a" />
+                </linearGradient>
+              </defs>
+              <path d="M30 4L7 14V32C7 48.5 17 62 30 66C43 62 53 48.5 53 32V14L30 4Z" fill="url(#sideShieldGrad)"
+                stroke="#38bdf8" stroke-width="2.5" />
+              <rect x="23" y="32" width="14" height="12" rx="2.5" fill="#ffffff" />
+              <path d="M26 32V27C26 24.8 27.8 23 30 23C32.2 23 34 24.8 34 27V32" stroke="#ffffff" stroke-width="2.5"
+                stroke-linecap="round" />
+            </svg>
+            <div class="brand-text">
+              <span class="brand-title">ZERO-TRUST</span>
+              <span class="brand-subtitle">API SECURITY GATEWAY</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <!-- Home / Dashboard Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="api-protector.html" class="nav-item">
+            <!-- Target API Shield / Reverse Proxy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 12 9 15 12"/>
+              <line x1="12" y1="9" x2="12" y2="15"/>
+            </svg>
+            <span>API Protector</span>
+            <span class="nav-badge-pulse" style="background:rgba(16,185,129,0.2);color:#10b981;font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:auto;">LIVE</span>
+          </a>
+
+          <a href="api-traffic.html" class="nav-item">
+            <!-- Bar Chart Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10" />
+              <line x1="12" y1="20" x2="12" y2="4" />
+              <line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
+            <span>API Traffic</span>
+          </a>
+
+          <a href="threat-center.html" class="nav-item">
+            <!-- Shield Exclamation Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span>Threat Center</span>
+          </a>
+
+          <a href="attack-simulator.html" class="nav-item">
+            <!-- Flask / Attack Simulator Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" />
+              <line x1="8.5" y1="2" x2="15.5" y2="2" />
+              <line x1="7" y1="16" x2="17" y2="16" />
+            </svg>
+            <span>Attack Simulator</span>
+          </a>
+
+          <a href="policies.html" class="nav-item">
+            <!-- Document / Policy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+            <span>Policies</span>
+          </a>
+
+          <a href="settings.html" class="nav-item active">
+            <!-- Settings Gear Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Sidebar Bottom System Status -->
+      <div class="sidebar-bottom">
+        <div class="system-status-card">
+          <div class="status-header">
+            <span class="status-indicator-dot"></span>
+            <span>System Online</span>
+          </div>
+          <div class="status-meta">
+            <span>All systems operational</span>
+            <span>Last Updated</span>
+            <span class="status-time" id="sidebarClockTime">Oct 05, 2026 12:58:31</span>
+          </div>
+        </div>
+
+        <a href="zerotrust.html" class="btn-logout" title="Sign out to Login Screen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Logout</span>
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-wrapper">
+
+      <!-- Top Search & Profile Bar -->
+      <header class="top-header-bar">
+
+        <div class="search-container">
+          <span class="search-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </span>
+          <input type="text" id="globalSearch" class="search-input" placeholder="Search settings, policies, users..." />
+        </div>
+
+        <div class="header-actions">
+
+          <!-- System Protected Badge -->
+          <div class="system-protection-badge">
+            <span class="status-indicator-dot"></span>
+            <div class="badge-text-group">
+              <span class="badge-title">System Protected</span>
+              <span class="badge-subtitle">All systems operational</span>
+            </div>
+          </div>
+
+          <!-- Notification Bell (Backend-ready) -->
+          <button type="button" class="notification-btn" aria-label="Notifications" id="notificationBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="notification-count" id="notificationCount">3</span>
+          </button>
+
+          <!-- Admin User Profile -->
+          <div class="user-profile-widget">
+            <div class="user-avatar-circle">A</div>
+            <div class="user-info-text">
+              <span class="user-name">Admin</span>
+              <span class="user-email">admin@example.com</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Header Banner -->
+      <div class="settings-header-banner">
+        <div class="settings-title-group">
+          <h1 class="settings-main-title">Settings</h1>
+          <p class="settings-subtext">Manage system configuration, users, and security preferences</p>
+        </div>
+      </div>
+
+      <!-- ================= 6-TAB NAVIGATION BAR ================= -->
+      <nav class="settings-tab-bar">
+        <button class="settings-tab-btn active" data-tab="general">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          <span>General</span>
+        </button>
+
+        <button class="settings-tab-btn" data-tab="users">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span>Users</span>
+        </button>
+
+        <button class="settings-tab-btn" data-tab="notifications">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+          <span>Notifications</span>
+        </button>
+
+        <button class="settings-tab-btn" data-tab="integrations">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+          </svg>
+          <span>Integrations</span>
+        </button>
+
+        <button class="settings-tab-btn" data-tab="system">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+            <line x1="6" y1="6" x2="6.01" y2="6" />
+            <line x1="6" y1="18" x2="6.01" y2="18" />
+          </svg>
+          <span>System</span>
+        </button>
+
+        <button class="settings-tab-btn" data-tab="logs">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+          </svg>
+          <span>Logs</span>
+        </button>
+      </nav>
+
+      <!-- ================= MAIN SETTINGS WORKSPACE (2 COLUMNS) ================= -->
+      <div class="settings-workspace-grid">
+
+        <!-- ================= LEFT / MAIN COLUMN ================= -->
+        <div class="settings-main-col">
+
+          <!-- ROW 1: System Configuration + Security Settings -->
+          <div class="settings-row-pair">
+
+            <!-- Card 1A: System Configuration -->
+            <div class="settings-card card-sys-config">
+              <div class="settings-card-head">
+                <div class="head-icon-circle">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                      d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="settings-card-title">System Configuration</h3>
+                  <p class="settings-card-sub">Basic system settings for the API Security Gateway</p>
+                </div>
+              </div>
+
+              <div class="settings-form-grid">
+
+                <!-- Field 1: System Name -->
+                <div class="form-field-group">
+                  <label class="form-label">System Name</label>
+                  <input type="text" class="cyber-input" id="cfgSystemName" value="Zero-Trust API Security Gateway">
+                </div>
+
+                <!-- Field 2: Environment Dropdown -->
+                <div class="form-field-group">
+                  <label class="form-label">Environment</label>
+                  <div class="cyber-select-wrap">
+                    <select class="cyber-select" id="cfgEnvironment">
+                      <option value="Production" selected>Production</option>
+                      <option value="Staging">Staging</option>
+                      <option value="Development">Development</option>
+                    </select>
+                    <svg class="select-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
+                </div>
+
+                <!-- Field 3: Session Timeout -->
+                <div class="form-field-group">
+                  <label class="form-label">Session Timeout (minutes)</label>
+                  <input type="number" class="cyber-input font-mono" id="cfgSessionTimeout" value="60">
+                </div>
+
+                <!-- Field 4: API Base URL -->
+                <div class="form-field-group">
+                  <label class="form-label">API Base URL</label>
+                  <input type="text" class="cyber-input font-mono" id="cfgApiBaseUrl"
+                    value="https://api.yourdomain.com">
+                </div>
+
+                <!-- Field 5: WebSocket URL (Full width) -->
+                <div class="form-field-group full-span">
+                  <label class="form-label">WebSocket URL</label>
+                  <input type="text" class="cyber-input font-mono" id="cfgWsUrl" value="wss://api.yourdomain.com/ws">
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Card 1B: Security Settings -->
+            <div class="settings-card card-sec-settings">
+              <div class="settings-card-head">
+                <div class="head-icon-circle">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="settings-card-title">Security Settings</h3>
+                  <p class="settings-card-sub">Core security configuration</p>
+                </div>
+              </div>
+
+              <div class="toggles-stack">
+
+                <div class="toggle-row-item">
+                  <span class="toggle-name">Enable Real-time Monitoring</span>
+                  <div class="cyber-green-toggle active" data-key="rtMonitoring">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="toggle-row-item">
+                  <span class="toggle-name">Block Unknown Devices</span>
+                  <div class="cyber-green-toggle active" data-key="blockDevices">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="toggle-row-item">
+                  <span class="toggle-name">Enable ML Anomaly Detection</span>
+                  <div class="cyber-green-toggle active" data-key="mlAnomaly">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="toggle-row-item">
+                  <span class="toggle-name">Geolocation Analysis</span>
+                  <div class="cyber-green-toggle active" data-key="geoAnalysis">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="toggle-row-item">
+                  <span class="toggle-name">Request Pattern Analysis</span>
+                  <div class="cyber-green-toggle active" data-key="reqPattern">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="toggle-row-item">
+                  <span class="toggle-name">Automated Threat Response</span>
+                  <div class="cyber-green-toggle active" data-key="autoThreat">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="toggle-row-item">
+                  <span class="toggle-name">Detailed Logging</span>
+                  <div class="cyber-green-toggle active" data-key="detailedLogging">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ROW 2: Notification Settings -->
+          <div class="settings-card card-notif-settings">
+            <div class="settings-card-head-bar">
+              <div class="head-left-group">
+                <div class="head-icon-circle">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="settings-card-title">Notification Settings</h3>
+                  <p class="settings-card-sub">Configure alerts and notifications</p>
+                </div>
+              </div>
+              <button class="btn-save-changes" id="btnSaveNotificationSettings" type="button">Save Changes</button>
+            </div>
+
+            <div class="notif-content-layout">
+
+              <!-- Left: 5 Notification Toggles -->
+              <div class="notif-toggles-col">
+
+                <div class="notif-toggle-row">
+                  <span class="notif-toggle-title">Critical Threat Alerts</span>
+                  <div class="cyber-green-toggle active" data-key="critAlerts">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="notif-toggle-row">
+                  <span class="notif-toggle-title">High Risk Alerts</span>
+                  <div class="cyber-green-toggle active" data-key="highRiskAlerts">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="notif-toggle-row">
+                  <span class="notif-toggle-title">Email Notifications</span>
+                  <div class="cyber-blue-toggle active" data-key="emailNotifs">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="notif-toggle-row">
+                  <span class="notif-toggle-title">Slack Notifications</span>
+                  <div class="cyber-blue-toggle" data-key="slackNotifs">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+                <div class="notif-toggle-row">
+                  <span class="notif-toggle-title">Daily Summary Report</span>
+                  <div class="cyber-blue-toggle active" data-key="dailySummary">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Right: Email Recipients & Dropdowns -->
+              <div class="notif-fields-col">
+
+                <div class="form-field-group">
+                  <label class="form-label">Email Recipients</label>
+                  <input type="text" class="cyber-input font-mono" id="notifRecipients"
+                    value="admin@example.com, security@example.com">
+                </div>
+
+                <div class="form-field-group">
+                  <label class="form-label">Alert Threshold</label>
+                  <div class="cyber-select-wrap">
+                    <select class="cyber-select" id="notifThreshold">
+                      <option value="High and Critical Only" selected>High and Critical Only</option>
+                      <option value="Critical Only">Critical Only</option>
+                      <option value="All Threats (Low, Medium, High, Critical)">All Threats</option>
+                    </select>
+                    <svg class="select-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="form-field-group">
+                  <label class="form-label">Notification Frequency</label>
+                  <div class="cyber-select-wrap">
+                    <select class="cyber-select" id="notifFrequency">
+                      <option value="Real-time" selected>Real-time</option>
+                      <option value="Batched Every 5 Mins">Batched Every 5 Mins</option>
+                      <option value="Hourly Digest">Hourly Digest</option>
+                    </select>
+                    <svg class="select-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ROW 3: 3 Bottom Cards (Data Management, Backup & Export, Danger Zone) -->
+          <div class="settings-bottom-triple">
+
+            <!-- Card 3A: Data Management -->
+            <div class="settings-card card-data-mgmt">
+              <div class="settings-card-head">
+                <div class="head-icon-circle">
+                  <!-- Database stack -->
+                  <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="settings-card-title">Data Management</h3>
+                  <p class="settings-card-sub">Manage data retention and storage</p>
+                </div>
+              </div>
+
+              <div class="data-mgmt-body">
+                <div class="data-field-pair">
+                  <span class="data-field-lbl">Log Retention Period (days)</span>
+                  <input type="number" class="cyber-mini-box font-mono" id="cfgLogRetention" value="30">
+                </div>
+
+                <div class="data-field-pair">
+                  <span class="data-field-lbl">Incident Retention Period (days)</span>
+                  <input type="number" class="cyber-mini-box font-mono" id="cfgIncidentRetention" value="90">
+                </div>
+
+                <div class="data-field-pair">
+                  <span class="data-field-lbl">Auto Cleanup Old Data</span>
+                  <div class="cyber-green-toggle active" data-key="autoCleanup">
+                    <span class="knob"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3B: Backup & Export -->
+            <div class="settings-card card-backup-export">
+              <div class="settings-card-head">
+                <div class="head-icon-circle">
+                  <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="settings-card-title">Backup & Export</h3>
+                  <p class="settings-card-sub">Export system data and configurations</p>
+                </div>
+              </div>
+
+              <div class="backup-export-body">
+                <div class="export-actions-list">
+                  <button class="btn-export-item" id="btnExportLogs" type="button">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span>Export Logs</span>
+                  </button>
+                  <button class="btn-export-item" id="btnExportIncidents" type="button">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span>Export Incidents</span>
+                  </button>
+                  <button class="btn-export-item" id="btnExportPolicies" type="button">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span>Export Policies</span>
+                  </button>
+                </div>
+
+                <div class="backup-cloud-box">
+                  <div class="cloud-icon-circle">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                    </svg>
+                  </div>
+                  <div class="backup-box-title">Backup Configuration</div>
+                  <div class="backup-box-sub">Download complete system config</div>
+                  <button class="btn-download-backup" id="btnDownloadBackup" type="button">Download Backup</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3C: Danger Zone -->
+            <div class="settings-card card-danger-zone">
+              <div class="danger-card-head">
+                <div class="danger-head-left">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#ef4444" stroke-width="2.5">
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                  </svg>
+                  <div>
+                    <h3 class="danger-title">Danger Zone</h3>
+                    <p class="danger-sub">These actions cannot be undone</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="danger-actions-stack">
+                <button class="btn-danger-action" id="btnClearLogs" type="button">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  </svg>
+                  <div class="danger-btn-text">
+                    <span class="danger-btn-label">Clear All Logs</span>
+                    <span class="danger-btn-desc">Permanently delete all system logs</span>
+                  </div>
+                </button>
+
+                <button class="btn-danger-action" id="btnResetDefault" type="button">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21.5 2v6h-6" />
+                    <path d="M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" />
+                  </svg>
+                  <div class="danger-btn-text">
+                    <span class="danger-btn-label">Reset to Default</span>
+                    <span class="danger-btn-desc">Reset all settings to default values</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ================= RIGHT COLUMN ================= -->
+        <div class="settings-side-col">
+
+          <!-- Card R1: System Information -->
+          <div class="settings-card card-sys-info">
+            <div class="side-card-head">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                <line x1="6" y1="6" x2="6.01" y2="6" />
+                <line x1="6" y1="18" x2="6.01" y2="18" />
+              </svg>
+              <h3 class="side-card-title">System Information</h3>
+            </div>
+
+            <div class="sys-info-kv-list">
+              <div class="kv-row">
+                <span class="kv-lbl">Version</span>
+                <span class="kv-val font-mono">v1.0.0</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-lbl">Environment</span>
+                <span class="kv-val font-green"><span class="dot-indicator bg-green"></span> Production</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-lbl">Uptime</span>
+                <span class="kv-val">6 days 14 hours</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-lbl">Database Status</span>
+                <span class="kv-val font-green"><span class="dot-indicator bg-green"></span> Connected</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-lbl">WebSocket Status</span>
+                <span class="kv-val font-green"><span class="dot-indicator bg-green"></span> Connected</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-lbl">ML Model Status</span>
+                <span class="kv-val font-green"><span class="dot-indicator bg-green"></span> Active</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-lbl">Last Model Update</span>
+                <span class="kv-val">Oct 05, 2026 08:30</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-lbl">Total Requests</span>
+                <span class="kv-val font-mono">128,492</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-lbl">Blocked Requests</span>
+                <span class="kv-val font-mono">1,284</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card R2: Recent Activity Timeline -->
+          <div class="settings-card card-recent-activity">
+            <div class="side-card-head flex-between">
+              <div class="head-icon-title">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <h3 class="side-card-title">Recent Activity</h3>
+              </div>
+              <a href="#" class="side-link-cyan">View All &rarr;</a>
+            </div>
+
+            <div class="activity-timeline-list">
+
+              <!-- Event 1 (Green) -->
+              <div class="activity-event-item">
+                <div class="activity-node-col">
+                  <span class="node-circle bg-green"></span>
+                  <span class="node-line"></span>
+                </div>
+                <div class="activity-body-col">
+                  <span class="act-title">Policy updated</span>
+                  <span class="act-desc">Rate limit changed to 150/min</span>
+                </div>
+                <div class="activity-meta-col">
+                  <span class="act-time font-mono">12:45:21</span>
+                  <span class="act-author">by Admin</span>
+                </div>
+              </div>
+
+              <!-- Event 2 (Blue) -->
+              <div class="activity-event-item">
+                <div class="activity-node-col">
+                  <span class="node-circle bg-blue"></span>
+                  <span class="node-line"></span>
+                </div>
+                <div class="activity-body-col">
+                  <span class="act-title">New user added</span>
+                  <span class="act-desc">security@example.com</span>
+                </div>
+                <div class="activity-meta-col">
+                  <span class="act-time font-mono">11:32:10</span>
+                  <span class="act-author">by Admin</span>
+                </div>
+              </div>
+
+              <!-- Event 3 (Yellow) -->
+              <div class="activity-event-item">
+                <div class="activity-node-col">
+                  <span class="node-circle bg-yellow"></span>
+                  <span class="node-line"></span>
+                </div>
+                <div class="activity-body-col">
+                  <span class="act-title">ML model updated</span>
+                  <span class="act-desc">Version 1.2.0 deployed</span>
+                </div>
+                <div class="activity-meta-col">
+                  <span class="act-time font-mono">10:25:33</span>
+                  <span class="act-author">by Admin</span>
+                </div>
+              </div>
+
+              <!-- Event 4 (Yellow) -->
+              <div class="activity-event-item">
+                <div class="activity-node-col">
+                  <span class="node-circle bg-yellow"></span>
+                  <span class="node-line"></span>
+                </div>
+                <div class="activity-body-col">
+                  <span class="act-title">Critical alert threshold changed</span>
+                  <span class="act-desc">70 &rarr; 80</span>
+                </div>
+                <div class="activity-meta-col">
+                  <span class="act-time font-mono">09:12:18</span>
+                  <span class="act-author">by Admin</span>
+                </div>
+              </div>
+
+              <!-- Event 5 (Red) -->
+              <div class="activity-event-item">
+                <div class="activity-node-col">
+                  <span class="node-circle bg-red"></span>
+                </div>
+                <div class="activity-body-col">
+                  <span class="act-title">System restart</span>
+                  <span class="act-desc">Scheduled maintenance</span>
+                </div>
+                <div class="activity-meta-col">
+                  <span class="act-time font-mono">08:45:02</span>
+                  <span class="act-author">by Admin</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Interactive Confirmation Modal for Danger Zone -->
+  <div class="modal-overlay" id="dangerModal">
+    <div class="modal-card">
+      <div class="modal-icon-red">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#ef4444" stroke-width="2.5">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+      </div>
+      <h3 class="modal-title" id="modalDangerTitle">Confirm Destructive Action</h3>
+      <p class="modal-desc" id="modalDangerDesc">Are you sure you want to proceed? This action is permanent and cannot
+        be undone.</p>
+      <div class="modal-actions-row">
+        <button class="btn-modal-cancel" id="btnCancelModal" type="button">Cancel</button>
+        <button class="btn-modal-confirm" id="btnConfirmModal" type="button">Confirm & Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Feedback -->
+  <div class="settings-toast" id="settingsToast">
+    <div class="toast-indicator"></div>
+    <div class="toast-text-col">
+      <div class="toast-title" id="settingsToastTitle">Settings Updated</div>
+      <div class="toast-msg" id="settingsToastMsg">Changes have been saved successfully.</div>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script src="api-client.js"></script>
+  <script src="settings.js"></script>
+</body>
+
+</html>

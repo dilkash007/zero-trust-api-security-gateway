@@ -1,0 +1,14 @@
+{
+  "model_name": "zero-trust-guard",
+  "base_model": "qwen2.5:0.5b",
+  "status": "TRAINED",
+  "training_samples": 1006,
+  "telemetry_samples": 1000,
+  "canonical_exemplars": 6,
+  "trained_at": "2026-10-05T19:45:37.106188+00:00",
+  "training_duration_seconds": 0.08,
+  "modelfile_path": "/Users/brajeshkumarrai/Desktop/Zero Trust Api Security Gatway/backend/ml/Modelfile",
+  "version": "1.0",
+  "decision_threshold": 70,
+  "error": null
+}

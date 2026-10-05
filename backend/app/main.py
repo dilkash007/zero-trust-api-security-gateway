@@ -13,7 +13,14 @@ from app.gateway.middleware import RequestContextMiddleware
 from app.gateway.telemetry_routes import telemetry_router
 from app.behavior.routes import behavior_router
 from app.detection.routes import detection_router
+from app.risk.routes import risk_router
+from ml.routes import ml_router
+from app.simulator.routes import simulator_router
+from app.dashboard.routes import dashboard_router
+from app.websocket.routes import websocket_router
+from app.proxy.routes import proxy_router
 # Ensure models are imported so Base.metadata knows about all schemas
+
 import app.database.models  # noqa: F401
 
 # Configure structured logging
@@ -53,9 +60,13 @@ async def lifespan(app: FastAPI):
 # Instantiate FastAPI application
 app = FastAPI(
     title="Zero-Trust API Security Engine",
-    version="0.1.0",
-    description="Hackathon MVP - Behavioral Anomaly Detection & Zero-Trust Verification Engine",
+    version="1.0.0",
+    description="Production Zero-Trust API Security Gateway with Behavioral Anomaly Detection",
     lifespan=lifespan,
+    # Disable docs in production via env — keep on for now for demo
+    docs_url="/docs" if settings.DEBUG else None,
+    redoc_url="/redoc" if settings.DEBUG else None,
+    openapi_url="/openapi.json" if settings.DEBUG else None,
 )
 
 # Step 3 & 4: Gateway & Telemetry Middleware
@@ -65,11 +76,41 @@ app.add_middleware(RequestContextMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
+    allow_origin_regex=".*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["X-Request-ID"],
 )
+
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    """Production hardening HTTP security headers with relaxed CSP for local API & WS connectivity."""
+    response = await call_next(request)
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Content-Security-Policy"] = (
+        "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; "
+        "connect-src * 'self' ws: wss: http: https:; "
+        "frame-ancestors 'self';"
+    )
+    response.headers["Access-Control-Allow-Private-Network"] = "true"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+
+    if request.method == "OPTIONS":
+        response.headers["Access-Control-Allow-Private-Network"] = "true"
+        origin = request.headers.get("origin")
+        if origin:
+            response.headers["Access-Control-Allow-Origin"] = origin
+            response.headers["Access-Control-Allow-Credentials"] = "true"
+            response.headers["Access-Control-Allow-Headers"] = "*"
+            response.headers["Access-Control-Allow-Methods"] = "*"
+
+    return response
 
 
 @app.exception_handler(SecurityGatewayException)
@@ -105,6 +146,25 @@ app.include_router(behavior_router)
 
 # Include Rule-Based Anomaly Detection APIs (Step 6)
 app.include_router(detection_router)
+
+# Include Risk Scoring & Policy Decision Engine APIs (Step 7)
+app.include_router(risk_router)
+
+# Include Machine Learning Anomaly Detection APIs (Step 8)
+app.include_router(ml_router)
+
+# Include Local Attack Simulator APIs (Step 8)
+app.include_router(simulator_router)
+
+# Include SOC Dashboard Aggregation APIs (Step 9)
+app.include_router(dashboard_router)
+
+# Include Real-Time WebSocket Telemetry Router (Step 10)
+app.include_router(websocket_router)
+
+# Include Zero-Trust API Protector & Reverse Proxy Router
+app.include_router(proxy_router)
+
 
 
 @app.get(

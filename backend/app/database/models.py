@@ -32,6 +32,14 @@ class SecurityEventType(str, enum.Enum):
     PRIVILEGE_MISUSE = "PRIVILEGE_MISUSE"
     UNUSUAL_TIME = "UNUSUAL_TIME"
 
+    # Step 7 Risk & Policy Decisions
+    RISK_CALCULATED = "RISK_CALCULATED"
+    POLICY_DECISION = "POLICY_DECISION"
+
+    # Step 8 Machine Learning Anomaly Detection
+    ML_ANOMALY_DETECTED = "ML_ANOMALY_DETECTED"
+    LLM_ANOMALY_DETECTED = "LLM_ANOMALY_DETECTED"
+
 
 class EventSeverity(str, enum.Enum):
     """Static severity levels for security and anomaly events."""
@@ -39,6 +47,7 @@ class EventSeverity(str, enum.Enum):
     LOW = "LOW"
     MEDIUM = "MEDIUM"
     HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
 
 
 class BaselineStatus(str, enum.Enum):
@@ -81,6 +90,11 @@ class User(Base):
         "BehaviorProfile", back_populates="user", uselist=False, cascade="all, delete-orphan"
     )
 
+    @property
+    def username(self) -> str:
+        """Compatibility property returning user's email."""
+        return self.email or self.name
+
 
 class ApiRequestLog(Base):
     """Persistent audit log of inspected API requests passing through the gateway."""
@@ -106,6 +120,10 @@ class ApiRequestLog(Base):
     response_size: Mapped[Optional[int]] = mapped_column(Integer, default=0, nullable=True)
     is_authenticated: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     is_sensitive: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    risk_score: Mapped[Optional[int]] = mapped_column(Integer, nullable=True, default=None, index=True)
+    risk_level: Mapped[Optional[str]] = mapped_column(String(20), nullable=True, default=None, index=True)
+    policy_decision: Mapped[Optional[str]] = mapped_column(String(20), nullable=True, default=None, index=True)
+    risk_reasons: Mapped[Optional[List[Dict[str, Any]]]] = mapped_column(JSON, nullable=True, default=None)
 
     # Relationship to user
     user: Mapped[Optional["User"]] = relationship("User", back_populates="request_logs")

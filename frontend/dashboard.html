@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Overview - ZERO-TRUST API SECURITY GATEWAY</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- ================= SIDEBAR NAVIGATION ================= -->
+    <aside class="sidebar">
+      
+      <div class="sidebar-top">
+        <!-- Brand Header -->
+        <div class="sidebar-brand">
+          <svg class="brand-shield-icon" viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sideShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00d2ff"/>
+                <stop offset="50%" stop-color="#0284c7"/>
+                <stop offset="100%" stop-color="#1e3a8a"/>
+              </linearGradient>
+            </defs>
+            <path d="M30 4L7 14V32C7 48.5 17 62 30 66C43 62 53 48.5 53 32V14L30 4Z" 
+                  fill="url(#sideShieldGrad)" 
+                  stroke="#38bdf8" 
+                  stroke-width="2.5"/>
+            <rect x="23" y="32" width="14" height="12" rx="2.5" fill="#ffffff"/>
+            <path d="M26 32V27C26 24.8 27.8 23 30 23C32.2 23 34 24.8 34 27V32" 
+                  stroke="#ffffff" 
+                  stroke-width="2.5" 
+                  stroke-linecap="round"/>
+          </svg>
+          <div class="brand-text">
+            <span class="brand-title">ZERO-TRUST</span>
+            <span class="brand-subtitle">API SECURITY GATEWAY</span>
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item active">
+            <!-- Home / Dashboard Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="api-protector.html" class="nav-item">
+            <!-- Target API Shield / Reverse Proxy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 12 9 15 12"/>
+              <line x1="12" y1="9" x2="12" y2="15"/>
+            </svg>
+            <span>API Protector</span>
+            <span class="nav-badge-pulse" style="background:rgba(16,185,129,0.2);color:#10b981;font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:auto;">LIVE</span>
+          </a>
+
+          <a href="api-traffic.html" class="nav-item">
+            <!-- Bar Chart Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <span>API Traffic</span>
+          </a>
+
+          <a href="threat-center.html" class="nav-item">
+            <!-- Shield Exclamation Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>Threat Center</span>
+          </a>
+
+          <a href="attack-simulator.html" class="nav-item">
+            <!-- Flask / Attack Simulator Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/>
+              <line x1="8.5" y1="2" x2="15.5" y2="2"/>
+              <line x1="7" y1="16" x2="17" y2="16"/>
+            </svg>
+            <span>Attack Simulator</span>
+          </a>
+
+          <a href="policies.html" class="nav-item">
+            <!-- Document / Policy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span>Policies</span>
+          </a>
+
+          <a href="settings.html" class="nav-item">
+            <!-- Settings Gear Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Sidebar Bottom System Status -->
+      <div class="sidebar-bottom">
+        <div class="system-status-card">
+          <div class="status-header">
+            <span class="status-indicator-dot"></span>
+            <span>System Online</span>
+          </div>
+          <div class="status-meta">
+            <span>Last Updated</span>
+            <span class="status-time" id="sidebarClockTime">Oct 05, 2026 12:58:31</span>
+          </div>
+        </div>
+
+        <a href="zerotrust.html" class="btn-logout" title="Sign out to Login Screen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>Logout</span>
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-wrapper">
+      
+      <!-- Top Search & Profile Bar -->
+      <header class="top-header-bar">
+        
+        <div class="search-container">
+          <span class="search-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </span>
+          <input 
+            type="text" 
+            id="globalSearch" 
+            class="search-input" 
+            placeholder="Search requests, users, endpoints..."
+          />
+        </div>
+
+        <div class="header-actions">
+          
+          <!-- System Protected Badge -->
+          <div class="system-protection-badge">
+            <span class="status-indicator-dot"></span>
+            <div class="badge-text-group">
+              <span class="badge-title">System Protected</span>
+              <span class="badge-subtitle">Zero-Trust Active</span>
+            </div>
+          </div>
+
+          <!-- Notification Bell (Backend-ready) -->
+          <button type="button" class="notification-btn" id="notificationBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-count" id="notificationCount">3</span>
+          </button>
+
+          <!-- Admin User Profile -->
+          <div class="user-profile-widget">
+            <div class="user-avatar-circle">A</div>
+            <div class="user-info-text">
+              <span class="user-name">Admin</span>
+              <span class="user-email">admin@example.com</span>
+            </div>
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- Overview Header -->
+      <div class="overview-header">
+        <div class="overview-title-block">
+          <h1 class="overview-title">Security Overview</h1>
+          <p class="overview-subtitle">Real-time monitoring of API traffic and security threats</p>
+        </div>
+        <div class="overview-live-status">
+          <span class="last-updated-text" id="liveClockText">Last Updated: 12:58:31</span>
+          <span class="live-pill-tag">
+            <span class="live-dot"></span>
+            LIVE
+          </span>
+        </div>
+      </div>
+
+      <!-- API Protector Announcement / Quick Launch Banner -->
+      <div class="protector-launch-banner" style="background: linear-gradient(135deg, rgba(14,26,52,0.9) 0%, rgba(6,11,23,0.95) 100%); border: 1px solid rgba(56,189,248,0.3); border-radius: 14px; padding: 18px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(56,189,248,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;">
+            🛡️
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #fff;">New: API Protector & Gemini Hop-by-Hop Telemetry</span>
+              <span style="background: rgba(16,185,129,0.2); color: #10b981; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px;">LIVE</span>
+            </div>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin: 0;">
+              Protect your real external APIs (Google Gemini 1.5 Flash/Pro, custom endpoints). Inspect where requests originate, neutralize threats with local Ollama (<code style="color:#38bdf8;">zero-trust-guard</code>), and track upstream latency.
+            </p>
+          </div>
+        </div>
+        <a href="api-protector.html" style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(56,189,248,0.3); transition: transform 0.2s ease;">
+          <span>Open API Protector</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <!-- ================= 5 KPI STAT CARDS ================= -->
+      <section class="kpi-grid">
+        
+        <!-- Card 1: API Requests -->
+        <div class="kpi-card kpi-card-1">
+          <div class="kpi-icon-wrap">
+            <!-- 3D Cube Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <div class="kpi-data-block">
+            <div class="kpi-number-wrap">
+              <span class="kpi-number">128,492</span>
+            </div>
+            <span class="kpi-label">API REQUESTS</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-trend trend-up-green">↑ 12.4%</span>
+            <canvas id="sparkline1" class="kpi-sparkline-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 2: Blocked Requests -->
+        <div class="kpi-card kpi-card-2">
+          <div class="kpi-icon-wrap">
+            <!-- Circle slash / ban icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+            </svg>
+          </div>
+          <div class="kpi-data-block">
+            <div class="kpi-number-wrap">
+              <span class="kpi-number">1,284</span>
+            </div>
+            <span class="kpi-label">BLOCKED REQUESTS</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-trend trend-up-red">↑ 8.2%</span>
+            <canvas id="sparkline2" class="kpi-sparkline-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 3: Active Threats -->
+        <div class="kpi-card kpi-card-3">
+          <div class="kpi-icon-wrap">
+            <!-- Warning Triangle Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div class="kpi-data-block">
+            <div class="kpi-number-wrap">
+              <span class="kpi-number">17</span>
+            </div>
+            <span class="kpi-label">ACTIVE THREATS</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-critical-badge">3 Critical</span>
+            <canvas id="sparkline3" class="kpi-sparkline-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 4: High Risk Requests -->
+        <div class="kpi-card kpi-card-4">
+          <div class="kpi-icon-wrap">
+            <!-- Users Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="kpi-data-block">
+            <div class="kpi-number-wrap">
+              <span class="kpi-number">43</span>
+            </div>
+            <span class="kpi-label">HIGH RISK REQUESTS</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-trend trend-up-red">↑ 15.6%</span>
+            <canvas id="sparkline4" class="kpi-sparkline-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 5: Average Risk -->
+        <div class="kpi-card kpi-card-5">
+          <div class="kpi-icon-wrap">
+            <!-- Speedometer / Gauge Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 14 4-4"/>
+              <path d="M3.34 19a10 10 0 1 1 17.32 0"/>
+            </svg>
+          </div>
+          <div class="kpi-data-block">
+            <div class="kpi-number-wrap">
+              <span class="kpi-number">31</span>
+              <span class="kpi-denom">/ 100</span>
+            </div>
+            <span class="kpi-label">AVERAGE RISK</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-trend trend-down-green">↓ 5.1%</span>
+            <canvas id="sparkline5" class="kpi-sparkline-canvas"></canvas>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= MIDDLE ROW: DONUT & 24H TRAFFIC CHART ================= -->
+      <section class="charts-grid-row">
+        
+        <!-- Risk Distribution Donut Chart -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h2 class="chart-card-title">Risk Distribution</h2>
+          </div>
+          <div class="donut-chart-wrap">
+            <div class="donut-visual-box">
+              <svg class="donut-svg" viewBox="0 0 160 160">
+                <!-- Base Dark Ring -->
+                <circle cx="80" cy="80" r="62" fill="none" stroke="#0e1b38" stroke-width="20"/>
+                
+                <!-- Segments (Circumference ≈ 389.5) -->
+                <!-- 1. Green (Low 72% -> ~280.4) -->
+                <circle class="donut-segment segment-low" data-idx="0" cx="80" cy="80" r="62" fill="none" stroke="#10b981" stroke-width="20"
+                        stroke-dasharray="280.4 389.5" stroke-dashoffset="0"/>
+                
+                <!-- 2. Yellow (Medium 16% -> ~62.3) -->
+                <circle class="donut-segment segment-medium" data-idx="1" cx="80" cy="80" r="62" fill="none" stroke="#f59e0b" stroke-width="20"
+                        stroke-dasharray="62.3 389.5" stroke-dashoffset="-280.4"/>
+
+                <!-- 3. Orange (High 8% -> ~31.1) -->
+                <circle class="donut-segment segment-high" data-idx="2" cx="80" cy="80" r="62" fill="none" stroke="#f97316" stroke-width="20"
+                        stroke-dasharray="31.1 389.5" stroke-dashoffset="-342.7"/>
+
+                <!-- 4. Red (Critical 4% -> ~15.5) -->
+                <circle class="donut-segment segment-critical" data-idx="3" cx="80" cy="80" r="62" fill="none" stroke="#ef4444" stroke-width="20"
+                        stroke-dasharray="15.5 389.5" stroke-dashoffset="-373.8"/>
+              </svg>
+              <div class="donut-inner-text">
+                <span class="donut-total-val">128K</span>
+                <span class="donut-total-lbl">Total Requests</span>
+              </div>
+            </div>
+
+            <!-- Legend List -->
+            <div class="donut-legend-list">
+              <div class="legend-row">
+                <div class="legend-left">
+                  <span class="legend-dot low"></span>
+                  <span>Low</span>
+                </div>
+                <span class="legend-percent">72%</span>
+              </div>
+              <div class="legend-row">
+                <div class="legend-left">
+                  <span class="legend-dot medium"></span>
+                  <span>Medium</span>
+                </div>
+                <span class="legend-percent">16%</span>
+              </div>
+              <div class="legend-row">
+                <div class="legend-left">
+                  <span class="legend-dot high"></span>
+                  <span>High</span>
+                </div>
+                <span class="legend-percent">8%</span>
+              </div>
+              <div class="legend-row">
+                <div class="legend-left">
+                  <span class="legend-dot critical"></span>
+                  <span>Critical</span>
+                </div>
+                <span class="legend-percent">4%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- API Requests Area Line Chart -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h2 class="chart-card-title">API Requests (Last 24 Hours)</h2>
+            <select class="chart-filter-select" aria-label="Timeframe filter">
+              <option value="24h">Last 24 Hours</option>
+              <option value="7d">Last 7 Days</option>
+              <option value="30d">Last 30 Days</option>
+            </select>
+          </div>
+          
+          <div class="traffic-chart-wrap">
+            <div class="traffic-chart-legend">
+              <div class="traffic-legend-item">
+                <span class="traffic-legend-dot allowed"></span>
+                <span>Allowed</span>
+              </div>
+              <div class="traffic-legend-item">
+                <span class="traffic-legend-dot blocked"></span>
+                <span>Blocked</span>
+              </div>
+            </div>
+            
+            <div class="traffic-canvas-container">
+              <canvas id="trafficCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= BOTTOM ROW: LIVE TRAFFIC & RECENT THREATS ================= -->
+      <section class="bottom-tables-row">
+        
+        <!-- Panel 1: Live API Traffic Table -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-header-left">
+              <div class="panel-icon-title">
+                <!-- Bidirectional arrows icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="17 1 21 5 17 9"/>
+                  <path d="M3 5h18"/>
+                  <polyline points="7 23 3 19 7 15"/>
+                  <path d="M21 19H3"/>
+                </svg>
+                <span>Live API Traffic</span>
+              </div>
+              <span class="live-pill-tag">
+                <span class="live-dot"></span>
+                LIVE
+              </span>
+            </div>
+            <a href="api-traffic.html" class="view-all-link" title="Open full Live API Traffic view">
+              <span>View All</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="table-responsive-wrapper">
+            <table class="api-traffic-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>User</th>
+                  <th>Endpoint</th>
+                  <th>Device</th>
+                  <th>Location</th>
+                  <th>Risk</th>
+                  <th>Action</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Row 1 -->
+                <tr>
+                  <td class="table-time">12:58:31</td>
+                  <td class="table-user">Rahul</td>
+                  <td class="table-endpoint">/api/profile</td>
+                  <td class="table-device">Android</td>
+                  <td class="table-location">India</td>
+                  <td><span class="badge-risk green">12</span></td>
+                  <td><span class="badge-action allow">ALLOW</span></td>
+                  <td><button class="table-options-btn">⠇</button></td>
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                  <td class="table-time">12:58:28</td>
+                  <td class="table-user">Amit</td>
+                  <td class="table-endpoint">/api/orders</td>
+                  <td class="table-device">Chrome</td>
+                  <td class="table-location">India</td>
+                  <td><span class="badge-risk yellow">28</span></td>
+                  <td><span class="badge-action allow">ALLOW</span></td>
+                  <td><button class="table-options-btn">⠇</button></td>
+                </tr>
+                <!-- Row 3 -->
+                <tr>
+                  <td class="table-time">12:58:25</td>
+                  <td class="table-user">X92</td>
+                  <td class="table-endpoint">/api/admin/users</td>
+                  <td class="table-device">iPhone</td>
+                  <td class="table-location">UK</td>
+                  <td><span class="badge-risk red">94</span></td>
+                  <td><span class="badge-action block">BLOCK</span></td>
+                  <td><button class="table-options-btn">⠇</button></td>
+                </tr>
+                <!-- Row 4 -->
+                <tr>
+                  <td class="table-time">12:58:21</td>
+                  <td class="table-user">Ravi</td>
+                  <td class="table-endpoint">/api/payment</td>
+                  <td class="table-device">Android</td>
+                  <td class="table-location">India</td>
+                  <td><span class="badge-risk orange">71</span></td>
+                  <td><span class="badge-action limit">LIMIT</span></td>
+                  <td><button class="table-options-btn">⠇</button></td>
+                </tr>
+                <!-- Row 5 -->
+                <tr>
+                  <td class="table-time">12:58:18</td>
+                  <td class="table-user">Sneha</td>
+                  <td class="table-endpoint">/api/products</td>
+                  <td class="table-device">Chrome</td>
+                  <td class="table-location">India</td>
+                  <td><span class="badge-risk green">18</span></td>
+                  <td><span class="badge-action allow">ALLOW</span></td>
+                  <td><button class="table-options-btn">⠇</button></td>
+                </tr>
+                <!-- Row 6 -->
+                <tr>
+                  <td class="table-time">12:58:15</td>
+                  <td class="table-user">Unknown</td>
+                  <td class="table-endpoint">/api/login</td>
+                  <td class="table-device">Unknown</td>
+                  <td class="table-location">Russia</td>
+                  <td><span class="badge-risk red">87</span></td>
+                  <td><span class="badge-action block">BLOCK</span></td>
+                  <td><button class="table-options-btn">⠇</button></td>
+                </tr>
+                <!-- Row 7 -->
+                <tr>
+                  <td class="table-time">12:58:13</td>
+                  <td class="table-user">Karan</td>
+                  <td class="table-endpoint">/api/cart</td>
+                  <td class="table-device">Android</td>
+                  <td class="table-location">India</td>
+                  <td><span class="badge-risk green">25</span></td>
+                  <td><span class="badge-action allow">ALLOW</span></td>
+                  <td><button class="table-options-btn">⠇</button></td>
+                </tr>
+                <!-- Row 8 -->
+                <tr>
+                  <td class="table-time">12:58:10</td>
+                  <td class="table-user">Priya</td>
+                  <td class="table-endpoint">/api/profile</td>
+                  <td class="table-device">iPhone</td>
+                  <td class="table-location">India</td>
+                  <td><span class="badge-risk green">34</span></td>
+                  <td><span class="badge-action allow">ALLOW</span></td>
+                  <td><button class="table-options-btn">⠇</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Panel 2: Recent Threats List -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="panel-header-left">
+              <div class="panel-icon-title">
+                <!-- Shield Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>Recent Threats</span>
+              </div>
+            </div>
+            <a href="threat-center.html" class="view-all-link">
+              <span>View All</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="threats-list">
+            
+            <!-- Threat 1: Credential Compromise -->
+            <div class="threat-item">
+              <div class="threat-left">
+                <div class="threat-icon-circle red">
+                  <!-- Hacker / Mask icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M7 10h10"/>
+                    <path d="M8 15s1.5 2 4 2 4-2 4-2"/>
+                    <circle cx="9" cy="9" r="1" fill="currentColor"/>
+                    <circle cx="15" cy="9" r="1" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="threat-info">
+                  <span class="threat-title">Credential Compromise</span>
+                  <span class="threat-meta">User: X92 | /api/admin/users</span>
+                </div>
+              </div>
+              <div class="threat-right">
+                <span class="threat-time">12:58:25</span>
+                <span class="threat-badge critical">
+                  CRITICAL
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Threat 2: API Abuse -->
+            <div class="threat-item">
+              <div class="threat-left">
+                <div class="threat-icon-circle red">
+                  <!-- Attack trend icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+                <div class="threat-info">
+                  <span class="threat-title">API Abuse</span>
+                  <span class="threat-meta">User: Unknown | /api/login</span>
+                </div>
+              </div>
+              <div class="threat-right">
+                <span class="threat-time">12:51:10</span>
+                <span class="threat-badge high">
+                  HIGH
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Threat 3: Privilege Misuse -->
+            <div class="threat-item">
+              <div class="threat-left">
+                <div class="threat-icon-circle red">
+                  <!-- User group alert icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <div class="threat-info">
+                  <span class="threat-title">Privilege Misuse</span>
+                  <span class="threat-meta">User: Amit | /api/users</span>
+                </div>
+              </div>
+              <div class="threat-right">
+                <span class="threat-time">12:45:33</span>
+                <span class="threat-badge high">
+                  HIGH
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Threat 4: Brute Force Attempt -->
+            <div class="threat-item">
+              <div class="threat-left">
+                <div class="threat-icon-circle yellow">
+                  <!-- Padlock icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </div>
+                <div class="threat-info">
+                  <span class="threat-title">Brute Force Attempt</span>
+                  <span class="threat-meta">User: TestUser | /api/login</span>
+                </div>
+              </div>
+              <div class="threat-right">
+                <span class="threat-time">12:40:12</span>
+                <span class="threat-badge medium">
+                  MEDIUM
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Threat 5: Data Exfiltration -->
+            <div class="threat-item">
+              <div class="threat-left">
+                <div class="threat-icon-circle orange">
+                  <!-- Cloud download icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                </div>
+                <div class="threat-info">
+                  <span class="threat-title">Data Exfiltration</span>
+                  <span class="threat-meta">User: Ravi | /api/export</span>
+                </div>
+              </div>
+              <div class="threat-right">
+                <span class="threat-time">12:32:15</span>
+                <span class="threat-badge high">
+                  HIGH
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  <!-- Welcome Toast Alert -->
+  <div class="toast-alert" id="dashboardToast" role="status" aria-live="polite">
+    <div class="toast-icon">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <polyline points="9 12 11 14 15 10"/>
+      </svg>
+    </div>
+    <div class="toast-content">
+      <span class="toast-title" style="font-weight:700; color:#fff; font-size:0.9rem;">Authenticated as Demo Admin</span>
+      <span class="toast-desc" style="color:#94a3b8; font-size:0.8rem;">Zero-Trust Operations Console session active.</span>
+    </div>
+  </div>
+
+  <script src="api-client.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Policies - ZERO-TRUST API SECURITY GATEWAY</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="policies.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- ================= SIDEBAR NAVIGATION ================= -->
+    <aside class="sidebar">
+      
+      <div class="sidebar-top">
+        <!-- Brand Header -->
+        <a href="dashboard.html" class="sidebar-brand-link" style="text-decoration:none;">
+          <div class="sidebar-brand">
+            <svg class="brand-shield-icon" viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sideShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00d2ff"/>
+                  <stop offset="50%" stop-color="#0284c7"/>
+                  <stop offset="100%" stop-color="#1e3a8a"/>
+                </linearGradient>
+              </defs>
+              <path d="M30 4L7 14V32C7 48.5 17 62 30 66C43 62 53 48.5 53 32V14L30 4Z" 
+                    fill="url(#sideShieldGrad)" 
+                    stroke="#38bdf8" 
+                    stroke-width="2.5"/>
+              <rect x="23" y="32" width="14" height="12" rx="2.5" fill="#ffffff"/>
+              <path d="M26 32V27C26 24.8 27.8 23 30 23C32.2 23 34 24.8 34 27V32" 
+                    stroke="#ffffff" 
+                    stroke-width="2.5" 
+                    stroke-linecap="round"/>
+            </svg>
+            <div class="brand-text">
+              <span class="brand-title">ZERO-TRUST</span>
+              <span class="brand-subtitle">API SECURITY GATEWAY</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <!-- Home / Dashboard Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="api-protector.html" class="nav-item">
+            <!-- Target API Shield / Reverse Proxy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 12 9 15 12"/>
+              <line x1="12" y1="9" x2="12" y2="15"/>
+            </svg>
+            <span>API Protector</span>
+            <span class="nav-badge-pulse" style="background:rgba(16,185,129,0.2);color:#10b981;font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:auto;">LIVE</span>
+          </a>
+
+          <a href="api-traffic.html" class="nav-item">
+            <!-- Bar Chart Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <span>API Traffic</span>
+          </a>
+
+          <a href="threat-center.html" class="nav-item">
+            <!-- Shield Exclamation Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>Threat Center</span>
+          </a>
+
+          <a href="attack-simulator.html" class="nav-item">
+            <!-- Flask / Attack Simulator Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/>
+              <line x1="8.5" y1="2" x2="15.5" y2="2"/>
+              <line x1="7" y1="16" x2="17" y2="16"/>
+            </svg>
+            <span>Attack Simulator</span>
+          </a>
+
+          <a href="policies.html" class="nav-item active">
+            <!-- Document / Policy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span>Policies</span>
+          </a>
+
+          <a href="settings.html" class="nav-item">
+            <!-- Settings Gear Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Sidebar Bottom System Status -->
+      <div class="sidebar-bottom">
+        <div class="system-status-card">
+          <div class="status-header">
+            <span class="status-indicator-dot"></span>
+            <span>System Online</span>
+          </div>
+          <div class="status-meta">
+            <span>Last Updated</span>
+            <span class="status-time" id="sidebarClockTime">Oct 05, 2026 12:58:31</span>
+          </div>
+        </div>
+
+        <a href="zerotrust.html" class="btn-logout" title="Sign out to Login Screen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>Logout</span>
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-wrapper">
+      
+      <!-- Top Search & Profile Bar -->
+      <header class="top-header-bar">
+        
+        <div class="search-container">
+          <span class="search-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </span>
+          <input 
+            type="text" 
+            id="globalSearch" 
+            class="search-input" 
+            placeholder="Search policies, rules, settings..."
+          />
+        </div>
+
+        <div class="header-actions">
+          
+          <!-- System Protected Badge -->
+          <div class="system-protection-badge">
+            <span class="status-indicator-dot"></span>
+            <div class="badge-text-group">
+              <span class="badge-title">System Protected</span>
+              <span class="badge-subtitle">All policies active</span>
+            </div>
+          </div>
+
+          <!-- Notification Bell (Backend-ready) -->
+          <button type="button" class="notification-btn" aria-label="Notifications" id="notificationBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-count" id="notificationCount">3</span>
+          </button>
+
+          <!-- Admin User Profile -->
+          <div class="user-profile-widget">
+            <div class="user-avatar-circle">A</div>
+            <div class="user-info-text">
+              <span class="user-name">Admin</span>
+              <span class="user-email">admin@example.com</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Header Banner with Save Button -->
+      <div class="policies-header-banner">
+        <div class="policies-title-group">
+          <h1 class="policies-main-title">Security Policies</h1>
+          <p class="policies-subtext">Configure security rules and risk thresholds for the Zero-Trust API Gateway</p>
+        </div>
+        <button class="btn-save-policies" id="btnSavePolicies" type="button">
+          <!-- Floppy Save Icon -->
+          <svg class="save-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+          <span class="btn-save-text">Save All Changes</span>
+        </button>
+      </div>
+
+      <!-- ================= TOP KPI SUMMARY CARDS (4 CARDS) ================= -->
+      <section class="policies-kpi-grid">
+        
+        <!-- Card 1: Active Policies -->
+        <div class="policy-kpi-card card-kpi-green">
+          <div class="kpi-icon-box box-green">
+            <!-- Shield with checkmark -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+          <div class="kpi-content-box">
+            <div class="kpi-main-number" id="kpiActivePolicies">12</div>
+            <div class="kpi-title">Active Policies</div>
+            <div class="kpi-subtext text-green">All systems protected</div>
+          </div>
+        </div>
+
+        <!-- Card 2: Critical Rules -->
+        <div class="policy-kpi-card card-kpi-red">
+          <div class="kpi-icon-box box-red">
+            <!-- Triangle alert -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div class="kpi-content-box">
+            <div class="kpi-main-number" id="kpiCriticalRules">3</div>
+            <div class="kpi-title">Critical Rules</div>
+            <div class="kpi-subtext text-red">High priority rules</div>
+          </div>
+        </div>
+
+        <!-- Card 3: Custom Rules -->
+        <div class="policy-kpi-card card-kpi-blue">
+          <div class="kpi-icon-box box-blue">
+            <!-- Document icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div class="kpi-content-box">
+            <div class="kpi-main-number" id="kpiCustomRules">5</div>
+            <div class="kpi-title">Custom Rules</div>
+            <div class="kpi-subtext text-muted">User defined policies</div>
+          </div>
+        </div>
+
+        <!-- Card 4: Enforcement Rate -->
+        <div class="policy-kpi-card card-kpi-purple">
+          <div class="kpi-icon-box box-purple">
+            <!-- Clock circle -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="kpi-content-box">
+            <div class="kpi-main-number" id="kpiEnforcementRate">100%</div>
+            <div class="kpi-title">Enforcement Rate</div>
+            <div class="kpi-subtext text-green">All policies active</div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= 2-COLUMN POLICIES WORKSPACE ================= -->
+      <div class="policies-main-layout">
+        
+        <!-- ================= LEFT COLUMN: 4 CONFIG CARDS ================= -->
+        <div class="policies-left-col">
+          
+          <!-- Config Card 1: Risk Thresholds -->
+          <div class="policy-config-card" id="cardRiskThresholds">
+            <div class="config-card-header">
+              <div class="config-header-left">
+                <div class="config-icon-circle">
+                  <!-- Trending line graph -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+                <div class="config-title-group">
+                  <h3 class="config-card-title">Risk Thresholds</h3>
+                  <p class="config-card-subtitle">Set risk score thresholds for different security actions</p>
+                </div>
+              </div>
+              <div class="config-toggle-switch active" id="toggleRiskThresholds" data-target="bodyRiskThresholds">
+                <span class="toggle-knob"></span>
+                <span class="toggle-status-lbl">Enabled</span>
+              </div>
+            </div>
+
+            <div class="config-card-body" id="bodyRiskThresholds">
+              
+              <!-- Slider Row 1: Medium Risk (30) -->
+              <div class="slider-row-item">
+                <div class="slider-label-col">
+                  <span class="slider-name">Medium Risk Threshold</span>
+                  <span class="slider-desc">Requests with risk score above this will be flagged</span>
+                </div>
+                <div class="slider-val-box" id="valBoxMedium">30</div>
+                <div class="slider-track-wrap">
+                  <input type="range" class="range-slider slider-yellow" id="rangeMedium" min="0" max="100" value="30">
+                </div>
+                <div class="slider-range-bounds">0 - 100</div>
+              </div>
+
+              <!-- Slider Row 2: High Risk (60) -->
+              <div class="slider-row-item">
+                <div class="slider-label-col">
+                  <span class="slider-name">High Risk Threshold</span>
+                  <span class="slider-desc">Requests with risk score above this will be limited</span>
+                </div>
+                <div class="slider-val-box" id="valBoxHigh">60</div>
+                <div class="slider-track-wrap">
+                  <input type="range" class="range-slider slider-orange" id="rangeHigh" min="0" max="100" value="60">
+                </div>
+                <div class="slider-range-bounds">0 - 100</div>
+              </div>
+
+              <!-- Slider Row 3: Critical Risk (80) -->
+              <div class="slider-row-item">
+                <div class="slider-label-col">
+                  <span class="slider-name">Critical Risk Threshold</span>
+                  <span class="slider-desc">Requests with risk score above this will be blocked</span>
+                </div>
+                <div class="slider-val-box" id="valBoxCritical">80</div>
+                <div class="slider-track-wrap">
+                  <input type="range" class="range-slider slider-red" id="rangeCritical" min="0" max="100" value="80">
+                </div>
+                <div class="slider-range-bounds">0 - 100</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Config Card 2: Rate Limiting -->
+          <div class="policy-config-card" id="cardRateLimiting">
+            <div class="config-card-header">
+              <div class="config-header-left">
+                <div class="config-icon-circle">
+                  <!-- Clock icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                </div>
+                <div class="config-title-group">
+                  <h3 class="config-card-title">Rate Limiting</h3>
+                  <p class="config-card-subtitle">Control request frequency to prevent abuse</p>
+                </div>
+              </div>
+              <div class="config-toggle-switch active" id="toggleRateLimiting" data-target="bodyRateLimiting">
+                <span class="toggle-knob"></span>
+                <span class="toggle-status-lbl">Enabled</span>
+              </div>
+            </div>
+
+            <div class="config-card-body" id="bodyRateLimiting">
+              
+              <!-- Slider Row 1: Global Rate Limit (100) -->
+              <div class="slider-row-item">
+                <div class="slider-label-col">
+                  <span class="slider-name">Global Rate Limit</span>
+                  <span class="slider-desc">Maximum requests per minute per user/IP</span>
+                </div>
+                <div class="slider-val-box" id="valBoxGlobalRate">100</div>
+                <div class="slider-track-wrap">
+                  <input type="range" class="range-slider slider-blue" id="rangeGlobalRate" min="10" max="1000" value="100">
+                </div>
+                <div class="slider-range-bounds">10 - 1000</div>
+              </div>
+
+              <!-- Slider Row 2: Burst Limit (20) -->
+              <div class="slider-row-item">
+                <div class="slider-label-col">
+                  <span class="slider-name">Burst Limit</span>
+                  <span class="slider-desc">Maximum burst requests in short time</span>
+                </div>
+                <div class="slider-val-box" id="valBoxBurstRate">20</div>
+                <div class="slider-track-wrap">
+                  <input type="range" class="range-slider slider-blue" id="rangeBurstRate" min="1" max="100" value="20">
+                </div>
+                <div class="slider-range-bounds">1 - 100</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Config Card 3: Authentication & Access Control -->
+          <div class="policy-config-card" id="cardAuthAccess">
+            <div class="config-card-header">
+              <div class="config-header-left">
+                <div class="config-icon-circle">
+                  <!-- User shield icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div class="config-title-group">
+                  <h3 class="config-card-title">Authentication & Access Control</h3>
+                  <p class="config-card-subtitle">Manage authentication and access rules</p>
+                </div>
+              </div>
+              <div class="config-toggle-switch active" id="toggleAuthAccess" data-target="bodyAuthAccess">
+                <span class="toggle-knob"></span>
+                <span class="toggle-status-lbl">Enabled</span>
+              </div>
+            </div>
+
+            <div class="config-card-body" id="bodyAuthAccess">
+              <div class="sub-rules-grid">
+                
+                <!-- Rule 1: Require Authentication -->
+                <div class="sub-rule-item">
+                  <div class="sub-rule-text">
+                    <span class="sub-rule-title">Require Authentication</span>
+                    <span class="sub-rule-desc">All API requests must be authenticated</span>
+                  </div>
+                </div>
+
+                <!-- Rule 2: Token Validation (Active) -->
+                <div class="sub-rule-item flex-between">
+                  <div class="sub-rule-text">
+                    <span class="sub-rule-title">Token Validation</span>
+                    <span class="sub-rule-desc">Validate JWT tokens and expiry</span>
+                  </div>
+                  <div class="pill-mini-switch active" id="switchTokenVal">
+                    <span class="mini-knob"></span>
+                  </div>
+                </div>
+
+                <!-- Rule 3: Block Unknown Devices (Active) -->
+                <div class="sub-rule-item flex-between">
+                  <div class="sub-rule-text">
+                    <span class="sub-rule-title">Block Unknown Devices</span>
+                    <span class="sub-rule-desc">Block requests from unregistered devices</span>
+                  </div>
+                  <div class="pill-mini-switch active" id="switchBlockDevices">
+                    <span class="mini-knob"></span>
+                  </div>
+                </div>
+
+                <!-- Rule 4: Multi-Factor Authentication (Off) -->
+                <div class="sub-rule-item flex-between">
+                  <div class="sub-rule-text">
+                    <span class="sub-rule-title">Multi-Factor Authentication</span>
+                    <span class="sub-rule-desc">Require MFA for sensitive endpoints</span>
+                  </div>
+                  <div class="pill-mini-switch" id="switchMFA">
+                    <span class="mini-knob"></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Config Card 4: Sensitive Endpoints Protection -->
+          <div class="policy-config-card" id="cardEndpointsProtection">
+            <div class="config-card-header">
+              <div class="config-header-left">
+                <div class="config-icon-circle">
+                  <!-- Lock icon -->
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </div>
+                <div class="config-title-group">
+                  <h3 class="config-card-title">Sensitive Endpoints Protection</h3>
+                  <p class="config-card-subtitle">Special protection for critical API endpoints</p>
+                </div>
+              </div>
+              <div class="config-toggle-switch active" id="toggleEndpointsProtection" data-target="bodyEndpointsProtection">
+                <span class="toggle-knob"></span>
+                <span class="toggle-status-lbl">Enabled</span>
+              </div>
+            </div>
+
+            <div class="config-card-body" id="bodyEndpointsProtection">
+              <div class="endpoints-items-row">
+                
+                <div class="endpoint-spec-item">
+                  <span class="endpoint-spec-title">Protect Admin Endpoints</span>
+                  <span class="endpoint-spec-desc">Apply strict rules for /api/admin/*</span>
+                </div>
+
+                <div class="endpoint-spec-item">
+                  <span class="endpoint-spec-title">Protect Financial Endpoints</span>
+                  <span class="endpoint-spec-desc">Apply strict rules for /api/payment/*</span>
+                </div>
+
+                <div class="endpoint-spec-item flex-between">
+                  <div>
+                    <span class="endpoint-spec-title">Require Elevated Permissions</span>
+                    <span class="endpoint-spec-desc">Check user roles for sensitive operations</span>
+                  </div>
+                  <div class="pill-mini-switch active" id="switchElevatedPerms">
+                    <span class="mini-knob"></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= RIGHT COLUMN: 3 CARDS ================= -->
+        <div class="policies-right-col">
+          
+          <!-- Right Card 1: Policy Overview Donut -->
+          <div class="policy-side-card" id="cardPolicyOverview">
+            <div class="side-card-header">
+              <div class="side-head-left">
+                <svg viewBox="0 0 24 24" class="side-head-icon" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                </svg>
+                <h3 class="side-card-title">Policy Overview</h3>
+              </div>
+            </div>
+
+            <div class="donut-overview-body">
+              <!-- SVG Donut Chart with glowing segments -->
+              <div class="donut-chart-container">
+                <svg class="donut-svg" viewBox="0 0 160 160">
+                  <defs>
+                    <linearGradient id="gradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#10b981"/>
+                      <stop offset="100%" stop-color="#059669"/>
+                    </linearGradient>
+                    <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#38bdf8"/>
+                      <stop offset="100%" stop-color="#0284c7"/>
+                    </linearGradient>
+                    <linearGradient id="gradYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#fbbf24"/>
+                      <stop offset="100%" stop-color="#d97706"/>
+                    </linearGradient>
+                    <linearGradient id="gradRed" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#ef4444"/>
+                      <stop offset="100%" stop-color="#dc2626"/>
+                    </linearGradient>
+                  </defs>
+                  
+                  <!-- Segments (Circumference: 2 * PI * 58 ≈ 364.4) -->
+                  <!-- Total 12: Green (4/12 = 33.3% = 121.5), Blue (3/12 = 25% = 91.1), Yellow (3/12 = 25% = 91.1), Red (2/12 = 16.7% = 60.7) -->
+                  <circle class="donut-segment seg-green" cx="80" cy="80" r="58"
+                          stroke="url(#gradGreen)" stroke-width="15" fill="none"
+                          stroke-dasharray="117.5 246.9" stroke-dashoffset="0"/>
+                  <circle class="donut-segment seg-blue" cx="80" cy="80" r="58"
+                          stroke="url(#gradBlue)" stroke-width="15" fill="none"
+                          stroke-dasharray="87.1 277.3" stroke-dashoffset="-121.5"/>
+                  <circle class="donut-segment seg-yellow" cx="80" cy="80" r="58"
+                          stroke="url(#gradYellow)" stroke-width="15" fill="none"
+                          stroke-dasharray="87.1 277.3" stroke-dashoffset="-212.6"/>
+                  <circle class="donut-segment seg-red" cx="80" cy="80" r="58"
+                          stroke="url(#gradRed)" stroke-width="15" fill="none"
+                          stroke-dasharray="56.7 307.7" stroke-dashoffset="-303.7"/>
+                </svg>
+                <div class="donut-center-info">
+                  <div class="donut-center-num" id="donutTotalCount">12</div>
+                  <div class="donut-center-lbl">Active<br>Policies</div>
+                </div>
+              </div>
+
+              <!-- Legend with Counts -->
+              <div class="donut-legend-col">
+                <div class="legend-row-pair" data-category="access">
+                  <div class="legend-dot-label">
+                    <span class="dot-color dot-green"></span>
+                    <span class="legend-name">Access Control</span>
+                  </div>
+                  <span class="legend-value font-mono" id="lgCountAccess">4</span>
+                </div>
+
+                <div class="legend-row-pair" data-category="rate">
+                  <div class="legend-dot-label">
+                    <span class="dot-color dot-blue"></span>
+                    <span class="legend-name">Rate Limiting</span>
+                  </div>
+                  <span class="legend-value font-mono" id="lgCountRate">3</span>
+                </div>
+
+                <div class="legend-row-pair" data-category="threat">
+                  <div class="legend-dot-label">
+                    <span class="dot-color dot-yellow"></span>
+                    <span class="legend-name">Threat Detection</span>
+                  </div>
+                  <span class="legend-value font-mono" id="lgCountThreat">3</span>
+                </div>
+
+                <div class="legend-row-pair" data-category="endpoint">
+                  <div class="legend-dot-label">
+                    <span class="dot-color dot-red"></span>
+                    <span class="legend-name">Endpoint Protection</span>
+                  </div>
+                  <span class="legend-value font-mono" id="lgCountEndpoint">2</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right Card 2: Recent Policy Changes -->
+          <div class="policy-side-card" id="cardRecentChanges">
+            <div class="side-card-header">
+              <div class="side-head-left">
+                <svg viewBox="0 0 24 24" class="side-head-icon" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                <h3 class="side-card-title">Recent Policy Changes</h3>
+              </div>
+              <a href="#" class="side-view-all-link">View All &rarr;</a>
+            </div>
+
+            <div class="changes-timeline-list">
+              
+              <!-- Change 1 (Green) -->
+              <div class="change-timeline-item">
+                <div class="change-node-col">
+                  <span class="node-circle bg-green"></span>
+                  <span class="node-line"></span>
+                </div>
+                <div class="change-info-col">
+                  <span class="change-title">Rate limit updated</span>
+                  <span class="change-diff">100 &rarr; 150 requests/min</span>
+                </div>
+                <div class="change-meta-col">
+                  <span class="change-time font-mono">12:45:21</span>
+                  <span class="change-author">by Admin</span>
+                </div>
+              </div>
+
+              <!-- Change 2 (Cyan) -->
+              <div class="change-timeline-item">
+                <div class="change-node-col">
+                  <span class="node-circle bg-cyan"></span>
+                  <span class="node-line"></span>
+                </div>
+                <div class="change-info-col">
+                  <span class="change-title">Critical threshold changed</span>
+                  <span class="change-diff">70 &rarr; 80</span>
+                </div>
+                <div class="change-meta-col">
+                  <span class="change-time font-mono">11:32:10</span>
+                  <span class="change-author">by Admin</span>
+                </div>
+              </div>
+
+              <!-- Change 3 (Green) -->
+              <div class="change-timeline-item">
+                <div class="change-node-col">
+                  <span class="node-circle bg-green"></span>
+                  <span class="node-line"></span>
+                </div>
+                <div class="change-info-col">
+                  <span class="change-title">New endpoint rule added</span>
+                  <span class="change-diff mono-diff">/api/admin/* protection</span>
+                </div>
+                <div class="change-meta-col">
+                  <span class="change-time font-mono">10:25:33</span>
+                  <span class="change-author">by Admin</span>
+                </div>
+              </div>
+
+              <!-- Change 4 (Yellow) -->
+              <div class="change-timeline-item">
+                <div class="change-node-col">
+                  <span class="node-circle bg-yellow"></span>
+                  <span class="node-line"></span>
+                </div>
+                <div class="change-info-col">
+                  <span class="change-title">MFA enabled</span>
+                  <span class="change-diff">Multi-factor authentication</span>
+                </div>
+                <div class="change-meta-col">
+                  <span class="change-time font-mono">09:12:18</span>
+                  <span class="change-author">by Admin</span>
+                </div>
+              </div>
+
+              <!-- Change 5 (Blue) -->
+              <div class="change-timeline-item">
+                <div class="change-node-col">
+                  <span class="node-circle bg-blue"></span>
+                </div>
+                <div class="change-info-col">
+                  <span class="change-title">Device blocking updated</span>
+                  <span class="change-diff">Unknown devices will be blocked</span>
+                </div>
+                <div class="change-meta-col">
+                  <span class="change-time font-mono">08:45:02</span>
+                  <span class="change-author">by Admin</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right Card 3: Policy Templates -->
+          <div class="policy-side-card" id="cardPolicyTemplates">
+            <div class="side-card-header no-border">
+              <div class="side-head-left">
+                <svg viewBox="0 0 24 24" class="side-head-icon" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <div>
+                  <h3 class="side-card-title">Policy Templates</h3>
+                  <p class="side-card-sub">Quick apply common security configurations</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="templates-list-col">
+              
+              <!-- Template 1: Strict Security -->
+              <div class="template-item-row tpl-strict" data-template="strict">
+                <div class="tpl-left-content">
+                  <div class="tpl-icon-box tpl-box-green">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                  </div>
+                  <div class="tpl-text-group">
+                    <span class="tpl-name">Strict Security</span>
+                    <span class="tpl-desc">Maximum protection</span>
+                  </div>
+                </div>
+                <button class="btn-apply-tpl btn-apply-green" type="button">Apply</button>
+              </div>
+
+              <!-- Template 2: Balanced -->
+              <div class="template-item-row tpl-balanced active" data-template="balanced">
+                <div class="tpl-left-content">
+                  <div class="tpl-icon-box tpl-box-blue">
+                    <!-- Balance Scales -->
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                      <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+                      <path d="M7 21h10"/>
+                      <path d="M12 3v18"/>
+                      <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+                    </svg>
+                  </div>
+                  <div class="tpl-text-group">
+                    <span class="tpl-name">Balanced</span>
+                    <span class="tpl-desc">Recommended for production</span>
+                  </div>
+                </div>
+                <button class="btn-apply-tpl btn-apply-blue" type="button">Apply</button>
+              </div>
+
+              <!-- Template 3: Development -->
+              <div class="template-item-row tpl-dev" data-template="dev">
+                <div class="tpl-left-content">
+                  <div class="tpl-icon-box tpl-box-purple">
+                    <!-- Code brackets -->
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="16 18 22 12 16 6"/>
+                      <polyline points="8 6 2 12 8 18"/>
+                    </svg>
+                  </div>
+                  <div class="tpl-text-group">
+                    <span class="tpl-name">Development</span>
+                    <span class="tpl-desc">Relaxed rules for testing</span>
+                  </div>
+                </div>
+                <button class="btn-apply-tpl btn-apply-purple" type="button">Apply</button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Toast Feedback Notification -->
+  <div class="policies-toast" id="policiesToast">
+    <div class="toast-indicator"></div>
+    <div class="toast-body">
+      <div class="toast-title" id="toastTitle">Policies Saved</div>
+      <div class="toast-msg" id="toastMsg">All security thresholds and rules have been updated.</div>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script src="api-client.js"></script>
+  <script src="policies.js"></script>
+</body>
+</html>

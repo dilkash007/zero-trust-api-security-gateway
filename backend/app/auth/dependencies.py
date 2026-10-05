@@ -65,3 +65,22 @@ def get_current_user(
         )
 
     return user
+
+
+def get_current_user_optional(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_scheme),
+    db: Session = Depends(get_db),
+) -> Optional[User]:
+    """Optional user dependency: returns active User if valid token provided, else None."""
+    if not credentials or not credentials.credentials:
+        return None
+    try:
+        payload = decode_access_token(credentials.credentials)
+        user_id_raw = payload.get("sub")
+        if user_id_raw is None:
+            return None
+        user = db.query(User).filter(User.id == int(user_id_raw)).first()
+        return user if user and user.is_active else None
+    except Exception:
+        return None
+

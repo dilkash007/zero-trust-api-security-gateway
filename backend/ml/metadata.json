@@ -1,0 +1,24 @@
+{
+  "model_type": "IsolationForest",
+  "version": "1.0",
+  "trained_at": "2026-10-05T13:21:51.596576+00:00",
+  "training_samples": 1316,
+  "features": [
+    "requests_per_minute",
+    "unique_endpoints",
+    "failed_requests",
+    "sensitive_endpoint_access",
+    "device_change",
+    "location_change",
+    "current_hour",
+    "request_size",
+    "response_size",
+    "session_age"
+  ],
+  "status": "READY",
+  "hyperparameters": {
+    "n_estimators": 150,
+    "contamination": "auto",
+    "random_state": 42
+  }
+}

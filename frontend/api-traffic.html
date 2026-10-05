@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live API Traffic - ZERO-TRUST API SECURITY GATEWAY</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="api-traffic.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- ================= SIDEBAR NAVIGATION ================= -->
+    <aside class="sidebar">
+      
+      <div class="sidebar-top">
+        <!-- Brand Header -->
+        <a href="dashboard.html" class="sidebar-brand-link" style="text-decoration:none;">
+          <div class="sidebar-brand">
+            <svg class="brand-shield-icon" viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sideShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00d2ff"/>
+                  <stop offset="50%" stop-color="#0284c7"/>
+                  <stop offset="100%" stop-color="#1e3a8a"/>
+                </linearGradient>
+              </defs>
+              <path d="M30 4L7 14V32C7 48.5 17 62 30 66C43 62 53 48.5 53 32V14L30 4Z" 
+                    fill="url(#sideShieldGrad)" 
+                    stroke="#38bdf8" 
+                    stroke-width="2.5"/>
+              <rect x="23" y="32" width="14" height="12" rx="2.5" fill="#ffffff"/>
+              <path d="M26 32V27C26 24.8 27.8 23 30 23C32.2 23 34 24.8 34 27V32" 
+                    stroke="#ffffff" 
+                    stroke-width="2.5" 
+                    stroke-linecap="round"/>
+            </svg>
+            <div class="brand-text">
+              <span class="brand-title">ZERO-TRUST</span>
+              <span class="brand-subtitle">API SECURITY GATEWAY</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <!-- Home / Dashboard Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="api-protector.html" class="nav-item">
+            <!-- Target API Shield / Reverse Proxy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 12 9 15 12"/>
+              <line x1="12" y1="9" x2="12" y2="15"/>
+            </svg>
+            <span>API Protector</span>
+            <span class="nav-badge-pulse" style="background:rgba(16,185,129,0.2);color:#10b981;font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:auto;">LIVE</span>
+          </a>
+
+          <a href="api-traffic.html" class="nav-item active">
+            <!-- Bar Chart Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <span>API Traffic</span>
+          </a>
+
+          <a href="threat-center.html" class="nav-item">
+            <!-- Shield Exclamation Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>Threat Center</span>
+          </a>
+
+          <a href="attack-simulator.html" class="nav-item">
+            <!-- Flask / Attack Simulator Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/>
+              <line x1="8.5" y1="2" x2="15.5" y2="2"/>
+              <line x1="7" y1="16" x2="17" y2="16"/>
+            </svg>
+            <span>Attack Simulator</span>
+          </a>
+
+          <a href="policies.html" class="nav-item">
+            <!-- Document / Policy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span>Policies</span>
+          </a>
+
+          <a href="settings.html" class="nav-item">
+            <!-- Settings Gear Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Sidebar Bottom System Status -->
+      <div class="sidebar-bottom">
+        <div class="system-status-card">
+          <div class="status-header">
+            <span class="status-indicator-dot"></span>
+            <span>System Online</span>
+          </div>
+          <div class="status-meta">
+            <span>Last Updated</span>
+            <span class="status-time" id="sidebarClockTime">Oct 05, 2026 12:58:31</span>
+          </div>
+        </div>
+
+        <a href="zerotrust.html" class="btn-logout" title="Sign out to Login Screen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>Logout</span>
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-wrapper">
+      
+      <!-- Top Search & Profile Bar -->
+      <header class="top-header-bar">
+        
+        <div class="search-container">
+          <span class="search-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </span>
+          <input 
+            type="text" 
+            id="globalSearch" 
+            class="search-input" 
+            placeholder="Search users, endpoints, devices..."
+          />
+        </div>
+
+        <div class="header-actions">
+          
+          <!-- System Protected Badge -->
+          <div class="system-protection-badge">
+            <span class="status-indicator-dot"></span>
+            <div class="badge-text-group">
+              <span class="badge-title">System Protected</span>
+              <span class="badge-subtitle">All systems operational</span>
+            </div>
+          </div>
+
+          <!-- Notification Bell (Backend-ready) -->
+          <button type="button" class="notification-btn" aria-label="Notifications" id="notificationBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notification-count" id="notificationCount">3</span>
+          </button>
+
+          <!-- Admin User Profile -->
+          <div class="user-profile-widget">
+            <div class="user-avatar-circle">A</div>
+            <div class="user-info-text">
+              <span class="user-name">Admin</span>
+              <span class="user-email">admin@example.com</span>
+            </div>
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- ================= PAGE TITLE & RANGE HEADER ================= -->
+      <div class="traffic-header-banner">
+        <div class="traffic-title-group">
+          <div class="traffic-title-row">
+            <h1 class="traffic-main-title">Live API Traffic</h1>
+            <span class="live-status-pill">
+              <span class="live-pulse-dot"></span>
+              LIVE
+            </span>
+          </div>
+          <p class="traffic-subtext">Monitor real-time API requests, risk scores and security actions</p>
+        </div>
+
+        <!-- Time Range Dropdown Selector -->
+        <div class="time-range-picker" id="timeRangeDropdown">
+          <button class="time-range-btn" id="timeRangeBtn">
+            <span id="selectedTimeRange">Last 1 Hour</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="time-dropdown-menu" id="timeDropdownMenu">
+            <div class="dropdown-option" data-range="15m">Last 15 Minutes</div>
+            <div class="dropdown-option" data-range="30m">Last 30 Minutes</div>
+            <div class="dropdown-option active" data-range="1h">Last 1 Hour</div>
+            <div class="dropdown-option" data-range="6h">Last 6 Hours</div>
+            <div class="dropdown-option" data-range="24h">Last 24 Hours</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 4 KPI STAT CARDS ================= -->
+      <section class="traffic-kpi-grid">
+        
+        <!-- Card 1: Total Requests -->
+        <div class="kpi-traffic-card card-requests">
+          <div class="kpi-card-header">
+            <div class="kpi-icon-box box-requests">
+              <!-- Database Cylinder Stack Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              </svg>
+            </div>
+            <div class="kpi-stats-col">
+              <span class="kpi-big-value" id="kpiTotalRequests">128,492</span>
+              <span class="kpi-title-label">Total Requests</span>
+            </div>
+          </div>
+          <div class="kpi-card-bottom">
+            <span class="kpi-trend-tag trend-green">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+              12.4%
+            </span>
+            <div class="kpi-sparkline-wrap">
+              <canvas id="sparklineTraffic1" width="120" height="32"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Blocked Requests -->
+        <div class="kpi-traffic-card card-blocked">
+          <div class="kpi-card-header">
+            <div class="kpi-icon-box box-blocked">
+              <!-- Blocked Prohibition Circle-Slash Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+              </svg>
+            </div>
+            <div class="kpi-stats-col">
+              <span class="kpi-big-value" id="kpiBlockedRequests">1,284</span>
+              <span class="kpi-title-label">Blocked Requests</span>
+            </div>
+          </div>
+          <div class="kpi-card-bottom">
+            <span class="kpi-trend-tag trend-red">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+              8.2%
+            </span>
+            <div class="kpi-sparkline-wrap">
+              <canvas id="sparklineTraffic2" width="120" height="32"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: High Risk Requests -->
+        <div class="kpi-traffic-card card-risk">
+          <div class="kpi-card-header">
+            <div class="kpi-icon-box box-risk">
+              <!-- Warning Triangle Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <div class="kpi-stats-col">
+              <span class="kpi-big-value" id="kpiRiskRequests">43</span>
+              <span class="kpi-title-label">High Risk Requests</span>
+            </div>
+          </div>
+          <div class="kpi-card-bottom">
+            <span class="kpi-trend-tag trend-orange">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+              15.6%
+            </span>
+            <div class="kpi-sparkline-wrap">
+              <canvas id="sparklineTraffic3" width="120" height="32"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Unique Users -->
+        <div class="kpi-traffic-card card-users">
+          <div class="kpi-card-header">
+            <div class="kpi-icon-box box-users">
+              <!-- Two Users Silhouette Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="kpi-stats-col">
+              <span class="kpi-big-value" id="kpiUniqueUsers">812</span>
+              <span class="kpi-title-label">Unique Users</span>
+            </div>
+          </div>
+          <div class="kpi-card-bottom">
+            <span class="kpi-trend-tag trend-green">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+              6.1%
+            </span>
+            <div class="kpi-sparkline-wrap">
+              <canvas id="sparklineTraffic4" width="120" height="32"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= FILTER TOOLBAR ================= -->
+      <section class="traffic-filters-bar">
+        
+        <div class="filter-dropdowns-group">
+          
+          <!-- Filter 1: Users -->
+          <div class="filter-pill-select" id="filterUsersSelect">
+            <span class="filter-label" id="labelUserFilter">All Users</span>
+            <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <div class="filter-options-menu">
+              <div class="filter-opt-item active" data-filter="user" data-value="all">All Users</div>
+              <div class="filter-opt-item" data-filter="user" data-value="X92">X92</div>
+              <div class="filter-opt-item" data-filter="user" data-value="Rahul">Rahul</div>
+              <div class="filter-opt-item" data-filter="user" data-value="Amit">Amit</div>
+              <div class="filter-opt-item" data-filter="user" data-value="Ravi">Ravi</div>
+              <div class="filter-opt-item" data-filter="user" data-value="Unknown">Unknown</div>
+              <div class="filter-opt-item" data-filter="user" data-value="TestUser">TestUser</div>
+            </div>
+          </div>
+
+          <!-- Filter 2: Endpoints -->
+          <div class="filter-pill-select" id="filterEndpointsSelect">
+            <span class="filter-label" id="labelEndpointFilter">All Endpoints</span>
+            <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <div class="filter-options-menu">
+              <div class="filter-opt-item active" data-filter="endpoint" data-value="all">All Endpoints</div>
+              <div class="filter-opt-item" data-filter="endpoint" data-value="/api/admin">/api/admin/*</div>
+              <div class="filter-opt-item" data-filter="endpoint" data-value="/api/profile">/api/profile</div>
+              <div class="filter-opt-item" data-filter="endpoint" data-value="/api/orders">/api/orders</div>
+              <div class="filter-opt-item" data-filter="endpoint" data-value="/api/payment">/api/payment</div>
+              <div class="filter-opt-item" data-filter="endpoint" data-value="/api/login">/api/login</div>
+            </div>
+          </div>
+
+          <!-- Filter 3: Devices -->
+          <div class="filter-pill-select" id="filterDevicesSelect">
+            <span class="filter-label" id="labelDeviceFilter">All Devices</span>
+            <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <div class="filter-options-menu">
+              <div class="filter-opt-item active" data-filter="device" data-value="all">All Devices</div>
+              <div class="filter-opt-item" data-filter="device" data-value="iPhone">iPhone</div>
+              <div class="filter-opt-item" data-filter="device" data-value="Android">Android</div>
+              <div class="filter-opt-item" data-filter="device" data-value="Chrome">Chrome</div>
+              <div class="filter-opt-item" data-filter="device" data-value="Windows">Windows</div>
+              <div class="filter-opt-item" data-filter="device" data-value="Unknown">Unknown</div>
+            </div>
+          </div>
+
+          <!-- Filter 4: Locations -->
+          <div class="filter-pill-select" id="filterLocationsSelect">
+            <span class="filter-label" id="labelLocationFilter">All Locations</span>
+            <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <div class="filter-options-menu">
+              <div class="filter-opt-item active" data-filter="location" data-value="all">All Locations</div>
+              <div class="filter-opt-item" data-filter="location" data-value="India">India</div>
+              <div class="filter-opt-item" data-filter="location" data-value="London, UK">London, UK</div>
+              <div class="filter-opt-item" data-filter="location" data-value="Russia">Russia</div>
+              <div class="filter-opt-item" data-filter="location" data-value="USA">USA</div>
+              <div class="filter-opt-item" data-filter="location" data-value="Germany">Germany</div>
+            </div>
+          </div>
+
+          <!-- Filter 5: Risk Levels -->
+          <div class="filter-pill-select" id="filterRiskSelect">
+            <span class="filter-label" id="labelRiskFilter">All Risk Levels</span>
+            <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <div class="filter-options-menu">
+              <div class="filter-opt-item active" data-filter="risk" data-value="all">All Risk Levels</div>
+              <div class="filter-opt-item" data-filter="risk" data-value="critical">Critical (&gt;80)</div>
+              <div class="filter-opt-item" data-filter="risk" data-value="high">High (60-80)</div>
+              <div class="filter-opt-item" data-filter="risk" data-value="medium">Medium (25-59)</div>
+              <div class="filter-opt-item" data-filter="risk" data-value="low">Low (&lt;25)</div>
+            </div>
+          </div>
+
+          <!-- Filter 6: Actions -->
+          <div class="filter-pill-select" id="filterActionsSelect">
+            <span class="filter-label" id="labelActionFilter">All Actions</span>
+            <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <div class="filter-options-menu">
+              <div class="filter-opt-item active" data-filter="action" data-value="all">All Actions</div>
+              <div class="filter-opt-item" data-filter="action" data-value="BLOCK">BLOCK</div>
+              <div class="filter-opt-item" data-filter="action" data-value="ALLOW">ALLOW</div>
+              <div class="filter-opt-item" data-filter="action" data-value="LIMIT">LIMIT</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Inline Table Search -->
+        <div class="table-search-box">
+          <svg class="search-mini-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input 
+            type="text" 
+            id="tableFilterInput" 
+            class="table-search-input" 
+            placeholder="Search requests..."
+          />
+        </div>
+
+      </section>
+
+      <!-- ================= SPLIT VIEW: TABLE & DETAILS DRAWER ================= -->
+      <section class="traffic-workspace-layout">
+        
+        <!-- ================= LEFT COLUMN: TRAFFIC TABLE ================= -->
+        <div class="traffic-table-card">
+          <div class="traffic-table-scroll-wrap">
+            <table class="traffic-data-table" id="trafficTable">
+              <thead>
+                <tr>
+                  <th class="col-time sortable" id="sortTimeHeader">
+                    <span class="th-content">
+                      Time 
+                      <svg class="sort-arrows-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="7 9 12 4 17 9"/>
+                        <polyline points="7 15 12 20 17 15"/>
+                      </svg>
+                    </span>
+                  </th>
+                  <th class="col-user">User</th>
+                  <th class="col-endpoint">Endpoint</th>
+                  <th class="col-method">Method</th>
+                  <th class="col-device">Device</th>
+                  <th class="col-location">Location</th>
+                  <th class="col-risk">Risk</th>
+                  <th class="col-action">Action</th>
+                  <th class="col-menu"></th>
+                </tr>
+              </thead>
+              <tbody id="trafficTableBody">
+                
+                <!-- ROW 1 (DEFAULT SELECTED) -->
+                <tr class="traffic-row selected-row row-risk-critical" data-id="REQ-10923">
+                  <td class="col-time cell-highlight-red">12:58:31</td>
+                  <td class="col-user">X92</td>
+                  <td class="col-endpoint">/api/admin/users</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">iPhone</td>
+                  <td class="col-location">London, UK</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-red">94</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-block">BLOCK</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 2 -->
+                <tr class="traffic-row" data-id="REQ-10922">
+                  <td class="col-time">12:58:28</td>
+                  <td class="col-user">Rahul</td>
+                  <td class="col-endpoint">/api/profile</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">Android</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-green">12</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 3 -->
+                <tr class="traffic-row" data-id="REQ-10921">
+                  <td class="col-time">12:58:25</td>
+                  <td class="col-user">Amit</td>
+                  <td class="col-endpoint">/api/orders</td>
+                  <td class="col-method">POST</td>
+                  <td class="col-device">Chrome</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-yellow">28</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 4 -->
+                <tr class="traffic-row" data-id="REQ-10920">
+                  <td class="col-time">12:58:21</td>
+                  <td class="col-user">Ravi</td>
+                  <td class="col-endpoint">/api/payment</td>
+                  <td class="col-method">POST</td>
+                  <td class="col-device">Android</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-orange">71</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-limit">LIMIT</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 5 -->
+                <tr class="traffic-row" data-id="REQ-10919">
+                  <td class="col-time">12:58:18</td>
+                  <td class="col-user">Sneha</td>
+                  <td class="col-endpoint">/api/products</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">Chrome</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-green">18</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 6 -->
+                <tr class="traffic-row" data-id="REQ-10918">
+                  <td class="col-time">12:58:15</td>
+                  <td class="col-user">Unknown</td>
+                  <td class="col-endpoint">/api/login</td>
+                  <td class="col-method">POST</td>
+                  <td class="col-device">Unknown</td>
+                  <td class="col-location">Russia</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-red">87</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-block">BLOCK</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 7 -->
+                <tr class="traffic-row" data-id="REQ-10917">
+                  <td class="col-time">12:58:13</td>
+                  <td class="col-user">Karan</td>
+                  <td class="col-endpoint">/api/cart</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">Android</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-green">25</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 8 -->
+                <tr class="traffic-row" data-id="REQ-10916">
+                  <td class="col-time">12:58:10</td>
+                  <td class="col-user">Priya</td>
+                  <td class="col-endpoint">/api/profile</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">iPhone</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-green">34</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 9 -->
+                <tr class="traffic-row" data-id="REQ-10915">
+                  <td class="col-time">12:58:08</td>
+                  <td class="col-user">TestUser</td>
+                  <td class="col-endpoint">/api/admin</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">Windows</td>
+                  <td class="col-location">USA</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-red">91</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-block">BLOCK</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 10 -->
+                <tr class="traffic-row" data-id="REQ-10914">
+                  <td class="col-time">12:58:05</td>
+                  <td class="col-user">Mohit</td>
+                  <td class="col-endpoint">/api/orders</td>
+                  <td class="col-method">POST</td>
+                  <td class="col-device">Chrome</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-green">22</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 11 -->
+                <tr class="traffic-row" data-id="REQ-10913">
+                  <td class="col-time">12:58:02</td>
+                  <td class="col-user">Neha</td>
+                  <td class="col-endpoint">/api/search</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">Android</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-green">19</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 12 -->
+                <tr class="traffic-row" data-id="REQ-10912">
+                  <td class="col-time">12:57:59</td>
+                  <td class="col-user">Ankit</td>
+                  <td class="col-endpoint">/api/upload</td>
+                  <td class="col-method">POST</td>
+                  <td class="col-device">Chrome</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-orange">62</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-limit">LIMIT</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 13 -->
+                <tr class="traffic-row" data-id="REQ-10911">
+                  <td class="col-time">12:57:55</td>
+                  <td class="col-user">Unknown</td>
+                  <td class="col-endpoint">/api/admin/users</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">Unknown</td>
+                  <td class="col-location">Germany</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-red">89</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-block">BLOCK</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 14 -->
+                <tr class="traffic-row" data-id="REQ-10910">
+                  <td class="col-time">12:57:52</td>
+                  <td class="col-user">Pooja</td>
+                  <td class="col-endpoint">/api/profile</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">iPhone</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-green">14</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- ROW 15 -->
+                <tr class="traffic-row" data-id="REQ-10909">
+                  <td class="col-time">12:57:50</td>
+                  <td class="col-user">Rohit</td>
+                  <td class="col-endpoint">/api/orders</td>
+                  <td class="col-method">GET</td>
+                  <td class="col-device">Chrome</td>
+                  <td class="col-location">India</td>
+                  <td class="col-risk">
+                    <span class="badge-risk risk-green">27</span>
+                  </td>
+                  <td class="col-action">
+                    <span class="badge-action action-allow">ALLOW</span>
+                  </td>
+                  <td class="col-menu">
+                    <button class="row-menu-btn" aria-label="Row actions">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Pagination Footer -->
+          <div class="traffic-table-footer">
+            <span class="records-count-text">Showing 1 - 15 of 128,492 requests</span>
+            
+            <div class="pagination-controls">
+              <button class="page-nav-btn" aria-label="Previous Page">&lsaquo;</button>
+              <button class="page-number-btn active">1</button>
+              <button class="page-number-btn">2</button>
+              <button class="page-number-btn">3</button>
+              <button class="page-number-btn">4</button>
+              <button class="page-number-btn">5</button>
+              <span class="page-ellipsis">...</span>
+              <button class="page-number-btn">8566</button>
+              <button class="page-nav-btn" aria-label="Next Page">&rsaquo;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= RIGHT COLUMN: REQUEST DETAILS INSPECTOR ================= -->
+        <aside class="traffic-inspector-panel" id="inspectorPanel">
+          
+          <!-- Inspector Header -->
+          <div class="inspector-header">
+            <div class="inspector-title-row">
+              <svg class="inspector-shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <h2 class="inspector-title">Request Details</h2>
+            </div>
+            <button class="btn-close-inspector" id="closeInspectorBtn" aria-label="Close details">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Main Details Card -->
+          <div class="inspector-card-body">
+            
+            <!-- Metadata Sub-card with Status Badge -->
+            <div class="request-summary-box">
+              <div class="summary-top-tag">
+                <span class="badge-status-glow" id="detailStatusBadge">BLOCKED</span>
+              </div>
+
+              <div class="metadata-grid">
+                
+                <div class="meta-field">
+                  <span class="meta-label">Request ID</span>
+                  <span class="meta-val meta-mono" id="detailReqId">REQ-10923</span>
+                </div>
+
+                <div class="meta-field">
+                  <span class="meta-label">Timestamp</span>
+                  <span class="meta-val meta-mono" id="detailTimestamp">2026-10-05 12:58:31</span>
+                </div>
+
+                <div class="meta-field">
+                  <span class="meta-label">User</span>
+                  <span class="meta-val" id="detailUser">X92</span>
+                </div>
+
+                <div class="meta-field">
+                  <span class="meta-label">IP Address</span>
+                  <span class="meta-val meta-mono" id="detailIp">103.21.XX.XX</span>
+                </div>
+
+                <div class="meta-field">
+                  <span class="meta-label">Endpoint</span>
+                  <span class="meta-val meta-mono" id="detailEndpoint">GET /api/admin/users</span>
+                </div>
+
+                <div class="meta-field">
+                  <span class="meta-label">User Agent</span>
+                  <span class="meta-val meta-agent" id="detailUserAgent">Mozilla/5.0 (iPhone; iOS 17)</span>
+                </div>
+
+                <div class="meta-field">
+                  <span class="meta-label">Device</span>
+                  <span class="meta-val" id="detailDevice">Unknown iPhone</span>
+                </div>
+
+                <div class="meta-field">
+                  <span class="meta-label">Risk Score</span>
+                  <div class="risk-score-display">
+                    <span class="score-ratio" id="detailRiskRatio"><strong id="detailRiskNum">94</strong> / 100</span>
+                    <span class="badge-critical" id="detailRiskTag">CRITICAL</span>
+                  </div>
+                </div>
+
+                <div class="meta-field meta-field-full">
+                  <span class="meta-label">Location</span>
+                  <span class="meta-val" id="detailLocation">London, UK 🇬🇧</span>
+                </div>
+
+              </div>
+
+              <!-- Deep Packet Forensics (Opens & Expands in Detail on Hover) -->
+              <div class="forensic-hover-drawer" id="forensicHoverDrawer">
+                <div class="drawer-header-pill">
+                  <span class="drawer-pulse-indicator"></span>
+                  <span class="drawer-prompt-text">Deep Packet Forensics &bull; Hover to Inspect</span>
+                  <svg class="drawer-down-arrow" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="drawer-expanded-content">
+                  <div class="forensic-meta-row">
+                    <span class="f-label">TLS / Cipher:</span>
+                    <span class="f-val" id="fTls">TLS 1.3 &bull; AES_256_GCM</span>
+                  </div>
+                  <div class="forensic-meta-row">
+                    <span class="f-label">Origin Network:</span>
+                    <span class="f-val" id="fNetwork">AS13335 (Cloudflare London)</span>
+                  </div>
+                  <div class="forensic-meta-row">
+                    <span class="f-label">Zero-Trust Policy:</span>
+                    <span class="f-val text-red" id="fPolicy">Rule #ZTP-402 &bull; Admin Geofence</span>
+                  </div>
+                  <div class="forensic-meta-row">
+                    <span class="f-label">Inspection Latency:</span>
+                    <span class="f-val text-green" id="fLatency">1.2ms &bull; Inline WAF Engine</span>
+                  </div>
+                  <div class="forensic-meta-row">
+                    <span class="f-label">Device MDM State:</span>
+                    <span class="f-val text-orange" id="fMdm">UNENROLLED &bull; Hardware UUID Mismatch</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Risk Analysis Breakdown -->
+            <div class="inspector-section risk-analysis-section">
+              <h3 class="section-title">Risk Analysis</h3>
+              
+              <div class="risk-factors-list" id="riskFactorsContainer">
+                
+                <div class="factor-item">
+                  <div class="factor-desc">
+                    <!-- Red Warning Hexagon Icon -->
+                    <svg class="factor-icon factor-icon-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/>
+                      <line x1="12" y1="8" x2="12" y2="12"/>
+                      <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <span>Unknown Device</span>
+                  </div>
+                  <span class="factor-score factor-score-red">+18</span>
+                </div>
+
+                <div class="factor-item">
+                  <div class="factor-desc">
+                    <svg class="factor-icon factor-icon-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/>
+                      <line x1="12" y1="8" x2="12" y2="12"/>
+                      <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <span>Location Anomaly (New Country)</span>
+                  </div>
+                  <span class="factor-score factor-score-red">+20</span>
+                </div>
+
+                <div class="factor-item">
+                  <div class="factor-desc">
+                    <svg class="factor-icon factor-icon-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/>
+                      <line x1="12" y1="8" x2="12" y2="12"/>
+                      <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <span>Abnormal Request Frequency</span>
+                  </div>
+                  <span class="factor-score factor-score-red">+24</span>
+                </div>
+
+                <div class="factor-item">
+                  <div class="factor-desc">
+                    <svg class="factor-icon factor-icon-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                    </svg>
+                    <span>Sensitive API Endpoint</span>
+                  </div>
+                  <span class="factor-score factor-score-red">+20</span>
+                </div>
+
+                <div class="factor-item">
+                  <div class="factor-desc">
+                    <svg class="factor-icon factor-icon-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    <span>Behaviour Anomaly (ML Model)</span>
+                  </div>
+                  <span class="factor-score factor-score-red">+12</span>
+                </div>
+
+              </div>
+
+              <!-- Total Risk Score Summary -->
+              <div class="risk-total-bar">
+                <span class="total-label">Total Risk Score</span>
+                <span class="total-score-value score-red" id="detailTotalScore">94</span>
+              </div>
+            </div>
+
+            <!-- System Response Checklist -->
+            <div class="inspector-section system-response-section">
+              <h3 class="section-title">System Response</h3>
+              
+              <ul class="system-actions-list" id="systemActionsContainer">
+                <li class="action-check-item">
+                  <span class="check-icon-circle">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  <span class="check-text">Request blocked</span>
+                </li>
+
+                <li class="action-check-item">
+                  <span class="check-icon-circle">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  <span class="check-text">Session flagged</span>
+                </li>
+
+                <li class="action-check-item">
+                  <span class="check-icon-circle">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  <span class="check-text">Security incident created</span>
+                </li>
+
+                <li class="action-check-item">
+                  <span class="check-icon-circle">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </span>
+                  <span class="check-text">Alert sent to admin</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </aside>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script src="api-client.js"></script>
+  <script src="api-traffic.js"></script>
+</body>
+</html>

@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Threat Center - ZERO-TRUST API SECURITY GATEWAY</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="threat-center.css">
+</head>
+
+<body>
+
+  <div class="app-container">
+
+    <!-- ================= SIDEBAR NAVIGATION ================= -->
+    <aside class="sidebar">
+
+      <div class="sidebar-top">
+        <!-- Brand Header -->
+        <a href="dashboard.html" class="sidebar-brand-link" style="text-decoration:none;">
+          <div class="sidebar-brand">
+            <svg class="brand-shield-icon" viewBox="0 0 60 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sideShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00d2ff" />
+                  <stop offset="50%" stop-color="#0284c7" />
+                  <stop offset="100%" stop-color="#1e3a8a" />
+                </linearGradient>
+              </defs>
+              <path d="M30 4L7 14V32C7 48.5 17 62 30 66C43 62 53 48.5 53 32V14L30 4Z" fill="url(#sideShieldGrad)"
+                stroke="#38bdf8" stroke-width="2.5" />
+              <rect x="23" y="32" width="14" height="12" rx="2.5" fill="#ffffff" />
+              <path d="M26 32V27C26 24.8 27.8 23 30 23C32.2 23 34 24.8 34 27V32" stroke="#ffffff" stroke-width="2.5"
+                stroke-linecap="round" />
+            </svg>
+            <div class="brand-text">
+              <span class="brand-title">ZERO-TRUST</span>
+              <span class="brand-subtitle">API SECURITY GATEWAY</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="nav-item">
+            <!-- Home / Dashboard Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="api-protector.html" class="nav-item">
+            <!-- Target API Shield / Reverse Proxy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 12 9 15 12"/>
+              <line x1="12" y1="9" x2="12" y2="15"/>
+            </svg>
+            <span>API Protector</span>
+            <span class="nav-badge-pulse" style="background:rgba(16,185,129,0.2);color:#10b981;font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:4px;margin-left:auto;">LIVE</span>
+          </a>
+
+          <a href="api-traffic.html" class="nav-item">
+            <!-- Bar Chart Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10" />
+              <line x1="12" y1="20" x2="12" y2="4" />
+              <line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
+            <span>API Traffic</span>
+          </a>
+
+          <a href="threat-center.html" class="nav-item active">
+            <!-- Shield Exclamation Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span>Threat Center</span>
+          </a>
+
+          <a href="attack-simulator.html" class="nav-item">
+            <!-- Flask / Attack Simulator Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" />
+              <line x1="8.5" y1="2" x2="15.5" y2="2" />
+              <line x1="7" y1="16" x2="17" y2="16" />
+            </svg>
+            <span>Attack Simulator</span>
+          </a>
+
+          <a href="policies.html" class="nav-item">
+            <!-- Document / Policy Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+            <span>Policies</span>
+          </a>
+
+          <a href="settings.html" class="nav-item">
+            <!-- Settings Gear Icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Sidebar Bottom System Status -->
+      <div class="sidebar-bottom">
+        <div class="system-status-card">
+          <div class="status-header">
+            <span class="status-indicator-dot"></span>
+            <span>System Online</span>
+          </div>
+          <div class="status-meta">
+            <span>All systems operational</span>
+            <span>Last Updated</span>
+            <span class="status-time" id="sidebarClockTime">Oct 05, 2026 12:58:31</span>
+          </div>
+        </div>
+
+        <a href="zerotrust.html" class="btn-logout" title="Sign out to Login Screen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span>Logout</span>
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-wrapper">
+
+      <!-- Top Search & Profile Bar -->
+      <header class="top-header-bar">
+
+        <div class="search-container">
+          <span class="search-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </span>
+          <input type="text" id="globalSearch" class="search-input" placeholder="Search threats, users, endpoints..." />
+        </div>
+
+        <div class="header-actions">
+
+          <!-- System Protected Badge -->
+          <div class="system-protection-badge">
+            <span class="status-indicator-dot"></span>
+            <div class="badge-text-group">
+              <span class="badge-title">System Protected</span>
+              <span class="badge-subtitle">Zero-Trust Active</span>
+            </div>
+          </div>
+
+          <!-- Notification Bell (Backend-ready) -->
+          <button type="button" class="notification-btn" aria-label="Notifications" id="notificationBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <span class="notification-count" id="notificationCount">3</span>
+          </button>
+
+          <!-- Admin User Profile -->
+          <div class="user-profile-widget">
+            <div class="user-avatar-circle">A</div>
+            <div class="user-info-text">
+              <span class="user-name">Admin</span>
+              <span class="user-email">admin@example.com</span>
+            </div>
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- ================= PAGE TITLE & RANGE HEADER ================= -->
+      <div class="threat-header-banner">
+        <div class="threat-title-group">
+          <h1 class="threat-main-title">Threat Center</h1>
+          <p class="threat-subtext">Detected security threats and incidents</p>
+        </div>
+
+        <!-- Time Range Dropdown Selector with Calendar Icon -->
+        <div class="threat-time-picker" id="threatTimePicker">
+          <button class="threat-time-btn" id="threatTimeBtn">
+            <svg class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <span id="selectedThreatRange">Last 24 Hours</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div class="threat-dropdown-menu" id="threatDropdownMenu">
+            <div class="dropdown-opt" data-range="1h">Last 1 Hour</div>
+            <div class="dropdown-opt" data-range="6h">Last 6 Hours</div>
+            <div class="dropdown-opt active" data-range="24h">Last 24 Hours</div>
+            <div class="dropdown-opt" data-range="7d">Last 7 Days</div>
+            <div class="dropdown-opt" data-range="30d">Last 30 Days</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 4 KPI THREAT METRIC CARDS ================= -->
+      <section class="threat-kpi-grid">
+
+        <!-- Card 1: Critical Threats -->
+        <div class="threat-kpi-card card-critical" data-type="critical">
+          <div class="threat-card-top">
+            <div class="threat-icon-box box-critical">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+            </div>
+            <div class="threat-stats-col">
+              <span class="threat-big-value" id="kpiCritical">3</span>
+              <span class="threat-title-label">Critical Threats</span>
+            </div>
+          </div>
+          <div class="threat-card-bottom">
+            <span class="threat-trend-tag trend-red">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="18 15 12 9 6 15" />
+              </svg>
+              50%
+            </span>
+            <div class="threat-sparkline-wrap">
+              <canvas id="sparklineCritical" width="110" height="30"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: High Threats -->
+        <div class="threat-kpi-card card-high" data-type="high">
+          <div class="threat-card-top">
+            <div class="threat-icon-box box-high">
+              <!-- Target Crosshair Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="22" y1="12" x2="18" y2="12" />
+                <line x1="6" y1="12" x2="2" y2="12" />
+                <line x1="12" y1="6" x2="12" y2="2" />
+                <line x1="12" y1="22" x2="12" y2="18" />
+              </svg>
+            </div>
+            <div class="threat-stats-col">
+              <span class="threat-big-value" id="kpiHigh">7</span>
+              <span class="threat-title-label">High Threats</span>
+            </div>
+          </div>
+          <div class="threat-card-bottom">
+            <span class="threat-trend-tag trend-orange">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="18 15 12 9 6 15" />
+              </svg>
+              17%
+            </span>
+            <div class="threat-sparkline-wrap">
+              <canvas id="sparklineHigh" width="110" height="30"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Medium Threats -->
+        <div class="threat-kpi-card card-medium" data-type="medium">
+          <div class="threat-card-top">
+            <div class="threat-icon-box box-medium">
+              <!-- Exclamation in Square/Circle -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="4" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <div class="threat-stats-col">
+              <span class="threat-big-value" id="kpiMedium">7</span>
+              <span class="threat-title-label">Medium Threats</span>
+            </div>
+          </div>
+          <div class="threat-card-bottom">
+            <span class="threat-trend-tag trend-green">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+              12%
+            </span>
+            <div class="threat-sparkline-wrap">
+              <canvas id="sparklineMedium" width="110" height="30"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Low Threats -->
+        <div class="threat-kpi-card card-low" data-type="low">
+          <div class="threat-card-top">
+            <div class="threat-icon-box box-low">
+              <!-- Checkmark Shield Icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <polyline points="9 12 11 14 15 10" />
+              </svg>
+            </div>
+            <div class="threat-stats-col">
+              <span class="threat-big-value" id="kpiLow">12</span>
+              <span class="threat-title-label">Low Threats</span>
+            </div>
+          </div>
+          <div class="threat-card-bottom">
+            <span class="threat-trend-tag trend-green">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+              33%
+            </span>
+            <div class="threat-sparkline-wrap">
+              <canvas id="sparklineLow" width="110" height="30"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= FILTER TOOLBAR ================= -->
+      <section class="threat-filters-bar">
+
+        <div class="threat-filters-left">
+          <!-- All Threats Title with Network Node Icon -->
+          <div class="threat-filter-title">
+            <svg class="nodes-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="18" cy="5" r="3" />
+              <circle cx="6" cy="12" r="3" />
+              <circle cx="18" cy="19" r="3" />
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+            </svg>
+            <span>All Threats</span>
+          </div>
+
+          <!-- Dropdown 1: All Types -->
+          <div class="threat-pill-select" id="filterTypeSelect">
+            <span class="pill-label" id="labelType">All Types</span>
+            <svg class="pill-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+            <div class="pill-dropdown-menu">
+              <div class="pill-opt active" data-filter="type" data-value="all">All Types</div>
+              <div class="pill-opt" data-filter="type" data-value="Credential Compromise">Credential Compromise</div>
+              <div class="pill-opt" data-filter="type" data-value="API Abuse">API Abuse</div>
+              <div class="pill-opt" data-filter="type" data-value="Privilege Misuse">Privilege Misuse</div>
+              <div class="pill-opt" data-filter="type" data-value="Brute Force">Brute Force</div>
+              <div class="pill-opt" data-filter="type" data-value="Data Exfiltration">Data Exfiltration</div>
+              <div class="pill-opt" data-filter="type" data-value="SQL Injection">SQL Injection</div>
+            </div>
+          </div>
+
+          <!-- Dropdown 2: All Status -->
+          <div class="threat-pill-select" id="filterStatusSelect">
+            <span class="pill-label" id="labelStatus">All Status</span>
+            <svg class="pill-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+            <div class="pill-dropdown-menu">
+              <div class="pill-opt active" data-filter="status" data-value="all">All Status</div>
+              <div class="pill-opt" data-filter="status" data-value="BLOCKED">BLOCKED</div>
+              <div class="pill-opt" data-filter="status" data-value="LIMITED">LIMITED</div>
+              <div class="pill-opt" data-filter="status" data-value="ALLOWED">ALLOWED</div>
+            </div>
+          </div>
+
+          <!-- Dropdown 3: All Severity -->
+          <div class="threat-pill-select" id="filterSeveritySelect">
+            <span class="pill-label" id="labelSeverity">All Severity</span>
+            <svg class="pill-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+            <div class="pill-dropdown-menu">
+              <div class="pill-opt active" data-filter="severity" data-value="all">All Severity</div>
+              <div class="pill-opt" data-filter="severity" data-value="critical">Critical (&gt;80)</div>
+              <div class="pill-opt" data-filter="severity" data-value="high">High (60-80)</div>
+              <div class="pill-opt" data-filter="severity" data-value="medium">Medium (40-60)</div>
+              <div class="pill-opt" data-filter="severity" data-value="low">Low (&lt;40)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Box -->
+        <div class="threat-search-box">
+          <svg class="threat-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input type="text" id="threatSearchInput" class="threat-search-input" placeholder="Search threats..." />
+        </div>
+
+      </section>
+
+      <!-- ================= SPLIT VIEW: THREAT TABLE & DETAILS ================= -->
+      <section class="threat-workspace-layout">
+
+        <!-- ================= LEFT COLUMN: THREATS TABLE ================= -->
+        <div class="threat-table-card">
+          <div class="threat-table-scroll-wrap">
+            <table class="threat-data-table" id="threatTable">
+              <thead>
+                <tr>
+                  <th class="col-time sortable">
+                    <span class="th-flex">
+                      Time
+                      <svg class="sort-icon" viewBox="0 0 24 24" width="12" height="12" fill="none"
+                        stroke="currentColor" stroke-width="2.5">
+                        <polyline points="7 9 12 4 17 9" />
+                        <polyline points="7 15 12 20 17 15" />
+                      </svg>
+                    </span>
+                  </th>
+                  <th>Threat Type</th>
+                  <th>User</th>
+                  <th>Endpoint</th>
+                  <th>Risk</th>
+                  <th>Status</th>
+                  <th>Location</th>
+                  <th class="col-actions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="threatTableBody">
+
+                <!-- ROW 1 (DEFAULT SELECTED) -->
+                <tr class="threat-row selected-threat" data-id="THR-10923">
+                  <td class="col-time cell-red">12:58:25</td>
+                  <td class="col-type font-white">Credential Compromise</td>
+                  <td class="col-user">X92</td>
+                  <td class="col-endpoint">/api/admin/users</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-red">94</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">London, UK</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 2 -->
+                <tr class="threat-row" data-id="THR-10922">
+                  <td class="col-time">12:51:10</td>
+                  <td class="col-type font-white">API Abuse</td>
+                  <td class="col-user">Unknown</td>
+                  <td class="col-endpoint">/api/login</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-red">89</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">Russia</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 3 -->
+                <tr class="threat-row" data-id="THR-10921">
+                  <td class="col-time">12:45:33</td>
+                  <td class="col-type font-white">Privilege Misuse</td>
+                  <td class="col-user">Amit</td>
+                  <td class="col-endpoint">/api/users</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-red">81</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">India</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 4 -->
+                <tr class="threat-row" data-id="THR-10920">
+                  <td class="col-time">12:40:12</td>
+                  <td class="col-type font-white">Brute Force</td>
+                  <td class="col-user">TestUser</td>
+                  <td class="col-endpoint">/api/login</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-orange">76</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">USA</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 5 -->
+                <tr class="threat-row" data-id="THR-10919">
+                  <td class="col-time">12:32:15</td>
+                  <td class="col-type font-white">Data Exfiltration</td>
+                  <td class="col-user">Ravi</td>
+                  <td class="col-endpoint">/api/export</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-orange">71</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">India</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 6 -->
+                <tr class="threat-row" data-id="THR-10918">
+                  <td class="col-time">12:28:41</td>
+                  <td class="col-type font-white">Unusual Location</td>
+                  <td class="col-user">Sneha</td>
+                  <td class="col-endpoint">/api/profile</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-orange">68</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">Germany</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 7 -->
+                <tr class="threat-row" data-id="THR-10917">
+                  <td class="col-time">12:15:20</td>
+                  <td class="col-type font-white">Rate Limit Violation</td>
+                  <td class="col-user">Karan</td>
+                  <td class="col-endpoint">/api/orders</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-orange">62</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-limited">LIMITED</span>
+                  </td>
+                  <td class="col-location">India</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 8 -->
+                <tr class="threat-row" data-id="THR-10916">
+                  <td class="col-time">12:12:11</td>
+                  <td class="col-type font-white">Suspicious Payload</td>
+                  <td class="col-user">Unknown</td>
+                  <td class="col-endpoint">/api/search</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-yellow">58</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">Singapore</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 9 -->
+                <tr class="threat-row" data-id="THR-10915">
+                  <td class="col-time">12:08:09</td>
+                  <td class="col-type font-white">Malicious Request</td>
+                  <td class="col-user">Pooja</td>
+                  <td class="col-endpoint">/api/upload</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-yellow">54</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-limited">LIMITED</span>
+                  </td>
+                  <td class="col-location">India</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 10 -->
+                <tr class="threat-row" data-id="THR-10914">
+                  <td class="col-time">12:01:44</td>
+                  <td class="col-type font-white">Anomalous Behaviour</td>
+                  <td class="col-user">Rohit</td>
+                  <td class="col-endpoint">/api/profile</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-yellow">49</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-allowed">ALLOWED</span>
+                  </td>
+                  <td class="col-location">India</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 11 -->
+                <tr class="threat-row" data-id="THR-10913">
+                  <td class="col-time">11:58:23</td>
+                  <td class="col-type font-white">SQL Injection Attempt</td>
+                  <td class="col-user">Unknown</td>
+                  <td class="col-endpoint">/api/login</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-yellow">43</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">Brazil</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 12 -->
+                <tr class="threat-row" data-id="THR-10912">
+                  <td class="col-time">11:52:10</td>
+                  <td class="col-type font-white">Reconnaissance</td>
+                  <td class="col-user">Unknown</td>
+                  <td class="col-endpoint">/api/health</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-green">37</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-allowed">ALLOWED</span>
+                  </td>
+                  <td class="col-location">USA</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 13 -->
+                <tr class="threat-row" data-id="THR-10911">
+                  <td class="col-time">11:45:58</td>
+                  <td class="col-type font-white">Automated Bot</td>
+                  <td class="col-user">Bot-21</td>
+                  <td class="col-endpoint">/api/products</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-green">28</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-allowed">ALLOWED</span>
+                  </td>
+                  <td class="col-location">India</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 14 -->
+                <tr class="threat-row" data-id="THR-10910">
+                  <td class="col-time">11:38:27</td>
+                  <td class="col-type font-white">Directory Traversal</td>
+                  <td class="col-user">Unknown</td>
+                  <td class="col-endpoint">/api/download</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-green">22</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-blocked">BLOCKED</span>
+                  </td>
+                  <td class="col-location">Germany</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+                <!-- ROW 15 -->
+                <tr class="threat-row" data-id="THR-10909">
+                  <td class="col-time">11:32:11</td>
+                  <td class="col-type font-white">XSS Attempt</td>
+                  <td class="col-user">Unknown</td>
+                  <td class="col-endpoint">/api/comment</td>
+                  <td class="col-risk">
+                    <span class="risk-badge badge-green">18</span>
+                  </td>
+                  <td class="col-status">
+                    <span class="status-badge badge-allowed">ALLOWED</span>
+                  </td>
+                  <td class="col-location">India</td>
+                  <td class="col-actions">
+                    <button class="threat-row-btn" aria-label="Row menu">⋮</button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table Pagination Footer -->
+          <div class="threat-table-footer">
+            <span class="records-count-text" id="threatRecordsCount">Showing 1 - 15 of 48 threats</span>
+
+            <div class="pagination-controls">
+              <button class="page-nav-btn" aria-label="Previous Page">&lsaquo;</button>
+              <button class="page-number-btn active">1</button>
+              <button class="page-number-btn">2</button>
+              <button class="page-number-btn">3</button>
+              <button class="page-number-btn">4</button>
+              <button class="page-nav-btn" aria-label="Next Page">&rsaquo;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= RIGHT COLUMN: THREAT DETAILS INSPECTOR ================= -->
+        <aside class="threat-inspector-panel" id="threatInspector">
+
+          <!-- Inspector Header with Red Alert Triangle -->
+          <div class="inspector-top-banner">
+            <div class="threat-badge-icon red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+            </div>
+            <div class="threat-header-text">
+              <div class="threat-title-row">
+                <h2 class="threat-inspect-title" id="threatTitle">Credential Compromise</h2>
+                <span class="badge-critical-pill" id="threatSevBadge">CRITICAL</span>
+              </div>
+              <p class="threat-inspect-sub" id="threatSub">Suspicious account activity detected</p>
+            </div>
+            <button class="btn-close-threat" id="closeThreatBtn" aria-label="Close Inspector">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Interactive Tabs: Overview | Risk Analysis | Response | Timeline -->
+          <div class="threat-tabs-bar">
+            <button class="threat-tab-btn active" data-tab="overview">Overview</button>
+            <button class="threat-tab-btn" data-tab="risk">Risk Analysis</button>
+            <button class="threat-tab-btn" data-tab="response">Response</button>
+            <button class="threat-tab-btn" data-tab="timeline">Timeline</button>
+          </div>
+
+          <!-- Inspector Body Content -->
+          <div class="threat-inspector-body">
+
+            <!-- Dual Cards Row: Circular Risk Gauge + Threat Details Grid -->
+            <div class="threat-dual-grid">
+
+              <!-- Left: Circular Gauge Box -->
+              <div class="gauge-card-box">
+                <span class="gauge-card-title">Risk Score</span>
+                <span class="gauge-ratio-text" id="gaugeRatio"><strong id="gaugeNum">94</strong> / 100</span>
+
+                <div class="circular-gauge-container">
+                  <svg class="circular-gauge-svg" viewBox="0 0 120 120">
+                    <circle class="gauge-bg-circle" cx="60" cy="60" r="48" />
+                    <circle class="gauge-fill-arc" id="gaugeArc" cx="60" cy="60" r="48" stroke-dasharray="301.6"
+                      stroke-dashoffset="18" />
+                  </svg>
+                  <div class="gauge-center-content">
+                    <span class="gauge-big-num" id="gaugeCenterNum">94</span>
+                  </div>
+                </div>
+
+                <span class="gauge-bottom-pill" id="gaugeBottomPill">CRITICAL</span>
+              </div>
+
+              <!-- Right: Threat Details Properties -->
+              <div class="properties-card-box">
+                <span class="props-title">Threat Details</span>
+
+                <div class="props-list">
+                  <div class="prop-item">
+                    <span class="prop-lbl">Request ID</span>
+                    <span class="prop-val mono" id="propReqId">REQ-10923</span>
+                  </div>
+                  <div class="prop-item">
+                    <span class="prop-lbl">Timestamp</span>
+                    <span class="prop-val mono" id="propTimestamp">2026-10-05 12:58:25</span>
+                  </div>
+                  <div class="prop-item">
+                    <span class="prop-lbl">User</span>
+                    <span class="prop-val" id="propUser">X92</span>
+                  </div>
+                  <div class="prop-item">
+                    <span class="prop-lbl">Endpoint</span>
+                    <span class="prop-val mono font-cyan" id="propEndpoint">GET /api/admin/users</span>
+                  </div>
+                  <div class="prop-item">
+                    <span class="prop-lbl">IP Address</span>
+                    <span class="prop-val mono" id="propIp">103.21.XX.XX</span>
+                  </div>
+                  <div class="prop-item">
+                    <span class="prop-lbl">Device</span>
+                    <span class="prop-val" id="propDevice">Unknown iPhone</span>
+                  </div>
+                  <div class="prop-item">
+                    <span class="prop-lbl">Location</span>
+                    <span class="prop-val" id="propLocation">London, UK 🇬🇧</span>
+                  </div>
+                  <div class="prop-item">
+                    <span class="prop-lbl">Status</span>
+                    <span class="status-pill-sub" id="propStatus">BLOCKED</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Deep Forensics Accordion (Opens on Hover) -->
+            <div class="threat-forensic-accordion" id="threatForensicAccordion">
+              <div class="accordion-head-pill">
+                <span class="live-dot-cyan"></span>
+                <span>Deep Packet Telemetry &bull; Hover to Inspect</span>
+                <svg class="acc-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor"
+                  stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
+              <div class="accordion-expand-body">
+                <div class="f-row"><span>TLS Cipher:</span><strong id="fTls">TLS 1.3 &bull; AES_256_GCM (Cipher
+                    0x1302)</strong></div>
+                <div class="f-row"><span>ASN & Carrier:</span><strong id="fAsn">AS13335 (Cloudflare London
+                    Edge)</strong></div>
+                <div class="f-row"><span>Zero-Trust Policy:</span><strong class="text-red" id="fPolicy">Rule #ZTP-402
+                    &bull; Admin Geofence Violation</strong></div>
+                <div class="f-row"><span>Execution Latency:</span><strong class="text-green" id="fLatency">1.2ms &bull;
+                    Inline WAF Filter</strong></div>
+              </div>
+            </div>
+
+            <!-- Section 2: Detection Factors -->
+            <div class="threat-inspect-section">
+              <div class="section-heading-row">
+                <svg class="section-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <circle cx="12" cy="11" r="3" />
+                </svg>
+                <h3 class="section-heading-text">Detection Factors</h3>
+              </div>
+
+              <div class="factors-list" id="threatFactorsList">
+
+                <!-- Factor 1 -->
+                <div class="factor-row factor-hoverable">
+                  <div class="factor-main-line">
+                    <div class="factor-icon-wrap red">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                        <line x1="12" y1="9" x2="12" y2="13" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                      </svg>
+                    </div>
+                    <div class="factor-texts">
+                      <span class="factor-name">Unknown Device</span>
+                      <span class="factor-sub">Device not recognized from history</span>
+                    </div>
+                    <span class="factor-points red">+18</span>
+                  </div>
+                  <!-- Forensic Drawer on Hover -->
+                  <div class="factor-hover-drawer">
+                    <p class="factor-hover-info">Hardware UUID has no enrolled enterprise MDM profile. Device signature
+                      was never registered in corporate inventory.</p>
+                  </div>
+                </div>
+
+                <!-- Factor 2 -->
+                <div class="factor-row factor-hoverable">
+                  <div class="factor-main-line">
+                    <div class="factor-icon-wrap red">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                    </div>
+                    <div class="factor-texts">
+                      <span class="factor-name">Location Anomaly</span>
+                      <span class="factor-sub">New location detected (London, UK)</span>
+                    </div>
+                    <span class="factor-points red">+20</span>
+                  </div>
+                  <div class="factor-hover-drawer">
+                    <p class="factor-hover-info">Request originated from London, UK. Account was actively authenticated
+                      in Mumbai, India 42 minutes ago (Impossible Travel: 10,400 km/h).</p>
+                  </div>
+                </div>
+
+                <!-- Factor 3 -->
+                <div class="factor-row factor-hoverable">
+                  <div class="factor-main-line">
+                    <div class="factor-icon-wrap red">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                      </svg>
+                    </div>
+                    <div class="factor-texts">
+                      <span class="factor-name">Abnormal Request Frequency</span>
+                      <span class="factor-sub">Unusually high number of requests</span>
+                    </div>
+                    <span class="factor-points red">+24</span>
+                  </div>
+                  <div class="factor-hover-drawer">
+                    <p class="factor-hover-info">Observed burst velocity of 48 req/s against administrative routes.
+                      Exceeds standard authorized baseline (≤ 5 req/s) by 9.6x.</p>
+                  </div>
+                </div>
+
+                <!-- Factor 4 -->
+                <div class="factor-row factor-hoverable">
+                  <div class="factor-main-line">
+                    <div class="factor-icon-wrap red">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+                      </svg>
+                    </div>
+                    <div class="factor-texts">
+                      <span class="factor-name">Sensitive Endpoint</span>
+                      <span class="factor-sub">Accessing admin endpoint</span>
+                    </div>
+                    <span class="factor-points red">+20</span>
+                  </div>
+                  <div class="factor-hover-drawer">
+                    <p class="factor-hover-info">Route handles administrative privileges, RBAC roles, and credential
+                      modification. Protected under Zero-Trust Level 4 isolation.</p>
+                  </div>
+                </div>
+
+                <!-- Factor 5 -->
+                <div class="factor-row factor-hoverable">
+                  <div class="factor-main-line">
+                    <div class="factor-icon-wrap red">
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+                        <line x1="12" y1="9" x2="12" y2="13" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                      </svg>
+                    </div>
+                    <div class="factor-texts">
+                      <span class="factor-name">Behaviour Anomaly (ML Model)</span>
+                      <span class="factor-sub">Unusual user behaviour pattern</span>
+                    </div>
+                    <span class="factor-points red">+12</span>
+                  </div>
+                  <div class="factor-hover-drawer">
+                    <p class="factor-hover-info">Isolation Forest behavioural biometrics model reported anomaly entropy
+                      score 0.94 (divergence threshold: 0.70).</p>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Total Risk Score Summary Row -->
+              <div class="threat-total-score-bar">
+                <span class="total-lbl">Total Risk Score</span>
+                <span class="total-score-val red" id="totalScoreVal">94</span>
+              </div>
+            </div>
+
+            <!-- Section 3: System Response -->
+            <div class="threat-inspect-section">
+              <div class="section-heading-row">
+                <svg class="section-head-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <polyline points="9 12 11 14 15 10" />
+                </svg>
+                <h3 class="section-heading-text">System Response</h3>
+              </div>
+
+              <ul class="system-response-list" id="threatResponseList">
+
+                <li class="response-row-item resp-hoverable">
+                  <div class="resp-main-line">
+                    <span class="check-dot-green">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+                        stroke-width="3.2">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <span class="resp-text">Request blocked by security policy</span>
+                  </div>
+                  <div class="resp-hover-drawer">
+                    <span class="resp-log-text">HTTP 403 Forbidden dispatched synchronously in 0.8ms.</span>
+                  </div>
+                </li>
+
+                <li class="response-row-item resp-hoverable">
+                  <div class="resp-main-line">
+                    <span class="check-dot-green">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+                        stroke-width="3.2">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <span class="resp-text">User session flagged for monitoring</span>
+                  </div>
+                  <div class="resp-hover-drawer">
+                    <span class="resp-log-text">OAuth bearer token revoked across edge gateways. Forced 2FA challenge
+                      triggered.</span>
+                  </div>
+                </li>
+
+                <li class="response-row-item resp-hoverable">
+                  <div class="resp-main-line">
+                    <span class="check-dot-green">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+                        stroke-width="3.2">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <span class="resp-text">Security incident created</span>
+                  </div>
+                  <div class="resp-hover-drawer">
+                    <span class="resp-log-text">Automated ticket INC-2026-9912 logged to enterprise SIEM cluster.</span>
+                  </div>
+                </li>
+
+                <li class="response-row-item resp-hoverable">
+                  <div class="resp-main-line">
+                    <span class="check-dot-green">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+                        stroke-width="3.2">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <span class="resp-text">Alert sent to admin</span>
+                  </div>
+                  <div class="resp-hover-drawer">
+                    <span class="resp-log-text">Urgent SOC telemetry pushed to Slack #security-alerts and
+                      PagerDuty.</span>
+                  </div>
+                </li>
+
+                <li class="response-row-item resp-hoverable">
+                  <div class="resp-main-line">
+                    <span class="check-dot-green">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+                        stroke-width="3.2">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
+                    <span class="resp-text">IP added to watchlist</span>
+                  </div>
+                  <div class="resp-hover-drawer">
+                    <span class="resp-log-text">103.21.XX.XX quarantined in perimeter rate limit table for 24
+                      hours.</span>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+
+          </div>
+
+        </aside>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script src="api-client.js"></script>
+  <script src="threat-center.js"></script>
+</body>
+
+</html>

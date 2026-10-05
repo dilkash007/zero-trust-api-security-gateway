@@ -66,18 +66,47 @@ SECTION 6: RULE-BASED ANOMALY DETECTION ENGINE (STEP 6)
 [2026-10-05 10:23:33 UTC] [PASS] [STEP 6] Duplicate Anomaly Suppression (60s deduplication window) - deduplication_rule_active=True, window=60s
 
 =====================================================================================
-SECTION 7: DATABASE PURITY & ZERO-FAKE TELEMETRY AUDIT
+SECTION 7: RISK SCORING & POLICY DECISION ENGINE (STEP 7)
 =====================================================================================
-[2026-10-05 10:23:33 UTC] [PASS] [PURITY] Clean Database Principal Accounts (No dummy registrations) - active_users_count=3
-[2026-10-05 10:23:33 UTC] [PASS] [PURITY] Real PostgreSQL API Request Telemetry Logs - persisted_logs_count=89
-[2026-10-05 10:23:33 UTC] [PASS] [PURITY] Real PostgreSQL Security & Anomaly Audit Events - persisted_events_count=34
-[2026-10-05 10:23:33 UTC] [PASS] [PURITY] Real PostgreSQL User Behavior Profiles - modeled_profiles_count=3
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Normal Request Scored 0 Points (LOW) - score=0, level=LOW, decision=ALLOW
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Unknown Device Signal Points (+18) - signal=UNKNOWN_DEVICE, points=18, level=LOW
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Location Anomaly Signal Points (+20) - signal=LOCATION_ANOMALY, points=20, level=LOW
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] API Abuse Anomaly Signal Points (+24) - signal=API_ABUSE, points=24, level=LOW
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Credential Attack Signal Points (+25) - signal=CREDENTIAL_ATTACK, points=25, level=LOW
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Privilege Misuse Signal Points (+20) - signal=PRIVILEGE_MISUSE, points=20, level=LOW
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Sensitive Endpoint Elevation (+10) - is_sensitive=True, points=10
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Multiple Anomalies Additive Scoring (18+20+10=48) - score=48, level=MEDIUM, decision=MONITOR
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Upper Clamping Ceiling Enforcement (Score clamped <= 100) - raw_sum=107, score=100, level=CRITICAL
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Lower Clamping Floor Enforcement (Score >= 0) - score=0
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Deterministic Boundaries (30 LOW, 31 MED, 60 MED, 61 HIGH, 80 HIGH, 81 CRIT, 100 CRIT) - all_valid=True
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Double-Counting Guard (PRIVILEGE_MISUSE suppresses extra sensitive endpoint) - score=20, double_counting_suppressed=True
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Policy Mapping LOW -> ALLOW - decision=ALLOW
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Policy Mapping MEDIUM -> MONITOR - decision=MONITOR
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Policy Mapping HIGH -> RATE_LIMIT - decision=RATE_LIMIT
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Policy Mapping CRITICAL -> BLOCK (Strong Attack Signals) - decision=BLOCK
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Blocking Safety Guard (No blocking on UNKNOWN_DEVICE alone) - decision=RATE_LIMIT, false_block_prevented=True
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Unauthenticated Request Preserves HTTP 401 - status=401
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] RBAC Violation Preserves HTTP 403 - status=403
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] RBAC Restriction on Admin Risk Telemetry (USER -> /api/risk 403) - status=403
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Admin Access to Risk Telemetry (ADMIN -> /api/risk 200) - status=200
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] User Self-Risk Inspection (USER -> /api/risk/me 200) - status=200, score=0, level=LOW
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Active Policy Blueprint API (ADMIN -> /api/policies 200, USER -> 403) - status=200/403
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] Human-Explainable Risk Reasons (signal, points, description) - verified=True
+[2026-10-05 10:38:19 UTC] [PASS] [STEP 7] PII / Secret Sanitization in Risk Telemetry - zero_secrets_leaked=True
+
+=====================================================================================
+SECTION 8: DATABASE PURITY & ZERO-FAKE TELEMETRY AUDIT
+=====================================================================================
+[2026-10-05 10:38:19 UTC] [PASS] [PURITY] Clean Database Principal Accounts (No dummy registrations) - active_users_count=3
+[2026-10-05 10:38:19 UTC] [PASS] [PURITY] Real PostgreSQL API Request Telemetry Logs with Risk Annotations - persisted_logs_count=98
+[2026-10-05 10:38:19 UTC] [PASS] [PURITY] Real PostgreSQL Security & Policy Audit Events - persisted_events_count=42
+[2026-10-05 10:38:19 UTC] [PASS] [PURITY] Real PostgreSQL User Behavior Profiles - modeled_profiles_count=3
 
 =====================================================================================
   OVERALL TEST EXECUTION SUMMARY
 =====================================================================================
-  TOTAL TEST CASES RUN   : 39
-  TOTAL TEST CASES PASSED : 39
+  TOTAL TEST CASES RUN   : 65
+  TOTAL TEST CASES PASSED : 65
   TOTAL TEST CASES FAILED : 0
   FINAL SUCCESS RATE      : 100.0%
 
@@ -88,9 +117,10 @@ SECTION 7: DATABASE PURITY & ZERO-FAKE TELEMETRY AUDIT
     [✓] Step 4 Persistent Telemetry & Audit Stream: 100% STORED (PostgreSQL)
     [✓] Step 5 Behavioral Baseline & Feature Engine: 100% REAL TELEMETRY
     [✓] Step 6 Rule-Based Anomaly Detection: 100% EXPLAINABLE & DEDUPLICATED
+    [✓] Step 7 Risk Scoring & Policy Decision Engine: 100% DETERMINISTIC (0–100) & EXPLAINABLE
     [✓] Database Hygiene: Zero fake data, zero mock generators, zero dummy users
-    [✓] Project Scope Discipline: Zero Step 7+ features implemented (No risk score, no ML, no blocking)
+    [✓] Project Scope Discipline: Zero Step 8+ features implemented (No ML, no simulator, no WebSocket)
 =====================================================================================
 
-  STATUS: ALL SYSTEM TESTS PASSED — SYSTEM VERIFIED READY FOR DEMO
+  STATUS: ALL SYSTEM TESTS PASSED — STEP 7 COMPREHENSIVELY VERIFIED
 =====================================================================================

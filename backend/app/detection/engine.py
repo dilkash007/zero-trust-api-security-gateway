@@ -196,6 +196,7 @@ def evaluate_request(
         return {
             "detected": len(anomalies) > 0,
             "anomalies": anomalies,
+            "features": features,
         }
 
     except Exception as exc:

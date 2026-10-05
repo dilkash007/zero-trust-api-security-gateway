@@ -35,6 +35,10 @@ def persist_telemetry(
     security_event_severity: Optional[str] = None,
     security_event_message: Optional[str] = None,
     security_event_metadata: Optional[Dict[str, Any]] = None,
+    risk_score: Optional[int] = None,
+    risk_level: Optional[str] = None,
+    policy_decision: Optional[str] = None,
+    risk_reasons: Optional[List[Dict[str, Any]]] = None,
 ) -> None:
     """Safely persists an API request log and associated security event to PostgreSQL.
 
@@ -62,6 +66,10 @@ def persist_telemetry(
             response_size=response_size,
             is_authenticated=is_authenticated,
             is_sensitive=is_sensitive,
+            risk_score=risk_score,
+            risk_level=risk_level,
+            policy_decision=policy_decision,
+            risk_reasons=risk_reasons,
         )
         db.add(log_entry)
 
@@ -92,3 +100,36 @@ def persist_telemetry(
         )
     finally:
         db.close()
+
+
+def persist_security_event(
+    request_id: str,
+    user_id: Optional[int],
+    event_type: str,
+    severity: str,
+    message: str,
+    endpoint: str,
+    metadata: Optional[Dict[str, Any]] = None,
+) -> None:
+    """Persists an isolated security event (e.g. ML anomaly detection)."""
+    db = SessionLocal()
+    try:
+        sec_event = SecurityEvent(
+            event_id=str(uuid.uuid4()),
+            request_id=request_id,
+            user_id=user_id,
+            event_type=event_type,
+            severity=severity,
+            message=message,
+            endpoint=endpoint,
+            timestamp=datetime.now(timezone.utc),
+            event_metadata=metadata or {},
+        )
+        db.add(sec_event)
+        db.commit()
+    except Exception as exc:
+        db.rollback()
+        logger.error("Failed to persist security event %s: %s", event_type, exc)
+    finally:
+        db.close()
+

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Trust Cyber War-Room — Real-time Attack Interception</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="attack-simulator.css">
+  <style>
+    /* Dedicated War-Room Standalone Window Styling */
+    body {
+      background: #030712 !important;
+      color: #e2e8f0;
+      font-family: var(--font-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      margin: 0;
+    }
+
+    .standalone-warroom-container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Ambient cyber backdrop */
+    .warroom-bg-ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 30%, rgba(239, 68, 68, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        linear-gradient(to bottom, #030712, #050b1a 60%, #02050e);
+      z-index: -1;
+    }
+
+    /* Cyber Window Bar */
+    .os-window-titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(11, 20, 42, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 14px;
+      padding: 12px 18px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+    }
+
+    .os-left-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .os-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .os-dots .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .os-dots .dot:hover { opacity: 0.8; }
+    .os-dots .dot.close { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+    .os-dots .dot.min { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+    .os-dots .dot.max { background: #10b981; box-shadow: 0 0 8px #10b981; }
+
+    .os-window-title {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .os-right-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .live-status-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .live-status-pill .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: beaconPulse 1s infinite alternate;
+    }
+
+    .close-win-btn {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #ef4444;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .close-win-btn:hover {
+      background: #ef4444;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="warroom-bg-ambient"></div>
+
+  <div class="standalone-warroom-container">
+
+    <!-- Top OS Cyber Window Titlebar -->
+    <div class="os-window-titlebar">
+      <div class="os-left-controls">
+        <div class="os-dots">
+          <span class="dot close" onclick="window.close()" title="Close Window"></span>
+          <span class="dot min"></span>
+          <span class="dot max"></span>
+        </div>
+        <div class="os-window-title">
+          <span>ZERO-TRUST SOC WAR-ROOM</span>
+          <span style="color:#64748b;">|</span>
+          <span id="winTargetLabel">TARGET: POST /api/auth/login</span>
+        </div>
+      </div>
+      <div class="os-right-status">
+        <div class="live-status-pill">
+          <span class="pulse-dot"></span>
+          <span>LIVE INTERCEPTION ENGAGED</span>
+        </div>
+        <button type="button" class="close-win-btn" onclick="window.close()">Close Window &times;</button>
+      </div>
+    </div>
+
+    <!-- Main War-Room Header Card -->
+    <div class="sim-war-room-card" style="box-shadow: none; border-color: rgba(56, 189, 248, 0.28); background: rgba(7, 13, 30, 0.9);">
+      
+      <!-- Top Cyber Status Bar -->
+      <div class="war-room-header">
+        <div class="header-left">
+          <div class="threat-beacon-wrap">
+            <span class="threat-beacon-ring"></span>
+            <span class="threat-beacon-dot"></span>
+          </div>
+          <div>
+            <div class="war-room-badge" id="modalStatusBadge">AUTONOMOUS ZERO-TRUST INTERCEPTION ACTIVE</div>
+            <h2 class="war-room-title" id="modalScenarioTitle">Simulating Attack Scenario...</h2>
+            <div class="war-room-target-endpoint">
+              <span class="lbl">TARGET:</span>
+              <span class="val font-mono" id="modalTargetEndpoint">POST /api/auth/login</span>
+              <span class="sep">&bull;</span>
+              <span class="lbl">ATTACKER IP:</span>
+              <span class="val font-mono" id="modalAttackerIp">127.0.0.1 (Perimeter Node)</span>
+              <span class="sep">&bull;</span>
+              <span class="lbl">TIME ELAPSED:</span>
+              <span class="val font-mono" id="modalElapsedTimer">0.0s</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Telemetry HUD Bar (4 Metrics) -->
+      <div class="war-room-hud">
+        <div class="hud-box">
+          <span class="hud-label">PACKETS DISPATCHED</span>
+          <div class="hud-value font-mono">
+            <span id="hudPacketsDispatched" class="counter-num">0</span>
+            <span class="hud-unit" id="hudPacketsTotal">/ 12 req</span>
+          </div>
+          <div class="hud-bar"><div class="hud-fill" id="hudBarPackets" style="width: 0%;"></div></div>
+        </div>
+        <div class="hud-box">
+          <span class="hud-label">BURST VELOCITY</span>
+          <div class="hud-value font-mono">
+            <span id="hudVelocity" class="counter-num">0</span>
+            <span class="hud-unit">req/sec</span>
+          </div>
+          <div class="hud-bar"><div class="hud-fill fill-amber" id="hudBarVelocity" style="width: 0%;"></div></div>
+        </div>
+        <div class="hud-box">
+          <span class="hud-label">AI ISOLATION FOREST</span>
+          <div class="hud-value font-mono">
+            <span id="hudAnomalyScore" class="counter-num">0</span>
+            <span class="hud-unit">% Outlier</span>
+          </div>
+          <div class="hud-bar"><div class="hud-fill fill-red" id="hudBarAnomaly" style="width: 0%;"></div></div>
+        </div>
+        <div class="hud-box highlight">
+          <span class="hud-label">GATEWAY DECISION</span>
+          <div class="hud-value font-mono">
+            <span id="hudDecision" class="decision-pill pill-analyzing">INITIALIZING</span>
+          </div>
+          <div class="hud-sub" id="hudDecisionSub">Awaiting telemetry...</div>
+        </div>
+      </div>
+
+      <!-- ================= 5 CONNECTED LIQUID GLASS POPUP PODS (WIRED PIPELINE) ================= -->
+      <div class="glass-synapse-pipeline" id="glassPipelineContainer">
+        
+        <!-- ================= POPUP 1: INGRESS ================= -->
+        <div class="liquid-glass-pod pod-ingress" id="glassPod1" style="display: none;">
+          <div class="glass-reflection-shine"></div>
+          <div class="pod-header">
+            <div class="pod-icon-circle cyan-glow">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>
+            </div>
+            <div class="pod-title-block">
+              <span class="pod-stage-sub">POPUP 1 &bull; PERIMETER INGRESS &amp; INTERCEPTION</span>
+              <h3 class="pod-title">Reverse-Proxy Gateway Envelope Dissection</h3>
+            </div>
+            <div class="pod-score-badge badge-neutral" id="podBadge1">
+              <span class="score-label">POINTS ADDED</span>
+              <span class="score-num">+0 PTS</span>
+            </div>
+          </div>
+          <div class="pod-body">
+            <div class="pod-meta-grid">
+              <div class="meta-item"><span class="m-lbl">DETECTOR:</span><span class="m-val">FastAPI Zero-Trust Gateway Middleware</span></div>
+              <div class="meta-item"><span class="m-lbl">TARGET:</span><span class="m-val font-mono" id="pod1Target">POST /api/auth/login</span></div>
+              <div class="meta-item"><span class="m-lbl">PACKETS:</span><span class="m-val highlight-cyan" id="pod1Packets">12 Envelopes Captured</span></div>
+              <div class="meta-item"><span class="m-lbl">TLS STATUS:</span><span class="m-val">TLS 1.3 / AES-256-GCM Verified</span></div>
+            </div>
+            <p class="pod-narrative" id="pod1Narrative">
+              Gateway security layer intercepted incoming burst of 12 requests at network boundary. Cryptographic TLS handshake inspected; client User-Agent and auth headers extracted for behavioral baseline inspection.
+            </p>
+          </div>
+          <div class="pod-status-banner banner-cyan">
+            <span class="pulse-ring-sm"></span>
+            <span id="pod1StatusText">INCOMING TRAFFIC INTERCEPTED &amp; QUEUED FOR FORENSICS</span>
+          </div>
+        </div>
+
+        <!-- WIRE 1 -> 2 -->
+        <div class="cyber-laser-wire" id="wire1to2" style="display: none;">
+          <div class="laser-track">
+            <div class="laser-energy-pulse"></div>
+          </div>
+          <div class="wire-annotation">
+            <span class="wire-arrow">&darr;</span>
+            <span class="wire-tag">DISPATCHING TELEMETRY TO BEHAVIOR ENGINE</span>
+            <span class="wire-arrow">&darr;</span>
+          </div>
+        </div>
+
+        <!-- ================= POPUP 2: BEHAVIOR & VELOCITY ================= -->
+        <div class="liquid-glass-pod pod-behavior" id="glassPod2" style="display: none;">
+          <div class="glass-reflection-shine"></div>
+          <div class="pod-header">
+            <div class="pod-icon-circle amber-glow">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div class="pod-title-block">
+              <span class="pod-stage-sub">POPUP 2 &bull; BEHAVIORAL DEVIATION ENGINE</span>
+              <h3 class="pod-title">Sliding-Window Velocity Surge Detection</h3>
+            </div>
+            <div class="pod-score-badge badge-amber" id="podBadge2">
+              <span class="score-label">POINTS ADDED</span>
+              <span class="score-num">+25 PTS</span>
+            </div>
+          </div>
+          <div class="pod-body">
+            <div class="pod-meta-grid">
+              <div class="meta-item"><span class="m-lbl">DETECTOR:</span><span class="m-val">Redis Sliding-Window Rate Limiter</span></div>
+              <div class="meta-item"><span class="m-lbl">BURST VELOCITY:</span><span class="m-val highlight-amber" id="pod2Velocity">48.2 req/sec (SPIKE)</span></div>
+              <div class="meta-item"><span class="m-lbl">BASELINE:</span><span class="m-val">2.1 req/min (Standard User)</span></div>
+              <div class="meta-item"><span class="m-lbl">DEVIATION:</span><span class="m-val highlight-red">+480% (Extreme Outlier)</span></div>
+            </div>
+            <p class="pod-narrative" id="pod2Narrative">
+              High-frequency burst rate exceeded 5-second sliding window threshold. User identity velocity severely violates historical access profile. <strong>+25 Risk Points</strong> assigned.
+            </p>
+          </div>
+          <div class="pod-status-banner banner-amber">
+            <span class="pulse-ring-sm amber"></span>
+            <span id="pod2StatusText">VELOCITY SURGE BREACH &bull; +25 RISK POINTS ASSIGNED</span>
+          </div>
+        </div>
+
+        <!-- WIRE 2 -> 3 -->
+        <div class="cyber-laser-wire" id="wire2to3" style="display: none;">
+          <div class="laser-track">
+            <div class="laser-energy-pulse purple"></div>
+          </div>
+          <div class="wire-annotation">
+            <span class="wire-arrow">&darr;</span>
+            <span class="wire-tag">STREAMING 8-DIMENSIONAL FEATURE VECTOR TO AI MODEL</span>
+            <span class="wire-arrow">&darr;</span>
+          </div>
+        </div>
+
+        <!-- ================= POPUP 3: MACHINE LEARNING ================= -->
+        <div class="liquid-glass-pod pod-ml" id="glassPod3" style="display: none;">
+          <div class="glass-reflection-shine"></div>
+          <div class="pod-header">
+            <div class="pod-icon-circle purple-glow">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div class="pod-title-block">
+              <span class="pod-stage-sub">POPUP 3 &bull; ARTIFICIAL INTELLIGENCE</span>
+              <h3 class="pod-title">Isolation Forest Anomaly Classifier</h3>
+            </div>
+            <div class="pod-score-badge badge-purple" id="podBadge3">
+              <span class="score-label">POINTS ADDED</span>
+              <span class="score-num">+14 PTS</span>
+            </div>
+          </div>
+          <div class="pod-body">
+            <div class="pod-meta-grid">
+              <div class="meta-item"><span class="m-lbl">DETECTOR:</span><span class="m-val">Unsupervised Isolation Forest (scikit-learn)</span></div>
+              <div class="meta-item"><span class="m-lbl">RAW SCORE:</span><span class="m-val highlight-purple" id="pod3RawScore">-0.214 (Severe Outlier)</span></div>
+              <div class="meta-item"><span class="m-lbl">ANOMALY INDEX:</span><span class="m-val highlight-red" id="pod3Anomaly">88 / 100% Deviation</span></div>
+              <div class="meta-item"><span class="m-lbl">FEATURES CHECKED:</span><span class="m-val">8 High-Dimensional Vectors</span></div>
+            </div>
+            <p class="pod-narrative" id="pod3Narrative">
+              Unsupervised AI model partitioned anomalous subspace. Non-human jitter, payload size anomaly, and abnormal inter-request gap confirmed malicious automation. <strong>+14 Risk Points</strong> assigned.
+            </p>
+          </div>
+          <div class="pod-status-banner banner-purple">
+            <span class="pulse-ring-sm purple"></span>
+            <span id="pod3StatusText">ISOLATION FOREST ANOMALY CONFIRMED &bull; +14 RISK POINTS ASSIGNED</span>
+          </div>
+        </div>
+
+        <!-- WIRE 3 -> 4 -->
+        <div class="cyber-laser-wire" id="wire3to4" style="display: none;">
+          <div class="laser-track">
+            <div class="laser-energy-pulse orange"></div>
+          </div>
+          <div class="wire-annotation">
+            <span class="wire-arrow">&darr;</span>
+            <span class="wire-tag">AGGREGATING SIGNALS INTO EXPLAINABLE RISK SCORE</span>
+            <span class="wire-arrow">&darr;</span>
+          </div>
+        </div>
+
+        <!-- ================= POPUP 4: EXPLAINABLE RISK ================= -->
+        <div class="liquid-glass-pod pod-risk" id="glassPod4" style="display: none;">
+          <div class="glass-reflection-shine"></div>
+          <div class="pod-header">
+            <div class="pod-icon-circle orange-glow">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="pod-title-block">
+              <span class="pod-stage-sub">POPUP 4 &bull; EXPLAINABLE RISK SCORER</span>
+              <h3 class="pod-title">Dynamic Point Aggregator &amp; Classifier</h3>
+            </div>
+            <div class="pod-score-badge badge-red" id="podBadge4">
+              <span class="score-label">AGGREGATED SCORE</span>
+              <span class="score-num font-mono" id="pod4Score">94 / 100</span>
+            </div>
+          </div>
+          <div class="pod-body">
+            <div class="risk-breakdown-table" id="pod4Breakdown">
+              <div class="rb-row"><span class="rb-sig">Credential Stuffing Velocity Breach</span><span class="rb-pts badge-red">+35 PTS</span></div>
+              <div class="rb-row"><span class="rb-sig">Unrecognized User-Agent Device Signature</span><span class="rb-pts badge-amber">+25 PTS</span></div>
+              <div class="rb-row"><span class="rb-sig">High-Sensitivity Target Path (/api/auth/login)</span><span class="rb-pts badge-orange">+20 PTS</span></div>
+              <div class="rb-row"><span class="rb-sig">Isolation Forest Anomaly Biometrics</span><span class="rb-pts badge-purple">+14 PTS</span></div>
+            </div>
+            <div class="pod-score-summary-bar">
+              <div class="score-label-wrap">
+                <span>TOTAL ACCUMULATED RISK SCORE:</span>
+                <strong class="font-red" id="pod4TotalScoreText">94 / 100 (CRITICAL TIER)</strong>
+              </div>
+              <div class="risk-meter-fill-bar"><div class="fill" id="pod4MeterFill" style="width: 94%;"></div></div>
+            </div>
+          </div>
+          <div class="pod-status-banner banner-red">
+            <span class="pulse-ring-sm red"></span>
+            <span id="pod4StatusText">CRITICAL RISK THRESHOLD BREACHED (SCORE: 94 &ge; 80)</span>
+          </div>
+        </div>
+
+        <!-- WIRE 4 -> 5 -->
+        <div class="cyber-laser-wire" id="wire4to5" style="display: none;">
+          <div class="laser-track">
+            <div class="laser-energy-pulse red"></div>
+          </div>
+          <div class="wire-annotation">
+            <span class="wire-arrow">&darr;</span>
+            <span class="wire-tag">DISPATCHING MITIGATION DIRECTIVE TO ZERO-TRUST ENFORCEMENT ENGINE</span>
+            <span class="wire-arrow">&darr;</span>
+          </div>
+        </div>
+
+        <!-- ================= POPUP 5: MITIGATION & BLOCK ================= -->
+        <div class="liquid-glass-pod pod-mitigation" id="glassPod5" style="display: none;">
+          <div class="glass-reflection-shine"></div>
+          <div class="pod-header">
+            <div class="pod-icon-circle red-glow">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="pod-title-block">
+              <span class="pod-stage-sub">POPUP 5 &bull; AUTONOMOUS ENFORCEMENT</span>
+              <h3 class="pod-title">Zero-Trust IP Quarantine &amp; Access Revocation</h3>
+            </div>
+            <div class="pod-score-badge badge-block" id="podBadge5">
+              <span class="score-label">ENFORCEMENT</span>
+              <span class="score-num font-mono">HTTP 403 BLOCKED</span>
+            </div>
+          </div>
+          <div class="pod-body">
+            <div class="mitigation-checklist">
+              <div class="chk-item"><span class="chk-icon">&check;</span><span><strong>Inline TCP/HTTP Drop:</strong> Dispatched immediate HTTP 403 Forbidden to client 127.0.0.1.</span></div>
+              <div class="chk-item"><span class="chk-icon">&check;</span><span><strong>Redis IP Quarantine:</strong> Attacker client IP permanently quarantined in Redis Blacklist.</span></div>
+              <div class="chk-item"><span class="chk-icon">&check;</span><span><strong>PostgreSQL Audit Event:</strong> Cryptographic incident committed to <code>security_events</code> database table.</span></div>
+              <div class="chk-item"><span class="chk-icon">&check;</span><span><strong>Real-time SOC Alert:</strong> High-priority WebSocket notification broadcast to SOC Dashboard.</span></div>
+            </div>
+          </div>
+          <div class="pod-status-banner banner-block">
+            <span class="shield-lock-icon">&#128274;</span>
+            <span id="pod5StatusText">ZERO-TRUST AUTONOMOUS DEFENSE SUCCESSFUL &bull; ACCESS PERMANENTLY REVOKED</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Forensics Terminal Stream -->
+      <div class="war-room-terminal-wrap">
+        <div class="terminal-bar">
+          <div class="term-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <span class="term-title">REAL-TIME FORENSICS STREAM [TELEMETRY_LOGS]</span>
+          <span class="term-active-pill">ACTIVE SOCKET</span>
+        </div>
+        <div class="terminal-body font-mono" id="warRoomTerminalBody">
+          <div class="term-line info">[INIT] Zero-Trust War-Room Telemetry Stream mounted. Waiting for packet generation...</div>
+        </div>
+      </div>
+
+      <!-- Final Mitigation Banner & Actions Footer -->
+      <div class="war-room-footer" id="warRoomFooter" style="display: none;">
+        <div class="mitigation-banner" id="modalMitigationBanner">
+          <div class="banner-icon-box">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="banner-text">
+            <h4 class="banner-title" id="bannerTitle">GATEWAY DEFENSE SUCCESSFUL — THREAT FULLY MITIGATED</h4>
+            <p class="banner-sub" id="bannerSub">Attacking client IP was intercepted, classified as CRITICAL threat, and quarantined from all protected APIs.</p>
+          </div>
+        </div>
+        <div class="footer-actions">
+          <button type="button" class="btn-action btn-outline" onclick="location.reload()">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Re-Run Simulation</span>
+          </button>
+          <button type="button" class="btn-action btn-primary-close" onclick="window.close()">
+            <span>Done &amp; Close Window</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="api-client.js"></script>
+  <script src="simulation-warroom.js"></script>
+</body>
+</html>

@@ -46,3 +46,7 @@ dist-ssr/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Logs & Temporary files
+*.log
+0 trust/
