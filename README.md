@@ -1,6 +1,6 @@
 # AI-Powered Zero-Trust API Security Gateway & LLM Shield
 
-[![Live Status](https://img.shields.io/badge/Status-LIVE%20ONLINE-10b981?style=for-the-badge&logo=cloudflare&logoColor=white)](https://median-huge-shaved-recommendations.trycloudflare.com)
+[![Live Status](https://img.shields.io/badge/Status-LIVE%20ONLINE-10b981?style=for-the-badge&logo=cloudflare&logoColor=white)](https://assuming-preservation-madonna-measure.trycloudflare.com)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Machine Learning](https://img.shields.io/badge/ML%20Engine-Isolation%20Forest-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
 [![Local LLM](https://img.shields.io/badge/Semantic%20Guard-Ollama%20zero--trust--guard-blueviolet?style=for-the-badge&logo=ollama&logoColor=white)](https://ollama.ai)
@@ -15,20 +15,20 @@
 
 The entire Zero-Trust Security Gateway, real-time WebSocket telemetry, and the upstream Gemini AI shield are deployed and live on the public internet:
 
-👉 **[Launch Live Zero-Trust Security Gateway](https://median-huge-shaved-recommendations.trycloudflare.com)**
+👉 **[Launch Live Zero-Trust Security Gateway](https://assuming-preservation-madonna-measure.trycloudflare.com)**
 
 ### 🚀 Direct Links to Live Modules:
 
 | Module | Direct Live URL | Description |
 |---|---|---|
-| **🛡️ API Protector & Reverse Proxy** | [Launch API Protector](https://median-huge-shaved-recommendations.trycloudflare.com/api-protector.html) | Live Google Gemini 3.5 Flash Lite protection, Hop-by-Hop inspector, prompt injection defense |
-| **📊 Cyber SOC Dashboard** | [Launch Dashboard](https://median-huge-shaved-recommendations.trycloudflare.com/dashboard.html) | Global threat metrics, live traffic volume, and real-time security alerts |
-| **⚔️ Attack Simulator** | [Launch Simulator](https://median-huge-shaved-recommendations.trycloudflare.com/attack-simulator.html) | Inject real SQLi, XSS, Prompt Injection, and Rate-Limit attacks in real-time |
-| **🚨 Simulation War Room** | [Launch War Room](https://median-huge-shaved-recommendations.trycloudflare.com/simulation-warroom.html) | Multi-vector automated stress testing console with live attack-vs-mitigation radar |
-| **🎯 Threat Center** | [Launch Threat Center](https://median-huge-shaved-recommendations.trycloudflare.com/threat-center.html) | Granular forensic analysis of blocked packets, risk scores, and anomaly signals |
-| **📈 Live API Traffic** | [Launch Traffic Stream](https://median-huge-shaved-recommendations.trycloudflare.com/api-traffic.html) | Real-time WebSocket packet telemetry stream with latency and HTTP status distribution |
-| **🎓 Presentation Slide Deck** | [Launch Presentation Deck](https://median-huge-shaved-recommendations.trycloudflare.com/presentation.html) | Fullscreen interactive presentation deck for project defense and technical seminars |
-| **🔐 Security Login** | [Launch Portal](https://median-huge-shaved-recommendations.trycloudflare.com/zerotrust.html) | Role-Based Access Control (RBAC) entry portal with JWT authentication |
+| **🛡️ API Protector & Reverse Proxy** | [Launch API Protector](https://assuming-preservation-madonna-measure.trycloudflare.com/api-protector.html) | Live Google Gemini 3.5 Flash Lite protection, Hop-by-Hop inspector, prompt injection defense |
+| **📊 Cyber SOC Dashboard** | [Launch Dashboard](https://assuming-preservation-madonna-measure.trycloudflare.com/dashboard.html) | Global threat metrics, live traffic volume, and real-time security alerts |
+| **⚔️ Attack Simulator** | [Launch Simulator](https://assuming-preservation-madonna-measure.trycloudflare.com/attack-simulator.html) | Inject real SQLi, XSS, Prompt Injection, and Rate-Limit attacks in real-time |
+| **🚨 Simulation War Room** | [Launch War Room](https://assuming-preservation-madonna-measure.trycloudflare.com/simulation-warroom.html) | Multi-vector automated stress testing console with live attack-vs-mitigation radar |
+| **🎯 Threat Center** | [Launch Threat Center](https://assuming-preservation-madonna-measure.trycloudflare.com/threat-center.html) | Granular forensic analysis of blocked packets, risk scores, and anomaly signals |
+| **📈 Live API Traffic** | [Launch Traffic Stream](https://assuming-preservation-madonna-measure.trycloudflare.com/api-traffic.html) | Real-time WebSocket packet telemetry stream with latency and HTTP status distribution |
+| **🎓 Presentation Slide Deck** | [Launch Presentation Deck](https://assuming-preservation-madonna-measure.trycloudflare.com/presentation.html) | Fullscreen interactive presentation deck for project defense and technical seminars |
+| **🔐 Security Login** | [Launch Portal](https://assuming-preservation-madonna-measure.trycloudflare.com/zerotrust.html) | Role-Based Access Control (RBAC) entry portal with JWT authentication |
 
 ---
 
